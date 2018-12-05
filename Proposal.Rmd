@@ -16,15 +16,14 @@ Kee-Young Shin ks3663
 Assessing the Division Amongst Americans Through Hate Crime 
 
 ## Motivation for Project
-HIV/AIDS have been a global health issue since the 1980s. Increase in health initiatives has raised awareness and provided better treatments for those suffering from these conditions. Though, much progress has been made, HIV/AIDS still pose a great threat to public health. This project will assess the current status of HIV/AIDS in NYC and attempt to find significant patterns within the data. 
+It seems like in the past few years, the news has been full of stories of racial, sexual, and other prejudicial controversies ranging from shootings to protests. Since the number of hate crimes committed could serve as an indicator of how much these divisions have increased over the years, we sought to use this figure to find out whether or not the level of discrimination and hate for certain subgroups actually changed over the past few years. Additionally, inspired by the recent elections and the controversies surrounding Trump's presidency, we wanted to find out whether or not his election contributed to the change in the number of hate crimes. 
 
 ## Intended Final Products
-We intend to create visualizations that depict the current status of HIV in NYC. Additionally, we intend to assess the datasets to determine how much progress has been made over the years in terms of awareness and treatment. Ultimately, we hope to incorporate various forms of analyses including plots of distributions, regression analysis of possible factors that may influence the case rate, and a map using shiny to visualize the results that we have found. 
+We intend to create visualizations that depict how the number of hate crimes committed changed over the past decade. These visualizations will include plots of the change in the number of hate crime and heat maps depicting the level of hate crime in different states. Additionally, we intend to conduct regression analyses to see if there are certain predictors that can help determine the hate crime rate. 
 
 ## Anticipated Data Sources
-https://data.cityofnewyork.us/Health/HIV-AIDS-Diagnoses-by-Neighborhood-Sex-and-Race-Et/ykvb-493p
-https://data.cityofnewyork.us/Health/HIV-Testing-Locations/72ss-25qh/data
-https://data.cityofnewyork.us/Health/DOHMH-HIV-AIDS-Annual-Report/fju2-rdad
+https://ucr.fbi.gov/hate-crime
+http://www.electproject.org/2016g
 
 ## The planned analyses / visualizations / coding challenges
 The main challenge will be compiling the massive amounts of data and wrangling it to create a digestible report. We also expect to face some challenges in incorporating different datasets in a sensible way. 
