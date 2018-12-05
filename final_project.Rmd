@@ -11,9 +11,8 @@ library(readxl)
 library(plotly)
 ```
 
+## import hate crime incident count from 2005 to 2017
 ```{r}
-
-# import hate crime data
 hate_offenses_2017 = read_xls("./table-1.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
@@ -93,12 +92,13 @@ hatecrime_count_df = rbind(hate_offenses_2017, hate_offenses_2016, hate_offenses
 colnames(hatecrime_count_df) = c("year", "total_incidents", "total_offenses")
 ```
 
+## plot change in number of hate crimes over time
 ```{r}
-# plot change in number of hate crimes over time
 hatecrime_count_df %>% 
   ggplot(aes(x = year, y = total_incidents)) + geom_line(group = 1, color = "blue")
 ```
 
+## importing hate crime and predictors dataset
 ```{r}
 # data in 2016
 income = read_csv("./data/Income.csv") %>% 
@@ -149,16 +149,16 @@ merge_data =
   rename(state = location, share_unemployed = unemployed, share_non_citizen = non_citizen, share_white = white)
 ```
 
-
+## import and clean the annual data from 2005-2017
 ```{r}
-#import and clean the annual data from 2005-2017
+
 #list the files
 files = as.data.frame(list.files(path = "./data_1")) 
 colnames(files)[1] = "file_names"
 ```
 
+## import the annual data from 2005-2017
 ```{r}
-#import the annual data from 2005-2017
 library(readxl)
 library(tidyverse)
 read_and_tidy = function(file_names){
@@ -177,9 +177,9 @@ hate_crime =
   mutate(annualprop = total_incident/population*100000)
 ```
 
-
+## do the further cleaning of the merge data
 ```{r}
-#do the further cleaning of the merge data
+
 merge_data = merge_data %>%
   mutate(median_annual_household_income = str_replace(median_annual_household_income, ",", "")) %>%
   mutate(median_annual_household_income = gsub("\\$", "",median_annual_household_income )) %>%
@@ -187,18 +187,18 @@ mutate(median_annual_household_income = as.numeric(median_annual_household_incom
   select(state, median_income = median_annual_household_income, everything())
 ```
 
-##regression part
+## regression part
 ```{r}
 sum(is.na(merge_data))
 mle = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ crime_rate, data = merge_data)
-multi.fit = step(mle, direction='backward')
+multi.fit = step(mle, direction = 'backward')
 summary(multi.fit)
 ```
 
 ```{r}
-merge_data%>%
-  select(-state, -share_voters_voted_trump)%>%
-  select(crime_rate, everything())%>%
+merge_data %>%
+  select(-state, -share_voters_voted_trump) %>%
+  select(crime_rate, everything()) %>%
   pairs()
 ```
 
@@ -213,7 +213,7 @@ ggplot(merge_data, aes(x = crime_rate)) +
 ##Building the Map of hate crime rate based on 2016 
 
 ```{r}
-map_data_2016<-merge_data %>% 
+map_data_2016 = merge_data %>% 
   mutate(#hate_crimes_per_100k_splc = as.numeric(hate_crimes_per_100k_splc),
          #median_household_income = as.numeric(median_household_income),
          state = as.factor(state),
