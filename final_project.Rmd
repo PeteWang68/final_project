@@ -176,7 +176,6 @@ hate_crime = hate_crime%>%
   filter(state != "Total") %>%
   mutate(annualprop = total_incident/population*100000)%>%
   mutate(year = str_replace(year, ".xls", "")) 
-<<<<<<< HEAD
 ```
 
 ## import and clean the annual data from 2005-2017
@@ -188,30 +187,6 @@ colnames(files)[1] = "file_names"
 
 ```
 
-## import the annual data from 2005-2017
-```{r}
-#do the further cleaning of the merge data
-library(readxl)
-library(tidyverse)
-read_and_tidy = function(file_names){
-read_excel(str_c("./data_1/", file_names), range = cell_rows(3:53))
-}
-
-hate_crime =
-  files %>% 
-  mutate(map(files$file_names, read_and_tidy)) %>% 
-  unnest() %>% 
-  janitor::clean_names() %>% 
-  rename(year = file_names) %>% 
-  mutate(year = str_replace(year, ".xls", "")) %>% 
-  filter(participating_state != "Total") %>%
-  select(year = year, state = participating_state, population = population_covered, total_incident = total_number_of_incidents_reported) %>%
-  mutate(annualprop = total_incident/population*100000)
-```
-=======
-```
-
->>>>>>> b84c94eb81d223c7de5dbb0b6f68f282f16ed039
 
 ## do the further cleaning of the merge data
 ```{r}
