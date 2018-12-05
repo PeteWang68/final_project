@@ -150,33 +150,31 @@ merge_data =
 ```
 
 
+#dataset for annual report in state division
 ```{r}
-#import and clean the annual data from 2005-2017
-#list the files
-files = as.data.frame(list.files(path = "./data_1")) 
-colnames(files)[1] = "file_names"
+#list
+df = list.files(path = "./annual")
+#function
+read_data = function(x){read_excel(str_c("./annual/", x),  range = "A3:E53")%>%
+    mutate(year = x)}
+#map
+hate_crime = map(df, read_data)%>%
+  bind_rows()%>%
+  janitor::clean_names()%>%
+  select(-agencies_submitting_incident_reports, -agencies_submitting_incident_reports_2,-agencies_submitting_incident_reports_3)%>%
+  mutate(year = str_replace(year, ".xls", ""))%>%
+  select(year, everything())
+#set na to 0
+hate_crime[is.na(hate_crime)]=0
+
+#complete the final dataset
+hate_crime = hate_crime%>%
+  mutate(total_incident = total_number_of_incidents_reported + total_number_of_incidents_reported_2)%>%
+  select(year, state = participating_state, population = population_covered, total_incident)%>%
+  filter(state != "Total") %>%
+  mutate(annualprop = total_incident/population*100000)%>%
+  mutate(year = str_replace(year, ".xls", "")) 
 ```
-
-```{r}
-#import the annual data from 2005-2017
-library(readxl)
-library(tidyverse)
-read_and_tidy = function(file_names){
-read_excel(str_c("./data_1/", file_names), range = cell_rows(3:53))
-}
-
-hate_crime =
-  files %>% 
-  mutate(map(files$file_names, read_and_tidy)) %>% 
-  unnest() %>% 
-  janitor::clean_names() %>% 
-  rename(year = file_names) %>% 
-  mutate(year = str_replace(year, ".xls", "")) %>% 
-  filter(participating_state != "Total") %>%
-  select(year = year, state = participating_state, population = population_covered, total_incident = total_number_of_incidents_reported) %>%
-  mutate(annualprop = total_incident/population*100000)
-```
-
 
 ```{r}
 #do the further cleaning of the merge data
@@ -207,7 +205,6 @@ ggplot(merge_data, aes(x = crime_rate)) +
   geom_density(alpha = .4, adjust = .5, color = "blue")
 ```
 
-```
 
 
 
