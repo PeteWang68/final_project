@@ -179,7 +179,6 @@ hate_crime =
 
 ## do the further cleaning of the merge data
 ```{r}
-
 merge_data = merge_data %>%
   mutate(median_annual_household_income = str_replace(median_annual_household_income, ",", "")) %>%
   mutate(median_annual_household_income = gsub("\\$", "",median_annual_household_income )) %>%
@@ -195,6 +194,7 @@ multi.fit = step(mle, direction = 'backward')
 summary(multi.fit)
 ```
 
+## see correlation between variables 
 ```{r}
 merge_data %>%
   select(-state, -share_voters_voted_trump) %>%
@@ -202,16 +202,14 @@ merge_data %>%
   pairs()
 ```
 
+## see distribution of hate crime rate 
 ```{r}
 ggplot(merge_data, aes(x = crime_rate)) + 
   geom_density(alpha = .4, adjust = .5, color = "blue")
 ```
 
-```
-
 
 ##Building the Map of hate crime rate based on 2016 
-
 ```{r}
 map_data_2016 = merge_data %>% 
   mutate(#hate_crimes_per_100k_splc = as.numeric(hate_crimes_per_100k_splc),
@@ -241,6 +239,4 @@ plot_geo(map_data_2016, locationmode = 'USA-states') %>%
     title = 'Hate crime rate in 2016 all over U.S. ',
     geo = g
   )
-
-
 ```
