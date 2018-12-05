@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+name: "Change of Hate Crime over Last Decade"
+=======
 name: "Final Project"
+>>>>>>> ddf20f7c0c5fa29ba86905870b758132d1b544dc
 output_dir: "."
 navbar:
   title: "Home"
