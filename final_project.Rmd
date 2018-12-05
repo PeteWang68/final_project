@@ -210,4 +210,41 @@ ggplot(merge_data, aes(x = crime_rate)) +
 ```
 
 
+##Building the Map of hate crime rate based on 2016 
 
+```{r}
+map_data_2016<-merge_data %>% 
+  mutate(#hate_crimes_per_100k_splc = as.numeric(hate_crimes_per_100k_splc),
+         #median_household_income = as.numeric(median_household_income),
+         state = as.factor(state),
+         code = state.abb[state],
+         hover = with(merge_data, paste(state,'<br>' ,"share for trump",share_voters_voted_trump))
+         ) %>% 
+  select(code, crime_rate, hover )
+
+l <- list(color = toRGB("white"), width = 2)
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white')
+)
+
+#p <-
+  plot_geo(map_data_2016, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~ crime_rate, text = ~hover, locations = ~code,
+    color = ~ crime_rate, colors = 'Reds'
+  ) %>%
+  colorbar(title = "Hate crime rate ") %>%
+  layout(
+    title = 'Hate crime rate in 2016 all over U.S. ',
+    geo = g
+  )
+
+
+# Create a shareable link to your chart
+# Set up API credentials: https://plot.ly/r/getting-started
+#chart_link = api_create(p, filename="choropleth-ag")
+#chart_link
+```
