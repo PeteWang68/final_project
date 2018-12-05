@@ -55,5 +55,9 @@ merge_data =
   merge(., vote, by = "location") %>%
   merge(., crime_rate, by = "location") %>% 
   filter(location != "United States") %>% 
-  rename(state = location, share_unemployed = unemployed, share_non_citizen = non_citizen, share_white = white)
+  rename(state = location, share_unemployed = unemployed, share_non_citizen = non_citizen, share_white = white) %>% 
+  mutate(median_annual_household_income = str_replace(median_annual_household_income, ",", "")) %>%
+  mutate(median_annual_household_income = gsub("\\$", "",median_annual_household_income )) %>%
+  mutate(median_annual_household_income = as.numeric(median_annual_household_income)) %>%
+  select(state, median_income = median_annual_household_income, everything())
 ```
