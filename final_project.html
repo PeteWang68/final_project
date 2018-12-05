@@ -222,12 +222,12 @@ $(document).ready(function () {
 
 
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## -- Attaching packages ---------------------------------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## -- Attaching packages ----------------------------------------------------- tidyverse 1.2.1 --</code></pre>
 <pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
-## v tibble  1.4.2     v dplyr   0.7.6
+## v tibble  1.4.2     v dplyr   0.7.8
 ## v tidyr   0.8.1     v stringr 1.3.1
 ## v readr   1.1.1     v forcats 0.3.0</code></pre>
-<pre><code>## -- Conflicts ------------------------------------------------------- tidyverse_conflicts() --
+<pre><code>## -- Conflicts -------------------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(readxl)
@@ -433,6 +433,95 @@ merge_data = merge_data %&gt;%
   mutate(median_annual_household_income = gsub(&quot;\\$&quot;, &quot;&quot;,median_annual_household_income )) %&gt;%
 mutate(median_annual_household_income = as.numeric(median_annual_household_income)) %&gt;%
   select(state, median_income = median_annual_household_income, everything())</code></pre>
+<div id="regression-part" class="section level2">
+<h2>regression part</h2>
+<pre class="r"><code>sum(is.na(merge_data))</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>mle = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ crime_rate, data = merge_data)</code></pre>
+<pre><code>## Warning in model.matrix.default(mt, mf, contrasts): the response appeared
+## on the right-hand side and was dropped</code></pre>
+<pre><code>## Warning in model.matrix.default(mt, mf, contrasts): problem with term 6 in
+## model.matrix: no columns are assigned</code></pre>
+<pre class="r"><code>multi.fit = step(mle, direction=&#39;backward&#39;)</code></pre>
+<pre><code>## Start:  AIC=94
+## crime_rate ~ median_income + share_unemployed + share_population_with_high_school_degree + 
+##     share_non_citizen + share_white + crime_rate</code></pre>
+<pre><code>## Warning in model.matrix.default(object, data = structure(list(crime_rate =
+## c(1.3808898651561, : the response appeared on the right-hand side and was
+## dropped</code></pre>
+<pre><code>## Warning in model.matrix.default(object, data = structure(list(crime_rate
+## = c(1.3808898651561, : problem with term 6 in model.matrix: no columns are
+## assigned</code></pre>
+<pre><code>## 
+## Step:  AIC=94
+## crime_rate ~ median_income + share_unemployed + share_population_with_high_school_degree + 
+##     share_non_citizen + share_white
+## 
+##                                            Df Sum of Sq    RSS    AIC
+## - share_population_with_high_school_degree  1    1.4839 262.66 92.273
+## - share_non_citizen                         1    2.7738 263.95 92.513
+## - share_white                               1    5.0901 266.27 92.942
+## - share_unemployed                          1    5.4210 266.60 93.002
+## - median_income                             1    6.6106 267.79 93.221
+## &lt;none&gt;                                                  261.18 93.996
+## 
+## Step:  AIC=92.27
+## crime_rate ~ median_income + share_unemployed + share_non_citizen + 
+##     share_white
+## 
+##                     Df Sum of Sq    RSS    AIC
+## - share_white        1    3.8270 266.49 90.982
+## - share_non_citizen  1    4.4476 267.11 91.096
+## - share_unemployed   1    4.6526 267.31 91.134
+## &lt;none&gt;                           262.66 92.273
+## - median_income      1   28.9317 291.59 95.394
+## 
+## Step:  AIC=90.98
+## crime_rate ~ median_income + share_unemployed + share_non_citizen
+## 
+##                     Df Sum of Sq    RSS    AIC
+## - share_non_citizen  1    0.9663 267.46 89.160
+## &lt;none&gt;                           266.49 90.982
+## - share_unemployed   1   17.9287 284.42 92.173
+## - median_income      1   27.1547 293.64 93.737
+## 
+## Step:  AIC=89.16
+## crime_rate ~ median_income + share_unemployed
+## 
+##                    Df Sum of Sq    RSS    AIC
+## &lt;none&gt;                          267.46 89.160
+## - share_unemployed  1    17.140 284.60 90.203
+## - median_income     1    29.397 296.85 92.269</code></pre>
+<pre class="r"><code>summary(multi.fit)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = crime_rate ~ median_income + share_unemployed, data = merge_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.6887 -1.1373 -0.4420  0.6579 12.5892 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)      -5.985e+00  3.393e+00  -1.764   0.0844 .
+## median_income     9.098e-05  4.046e-05   2.249   0.0294 *
+## share_unemployed  6.475e+01  3.771e+01   1.717   0.0927 .
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.411 on 46 degrees of freedom
+## Multiple R-squared:  0.1187, Adjusted R-squared:  0.08043 
+## F-statistic: 3.099 on 2 and 46 DF,  p-value: 0.05462</code></pre>
+<pre class="r"><code>merge_data%&gt;%
+  select(-state, -share_voters_voted_trump)%&gt;%
+  select(crime_rate, everything())%&gt;%
+  pairs()</code></pre>
+<p><img src="final_project_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(merge_data, aes(x = crime_rate)) + 
+  geom_density(alpha = .4, adjust = .5, color = &quot;blue&quot;)</code></pre>
+<p><img src="final_project_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>```</p>
+</div>
 
 
 

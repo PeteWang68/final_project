@@ -187,6 +187,27 @@ mutate(median_annual_household_income = as.numeric(median_annual_household_incom
   select(state, median_income = median_annual_household_income, everything())
 ```
 
+##regression part
+```{r}
+sum(is.na(merge_data))
+mle = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ crime_rate, data = merge_data)
+multi.fit = step(mle, direction='backward')
+summary(multi.fit)
+```
+
+```{r}
+merge_data%>%
+  select(-state, -share_voters_voted_trump)%>%
+  select(crime_rate, everything())%>%
+  pairs()
+```
+
+```{r}
+ggplot(merge_data, aes(x = crime_rate)) + 
+  geom_density(alpha = .4, adjust = .5, color = "blue")
+```
+
+```
 
 
 
