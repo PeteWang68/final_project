@@ -190,8 +190,21 @@ mutate(median_annual_household_income = as.numeric(median_annual_household_incom
 ```{r}
 sum(is.na(merge_data))
 mle = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ crime_rate, data = merge_data)
+summary(mle)
 multi.fit = step(mle, direction = 'backward')
 summary(multi.fit)
+
+# see distribution of crime rate 
+merge_data %>% 
+  ggplot(aes(x = crime_rate)) + geom_histogram()
+
+# transform crime rate variable
+merge_data_log = merge_data %>% 
+  mutate(crime_rate = log(crime_rate)) 
+
+mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ crime_rate, data = merge_data_log)
+
+summary(step(mle_log, direction = "both"))
 ```
 
 ## see correlation between variables 
