@@ -3,7 +3,7 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "About"
+    - text: "Change in Hate Crime Incidents"
       href: about.html
     - icon: fa-envelope fa-lg
       href: mailto:ks3663@cumc.columbia.edu
