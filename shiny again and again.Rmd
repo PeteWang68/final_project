@@ -6,50 +6,25 @@ output:
     vertical_layout: fill
 runtime: shiny
 ---
-
 ```{r setup, include=FALSE}
 library(flexdashboard)
-
 library(tidyverse)
 library(viridis)
+## Loading required package: viridisLite
 library(p8105.datasets)
-
 library(plotly)
-```
-
-```{r, include=FALSE}
-#list the files
-files = as.data.frame(list.files(path = "./data_1")) 
-colnames(files)[1] = "file_names"
-```
-
-```{r, include=FALSE}
 library(readxl)
-library(tidyverse)
-read_and_tidy = function(file_names){
-read_excel(str_c("./data_1/", file_names), range = cell_rows(3:53))
-}
+```
 
-hate_crime =
-  files %>% 
-  mutate(map(files$file_names, read_and_tidy)) %>% 
-  unnest() %>% 
-  janitor::clean_names() %>% 
-  rename(year = file_names) %>% 
-  mutate(year = str_replace(year, ".xls", "")) %>% 
-  filter(participating_state != "Total")%>%
-  select(year = year, state = participating_state, population = population_covered, total_incident = total_number_of_incidents_reported)%>%
-  mutate(annualprop = total_incident/population*100000)
+```{r}
 
-
+hate_crime<-read_csv("./data/hate_crime.csv")
 
 l <- list(color = toRGB("white"), width = 2)
 
 g <- list(
   scope = 'usa',
-  projection = list(type = 'albers usa'),
-  showlakes = TRUE,
-  lakecolor = toRGB('gray85')
+  projection = list(type = 'albers usa')
 )
 ```
 
@@ -79,7 +54,7 @@ renderPlotly({
   plot_geo(locationmode = 'USA-states') %>%
   add_trace(
     z = ~ annualprop,  locations = ~code,
-    color = ~ annualprop, colors = 'Reds'
+    color = ~ annualprop, colors = 'Greens'
   ) %>%
   colorbar(title = "Hate crime rate ") %>%
   layout(
@@ -103,4 +78,3 @@ Column {data-width=350}
 ```{r}
 
 ```
-
