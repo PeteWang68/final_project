@@ -221,9 +221,28 @@ $(document).ready(function () {
 </div>
 
 
-<pre class="r"><code>library(tidyverse)
-library(readxl)
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## -- Attaching packages ---------------------------------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
+## v tibble  1.4.2     v dplyr   0.7.6
+## v tidyr   0.8.1     v stringr 1.3.1
+## v readr   1.1.1     v forcats 0.3.0</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(readxl)
 library(plotly)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plotly&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     last_plot</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter</code></pre>
+<pre><code>## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     layout</code></pre>
 <pre class="r"><code># import hate crime data
 hate_offenses_2017 = read_xls(&quot;./table-1.xls&quot;) %&gt;% 
   janitor::clean_names() %&gt;% 
@@ -387,9 +406,8 @@ merge_data =
   merge(., crime_rate, by = &quot;location&quot;) %&gt;% 
   filter(location != &quot;United States&quot;) %&gt;% 
   rename(state = location, share_unemployed = unemployed, share_non_citizen = non_citizen, share_white = white)</code></pre>
-<div id="import-and-clean-the-annual-data-from-2005-2017" class="section level2">
-<h2>import and clean the annual data from 2005-2017</h2>
-<pre class="r"><code>#list the files
+<pre class="r"><code>#import and clean the annual data from 2005-2017
+#list the files
 files = as.data.frame(list.files(path = &quot;./data_1&quot;)) 
 colnames(files)[1] = &quot;file_names&quot;</code></pre>
 <pre class="r"><code>#import the annual data from 2005-2017
@@ -406,18 +424,15 @@ hate_crime =
   janitor::clean_names() %&gt;% 
   rename(year = file_names) %&gt;% 
   mutate(year = str_replace(year, &quot;.xls&quot;, &quot;&quot;)) %&gt;% 
-  filter(participating_state != &quot;Total&quot;)%&gt;%
-  select(year = year, state = participating_state, population = population_covered, total_incident = total_number_of_incidents_reported)%&gt;%
+  filter(participating_state != &quot;Total&quot;) %&gt;%
+  select(year = year, state = participating_state, population = population_covered, total_incident = total_number_of_incidents_reported) %&gt;%
   mutate(annualprop = total_incident/population*100000)</code></pre>
-</div>
-<div id="do-the-further-cleaning-of-the-merge-data" class="section level2">
-<h2>do the further cleaning of the merge data</h2>
-<pre class="r"><code>merge_data = merge_data%&gt;%
-  mutate(median_annual_household_income = str_replace(median_annual_household_income, &quot;,&quot;, &quot;&quot;))%&gt;%
-  mutate(median_annual_household_income = gsub(&quot;\\$&quot;, &quot;&quot;,median_annual_household_income ))%&gt;%
-mutate(median_annual_household_income = as.numeric(median_annual_household_income))%&gt;%
+<pre class="r"><code>#do the further cleaning of the merge data
+merge_data = merge_data %&gt;%
+  mutate(median_annual_household_income = str_replace(median_annual_household_income, &quot;,&quot;, &quot;&quot;)) %&gt;%
+  mutate(median_annual_household_income = gsub(&quot;\\$&quot;, &quot;&quot;,median_annual_household_income )) %&gt;%
+mutate(median_annual_household_income = as.numeric(median_annual_household_income)) %&gt;%
   select(state, median_income = median_annual_household_income, everything())</code></pre>
-</div>
 
 
 
