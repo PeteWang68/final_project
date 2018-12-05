@@ -1,9 +1,103 @@
 ---
-title: "Change of Hate Crime over Last Decade"
+title: "Change In Hate Crime Incidents Over the Past Decade"
 ---
 
-### About this site
+```{r include=FALSE}
+library(tidyverse)
+library(plotly)
+library(readxl)
+```
 
-Sometimes you need to say a bit about the site -- how it was made, where it's hosted, where the source code can be found. 
+```{r include=FALSE}
 
-If this is for a project or analysis, I recommend giving some details about the R package versions that you used to create the content.
+# import hate crime data
+hate_offenses_2017 = read_xls("./table-1.xls") %>% 
+  janitor::clean_names() %>% 
+  filter(table_1 == "Total") %>% 
+  mutate(table_1 = str_replace(table_1, "Total", "2017"))
+
+hate_offenses_2016 = read_xls("./2016_hatecrime.xls") %>% 
+  janitor::clean_names() %>% 
+  filter(table_1 == "Total") %>% 
+  mutate(table_1 = str_replace(table_1, "Total", "2016")) %>% 
+  select(1:5)
+
+hate_offenses_2015 = read_xls("./2015_hatecrime.xls") %>% 
+  janitor::clean_names() %>% 
+  filter(table_1 == "Total") %>% 
+  mutate(table_1 = str_replace(table_1, "Total", "2015"))
+    
+hate_offenses_2014 = read_xls("./2014_hatecrime.xls") %>% 
+  janitor::clean_names() %>% 
+  filter(table_1 == "Total") %>% 
+  mutate(table_1 = str_replace(table_1, "Total", "2014")) %>% 
+  select(1:5)
+
+hate_offenses_2013 = read_xls("./2013_hatecrime.xls") %>% 
+  janitor::clean_names() %>% 
+  filter(table_1 == "Total") %>% 
+  mutate(table_1 = str_replace(table_1, "Total", "2013")) %>% 
+  select(1:5)
+
+hate_offenses_2012 = read_xls("./2011_hatecrime.xls") %>% 
+  janitor::clean_names() %>% 
+  filter(table_1 == "Total") %>% 
+  mutate(table_1 = str_replace(table_1, "Total", "2012"))
+
+hate_offenses_2011 = read_xls("./2011_hatecrime.xls") %>% 
+  janitor::clean_names() %>% 
+  filter(table_1 == "Total") %>% 
+  mutate(table_1 = str_replace(table_1, "Total", "2011"))
+
+hate_offenses_2010 = read_xls("./2010_hatecrime.xls") %>% 
+  janitor::clean_names() %>% 
+  filter(table_1 == "Total") %>% 
+  mutate(table_1 = str_replace(table_1, "Total", "2010"))
+
+hate_offenses_2009 = read_xls("./2009_hatecrime.xls") %>% 
+  janitor::clean_names() %>% 
+  filter(table_1 == "Total") %>% 
+  mutate(table_1 = str_replace(table_1, "Total", "2009"))
+
+hate_offenses_2008 = read_xls("./2008_hatecrime.xls") %>% 
+  janitor::clean_names() %>% 
+  filter(table_1 == "Total") %>% 
+  mutate(table_1 = str_replace(table_1, "Total", "2008"))
+
+hate_offenses_2007 = read_xls("./2007_hatecrime.xls") %>% 
+  janitor::clean_names() %>% 
+  filter(table_1 == "Total") %>% 
+  mutate(table_1 = str_replace(table_1, "Total", "2007"))
+
+hate_offenses_2006 = read_xls("./2006_hatecrime.xls") %>% 
+  janitor::clean_names() %>% 
+  filter(table_1 == "Total") %>% 
+  mutate(table_1 = str_replace(table_1, "Total", "2006"))
+
+hate_offenses_2005 = read_xls("./2005_hatecrime.xls") %>% 
+  janitor::clean_names() %>% 
+  filter(table_1 == "Total") %>% 
+  mutate(table_1 = str_replace(table_1, "Total", "2005"))
+
+# aggregate data for all years
+hatecrime_count_df = rbind(hate_offenses_2017, hate_offenses_2016, hate_offenses_2015, 
+                           hate_offenses_2014, hate_offenses_2013, hate_offenses_2012,
+                           hate_offenses_2011, hate_offenses_2010, hate_offenses_2009,
+                           hate_offenses_2008, hate_offenses_2007, hate_offenses_2006,
+                           hate_offenses_2005) %>% 
+  select(1:3) 
+  
+colnames(hatecrime_count_df) = c("year", "total_incidents", "total_offenses")
+```
+
+We first wanted to determine the overall pattern of the number of hate crimes committed in the U.S. over the past few years. To do this, we created a plot to see how total number of hate crimes committed in the U.S. changed from 2005 to 2017. We predicted that total hate crime increased from around 2013 (Obama's Presidency) to 2017 (a year into Trump's Presidency). 
+
+
+```{r echo=FALSE}
+# plot change in number of hate crimes over time
+hatecrime_count_df %>% 
+  plot_ly(x = ~year, y = ~total_incidents, type = "scatter", mode = "line") %>% 
+  layout(title = "Change In Total Hate Crime Incidents From 2005 to 2017")
+```
+
+The plot showed our prediction to be partly true, as it displyed a wave-like pattern, decreasing from 2008 to 2014, and increasing from 2014 to 2017. The spike in the number of hate crimes from 2016 to 2017 was expected since this was the transition period into Trump's Presidency. 

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Kee-Young Shin" />
+
+
+<title>Report</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 45px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+
+.section h2 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h3 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h4 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h5 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h6 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">Change in Hate Crime Incidents</a>
+</li>
+<li>
+  <a href="mailto:ks3663@cumc.columbia.edu">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/PeteWang68/final_project">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Report</h1>
+<h4 class="author"><em>Kee-Young Shin</em></h4>
+<h4 class="date"><em>December 5, 2018</em></h4>
+
+</div>
+
+
+<div id="motivation" class="section level2">
+<h2>Motivation</h2>
+<p>In the past recent years, the United States has been facing clashes of opinions and ideals, dividing the citizens within the country. We believe the increase in discriminative sentiments and conflicts between groups(races, ethnicities, sexual orientation, etc.) could be due to the election of Donald Trump as President, and the resulting shift in political power.</p>
+<p>We sought to determine just how much these divisions within subgroups have increased through an analysis of hate crimes committed in the country. Hate crimes- crimes motivated by ethnic, racial, sexual, or other prejudices- would be a good indicator since they are directly related to these clashing ideals and divisions. Our goal is to see how hate crimes have changed over the years and determine its relationship to various predictors including political support.</p>
+</div>
+<div id="related-work" class="section level2">
+<h2>Related Work</h2>
+<p>We were inspired to conduct this analysis after reading an article by USA Today that stated that hate crimes in 2017 increased in America’s ten largest cities. The article can be found here: <a href="https://www.usatoday.com/story/news/2018/07/17/hate-crimes-up-america-10-largest-cities/776721002/" class="uri">https://www.usatoday.com/story/news/2018/07/17/hate-crimes-up-america-10-largest-cities/776721002/</a></p>
+</div>
+<div id="initial-questions" class="section level2">
+<h2>Initial Questions</h2>
+<p>There were seveal questions that we wanted to find out. Did hate crimes increase over the past decade? Was this change in part due to the change in the U.S. presidency? How do hate crimes differ by state?</p>
+<p>Did questions change as we did this project</p>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>We first created a dataset containing the number of hate crime incidents and offenses from 2005 to 2017 by compiling the yearly hate crime data from the FBI data source. We excluded the number of victims and known offenders also offered by these datasets, since they were not releveant to our analysis. Then, we create a dataset containing the number of hate crime in state division from 2005 to 2017, compling the relevent data from FBI data sourse. I only retain the number of hate crime and the total population covered in the dataset, and then caculate the hate crime rate per 100,000 population.</p>
+<ul>
+<li>FBI data resource，state division： 2005：<a href="https://ucr.fbi.gov/hate-crime/2005" class="uri">https://ucr.fbi.gov/hate-crime/2005</a> 2006: <a href="https://ucr.fbi.gov/hate-crime/2006" class="uri">https://ucr.fbi.gov/hate-crime/2006</a> 2007: <a href="https://ucr.fbi.gov/hate-crime/2007" class="uri">https://ucr.fbi.gov/hate-crime/2007</a> 2008：<a href="https://ucr.fbi.gov/hate-crime/2008" class="uri">https://ucr.fbi.gov/hate-crime/2008</a> 2009: <a href="https://ucr.fbi.gov/hate-crime/2009" class="uri">https://ucr.fbi.gov/hate-crime/2009</a> 2010: <a href="https://ucr.fbi.gov/hate-crime/2010" class="uri">https://ucr.fbi.gov/hate-crime/2010</a> 2011: <a href="https://ucr.fbi.gov/hate-crime/2011" class="uri">https://ucr.fbi.gov/hate-crime/2011</a> 2012: <a href="https://ucr.fbi.gov/hate-crime/2012" class="uri">https://ucr.fbi.gov/hate-crime/2012</a> 2013: <a href="https://ucr.fbi.gov/hate-crime/2013" class="uri">https://ucr.fbi.gov/hate-crime/2013</a> 2014: <a href="https://ucr.fbi.gov/hate-crime/2014" class="uri">https://ucr.fbi.gov/hate-crime/2014</a> 2015: <a href="https://ucr.fbi.gov/hate-crime/2015" class="uri">https://ucr.fbi.gov/hate-crime/2015</a> 2016: <a href="https://ucr.fbi.gov/hate-crime/2016" class="uri">https://ucr.fbi.gov/hate-crime/2016</a> 2017: <a href="https://ucr.fbi.gov/hate-crime/2017" class="uri">https://ucr.fbi.gov/hate-crime/2017</a></li>
+</ul>
+<p>Next, we created the dataset containing several factors associate with the hate crime. The resource of the raw data of each factor is showing below:</p>
+<ul>
+<li><p>Median annual household income: <a href="https://www.kff.org/other/state-indicator/median-annual-income/?currentTimeframe=0&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D">https://www.kff.org/other/state-indicator/median-annual-income/?currentTimeframe=0&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D</a></p></li>
+<li><p>Share of the population that is unemployed: <a href="https://www.kff.org/other/state-indicator/unemployment-rate/?currentTimeframe=2&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D">https://www.kff.org/other/state-indicator/unemployment-rate/?currentTimeframe=2&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D</a></p></li>
+<li><p>Share of the population with high school degree: <a href="https://www.census.gov/prod/2012pubs/p20-566.pdf" class="uri">https://www.census.gov/prod/2012pubs/p20-566.pdf</a></p></li>
+<li><p>Share of the population that are not U.S. citizens: <a href="https://www.kff.org/other/state-indicator/distribution-by-citizenship-status/?currentTimeframe=1&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D">https://www.kff.org/other/state-indicator/distribution-by-citizenship-status/?currentTimeframe=1&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D</a></p></li>
+<li><p>Share of the population that is white: <a href="https://www.kff.org/other/state-indicator/distribution-by-raceethnicity/?currentTimeframe=0&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D">https://www.kff.org/other/state-indicator/distribution-by-raceethnicity/?currentTimeframe=0&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D</a></p></li>
+<li><p>Share of 2016 U.S. presidential voters who voted for Donald Trump: <a href="https://projects.fivethirtyeight.com/2016-swing-the-election/" class="uri">https://projects.fivethirtyeight.com/2016-swing-the-election/</a></p></li>
+</ul>
+</div>
+<div id="exploratory-analysis" class="section level2">
+<h2>Exploratory Analysis</h2>
+<p>We first created a simple plot to see how hate crimes in the U.S. changed from 2005 to 2017. This was done by aggregating the yearly hate crime reports and creating a line chart that depicting the total number of hate crime incidences over the specified timeline. We used the incidence counts for simplicity, since there could be multiple offenses commited per incident.</p>
+</div>
+<div id="additional-analysis" class="section level2">
+<h2>Additional Analysis</h2>
+<p>We performed a multilinear regression to see if predictors including</p>
+</div>
+<div id="discussion" class="section level2">
+<h2>Discussion</h2>
+<p>The line plot depicting the total hate crime incidence counts from 2005 to 2017 showed a wave-like pattern, decreasing from 2008 to 2014 and increasing from 2014 to 2017. There was a spike in the number of hate crimes from 2016 to 2017, potentially caused by Trump’s election to Presidency at the end of 2016. We decided to look into this increase by comparing each state’s share of Trump voters to the change in its hate crime rate before and after Trump was elected.</p>
+<p>The reesulting heat map, depicting the</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

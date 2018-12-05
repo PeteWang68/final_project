@@ -1,7 +1,16 @@
 ---
+<<<<<<< HEAD
 title: "Change of Hate Crime over Last Decade"
+=======
+title: "Hate Crime Over the Last Decade"
+>>>>>>> ddf20f7c0c5fa29ba86905870b758132d1b544dc
 ---
 
-### I have a webpage!
 
-And I can put all kinds of stuff on it!
+### Kee-Young Shin | Runqi Ma | Man Luo | Zixu Wang | Jingyu Xu
+
+***
+
+<img src="hate_crime_img.jpg" style="width:80%">
+
+Over the past few years, the United States has been facing increased divisions amongst its citizens due to ethnic, racial, sexual, and other prejudices. Many articles indicate that Trump's election into presidency and the overall shift in political power, have fostered an environment wherein these harmful sentiments could circulate. We wanted to see if the number of hate crimes reflected the seemingly endless reports of discrimination that flood the news. Additionally, we sought to find whether Trump's election played a part in the change in the number of hate crimes. 

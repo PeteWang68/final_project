@@ -1,0 +1,70 @@
+---
+title: "Report"
+author: "Kee-Young Shin"
+date: "December 5, 2018"
+output: html_document
+---
+
+## Motivation
+
+  In the past recent years, the United States has been facing clashes of opinions and ideals, dividing the citizens within the country. We believe the increase in discriminative sentiments and conflicts between groups(races, ethnicities, sexual orientation, etc.) could be due to the election of Donald Trump as President, and the resulting shift in political power. 
+  
+  We sought to determine just how much these divisions within subgroups have increased through an analysis of hate crimes committed in the country. Hate crimes- crimes motivated by ethnic, racial, sexual, or other prejudices- would be a good indicator since they are directly related to these clashing ideals and divisions. Our goal is to see how hate crimes have changed over the years and determine its relationship to various predictors including political support. 
+  
+## Related Work
+
+  We were inspired to conduct this analysis after reading an article by USA Today that stated that hate crimes in 2017 increased in America's ten largest cities. The article can be found here: https://www.usatoday.com/story/news/2018/07/17/hate-crimes-up-america-10-largest-cities/776721002/
+  
+## Initial Questions
+
+  There were seveal questions that we wanted to find out. Did hate crimes increase over the past decade? Was this change in part due to the change in the U.S. presidency? How do hate crimes differ by state? 
+
+Did questions change as we did this project
+
+## Data
+
+  We first created a dataset containing the number of hate crime incidents and offenses from 2005 to 2017 by compiling the yearly hate crime data from the FBI data source. We excluded the number of victims and known offenders also offered by these datasets, since they were not releveant to our analysis. 
+    Then, we create a dataset containing the number of hate crime in state division from 2005 to 2017, compling the relevent data from FBI data sourse. I only retain the number of hate crime and the total population covered in the dataset, and then caculate the hate crime rate per 100,000 population.
+
+* FBI data resource，state division：
+2005：https://ucr.fbi.gov/hate-crime/2005
+2006: https://ucr.fbi.gov/hate-crime/2006
+2007: https://ucr.fbi.gov/hate-crime/2007
+2008：https://ucr.fbi.gov/hate-crime/2008
+2009: https://ucr.fbi.gov/hate-crime/2009
+2010: https://ucr.fbi.gov/hate-crime/2010
+2011: https://ucr.fbi.gov/hate-crime/2011
+2012: https://ucr.fbi.gov/hate-crime/2012
+2013: https://ucr.fbi.gov/hate-crime/2013
+2014: https://ucr.fbi.gov/hate-crime/2014
+2015: https://ucr.fbi.gov/hate-crime/2015
+2016: https://ucr.fbi.gov/hate-crime/2016
+2017: https://ucr.fbi.gov/hate-crime/2017
+
+   Next, we created the dataset containing several factors associate with the hate crime. The resource of the raw data of each factor is showing below:
+ 
+* Median annual household income: https://www.kff.org/other/state-indicator/median-annual-income/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
+ 
+* Share of the population that is unemployed: https://www.kff.org/other/state-indicator/unemployment-rate/?currentTimeframe=2&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
+ 
+* Share of the population with high school degree: https://www.census.gov/prod/2012pubs/p20-566.pdf
+ 
+* Share of the population that are not U.S. citizens: https://www.kff.org/other/state-indicator/distribution-by-citizenship-status/?currentTimeframe=1&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
+ 
+* Share of the population that is white: https://www.kff.org/other/state-indicator/distribution-by-raceethnicity/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
+ 
+* Share of 2016 U.S. presidential voters who voted for Donald Trump: https://projects.fivethirtyeight.com/2016-swing-the-election/
+  
+## Exploratory Analysis 
+
+  We first created a simple plot to see how hate crimes in the U.S. changed from 2005 to 2017. This was done by aggregating the yearly hate crime reports and creating a line chart that depicting the total number of hate crime incidences over the specified timeline. We used the incidence counts for simplicity, since there could be multiple offenses commited per incident. 
+  
+## Additional Analysis
+
+  We performed a multilinear regression to see if predictors including
+  
+## Discussion
+
+  The line plot depicting the total hate crime incidence counts from 2005 to 2017 showed a wave-like pattern, decreasing from 2008 to 2014 and increasing from 2014 to 2017. There was a spike in the number of hate crimes from 2016 to 2017, potentially caused by Trump's election to Presidency at the end of 2016. We decided to look into this increase by comparing each state's share of Trump voters to the change in its hate crime rate before and after Trump was elected. 
+  
+  The reesulting heat map, depicting the 

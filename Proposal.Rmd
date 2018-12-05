@@ -1,0 +1,36 @@
+---
+title: "Proposal"
+author: "Kee-Young Shin"
+date: "December 5, 2018"
+output: html_document
+---
+
+## Group Members
+Jingyu Xu jx2371
+Runqi Ma rm3609
+Zixu Wang zw2541
+Man Luo ml4239
+Kee-Young Shin ks3663
+
+## The Tentative Project Title
+Assessing the Division Amongst Americans Through Hate Crime 
+
+## Motivation for Project
+It seems like in the past few years, the news has been full of stories of racial, sexual, and other prejudicial controversies ranging from shootings to protests. Since the number of hate crimes committed could serve as an indicator of how much these divisions have increased over the years, we sought to use this figure to find out whether or not the level of discrimination and hate for certain subgroups actually changed over the past few years. Additionally, inspired by the recent elections and the controversies surrounding Trump's presidency, we wanted to find out whether or not his election contributed to the change in the number of hate crimes. 
+
+## Intended Final Products
+We intend to create visualizations that depict how the number of hate crimes committed changed over the past decade. These visualizations will include plots of the change in the number of hate crime and heat maps depicting the level of hate crime in different states. Additionally, we intend to conduct regression analyses to see if there are certain predictors that can help determine the hate crime rate. 
+
+## Anticipated Data Sources
+https://ucr.fbi.gov/hate-crime
+http://www.electproject.org/2016g
+
+## The planned analyses / visualizations / coding challenges
+The main challenge will be compiling the massive amounts of data and wrangling it to create a digestible report. We also expect to face some challenges in incorporating different datasets in a sensible way. 
+
+## Planned Timeline
+Compile relevant datasets: Nov. 12
+Analyze datasets: Nov. 16
+Extract information and create analyses: Nov. 25
+Compile and create website: Dec. 1
+Polish: Dec. 6
