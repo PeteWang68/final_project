@@ -152,6 +152,7 @@ merge_data =
 
 
 #dataset for annual report in state division
+
 ```{r}
 #list
 df = list.files(path = "./annual")
@@ -175,6 +176,7 @@ hate_crime = hate_crime%>%
   filter(state != "Total") %>%
   mutate(annualprop = total_incident/population*100000)%>%
   mutate(year = str_replace(year, ".xls", "")) 
+<<<<<<< HEAD
 ```
 
 ## import and clean the annual data from 2005-2017
@@ -206,6 +208,10 @@ hate_crime =
   select(year = year, state = participating_state, population = population_covered, total_incident = total_number_of_incidents_reported) %>%
   mutate(annualprop = total_incident/population*100000)
 ```
+=======
+```
+
+>>>>>>> b84c94eb81d223c7de5dbb0b6f68f282f16ed039
 
 ## do the further cleaning of the merge data
 ```{r}
@@ -215,6 +221,7 @@ merge_data = merge_data %>%
 mutate(median_annual_household_income = as.numeric(median_annual_household_income)) %>%
   select(state, median_income = median_annual_household_income, everything())
 ```
+
 
 ## regression part
 ```{r}
