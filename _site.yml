@@ -11,4 +11,6 @@ navbar:
       href: https://github.com/PeteWang68/final_project
 output:
   html_document :
-    theme: yeti
+    theme: spacelab
+    
+    
