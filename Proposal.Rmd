@@ -13,7 +13,7 @@ Man Luo ml4239
 Kee-Young Shin ks3663
 
 ## The Tentative Project Title
-The Status of HIV in NYC
+Assessing the Division Amongst Americans Through Hate Crime 
 
 ## Motivation for Project
 HIV/AIDS have been a global health issue since the 1980s. Increase in health initiatives has raised awareness and provided better treatments for those suffering from these conditions. Though, much progress has been made, HIV/AIDS still pose a great threat to public health. This project will assess the current status of HIV/AIDS in NYC and attempt to find significant patterns within the data. 
