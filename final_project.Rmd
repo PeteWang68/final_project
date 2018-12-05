@@ -187,6 +187,60 @@ mutate(median_annual_household_income = as.numeric(median_annual_household_incom
   select(state, median_income = median_annual_household_income, everything())
 ```
 
+##regression part
+```{r}
+sum(is.na(merge_data))
+mle = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ crime_rate, data = merge_data)
+multi.fit = step(mle, direction='backward')
+summary(multi.fit)
+```
+
+```{r}
+merge_data%>%
+  select(-state, -share_voters_voted_trump)%>%
+  select(crime_rate, everything())%>%
+  pairs()
+```
+
+```{r}
+ggplot(merge_data, aes(x = crime_rate)) + 
+  geom_density(alpha = .4, adjust = .5, color = "blue")
+```
+
+```
 
 
+##Building the Map of hate crime rate based on 2016 
 
+```{r}
+map_data_2016<-merge_data %>% 
+  mutate(#hate_crimes_per_100k_splc = as.numeric(hate_crimes_per_100k_splc),
+         #median_household_income = as.numeric(median_household_income),
+         state = as.factor(state),
+         code = state.abb[state],
+         hover = with(merge_data, paste(state,'<br>' ,"share for trump",share_voters_voted_trump))
+         ) %>% 
+  select(code, crime_rate, hover )
+
+l <- list(color = toRGB("white"), width = 2)
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white')
+)
+
+
+plot_geo(map_data_2016, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~ crime_rate, text = ~hover, locations = ~code,
+    color = ~ crime_rate, colors = 'Reds'
+  ) %>%
+  colorbar(title = "Hate crime rate ") %>%
+  layout(
+    title = 'Hate crime rate in 2016 all over U.S. ',
+    geo = g
+  )
+
+
+```

@@ -1,5 +1,11 @@
 ---
 title: "Situation in 2016"
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      collapse: true
+      smooth_scroll: false
 ---
 
 ```{r setup, include = FALSE}
@@ -61,3 +67,7 @@ merge_data =
   mutate(median_annual_household_income = as.numeric(median_annual_household_income)) %>%
   select(state, median_income = median_annual_household_income, everything())
 ```
+
+## Introduction
+
+## Regression
