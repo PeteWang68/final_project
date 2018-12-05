@@ -178,7 +178,6 @@ hate_crime = hate_crime%>%
   mutate(year = str_replace(year, ".xls", "")) 
 ```
 
-
 ## do the further cleaning of the merge data
 ```{r}
 merge_data = merge_data %>%
@@ -222,6 +221,14 @@ merge_data %>%
 ```{r}
 ggplot(merge_data, aes(x = crime_rate)) + 
   geom_density(alpha = .4, adjust = .5, color = "blue")
+```
+
+## do scatter plot 
+```{r}
+merge_data%>%
+  ggplot(aes(x = median_income,y = crime_rate))+
+  geom_smooth(method = "lm", color="black", formula = y ~ x) +
+  geom_point()
 ```
 
 <<<<<<< HEAD
