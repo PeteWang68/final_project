@@ -11,9 +11,8 @@ library(readxl)
 library(plotly)
 ```
 
+## import hate crime incident count from 2005 to 2017
 ```{r}
-
-# import hate crime data
 hate_offenses_2017 = read_xls("./table-1.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
@@ -93,12 +92,13 @@ hatecrime_count_df = rbind(hate_offenses_2017, hate_offenses_2016, hate_offenses
 colnames(hatecrime_count_df) = c("year", "total_incidents", "total_offenses")
 ```
 
+## plot change in number of hate crimes over time
 ```{r}
-# plot change in number of hate crimes over time
 hatecrime_count_df %>% 
   ggplot(aes(x = year, y = total_incidents)) + geom_line(group = 1, color = "blue")
 ```
 
+## importing hate crime and predictors dataset
 ```{r}
 # data in 2016
 income = read_csv("./data/Income.csv") %>% 
@@ -149,6 +149,7 @@ merge_data =
   rename(state = location, share_unemployed = unemployed, share_non_citizen = non_citizen, share_white = white)
 ```
 
+<<<<<<< HEAD
 
 #dataset for annual report in state division
 ```{r}
@@ -174,10 +175,42 @@ hate_crime = hate_crime%>%
   filter(state != "Total") %>%
   mutate(annualprop = total_incident/population*100000)%>%
   mutate(year = str_replace(year, ".xls", "")) 
+=======
+## import and clean the annual data from 2005-2017
+```{r}
+
+#list the files
+files = as.data.frame(list.files(path = "./data_1")) 
+colnames(files)[1] = "file_names"
+>>>>>>> 691d2d127d61adfde0e35263386314f92b6a3a32
 ```
 
+## import the annual data from 2005-2017
 ```{r}
+<<<<<<< HEAD
 #do the further cleaning of the merge data
+=======
+library(readxl)
+library(tidyverse)
+read_and_tidy = function(file_names){
+read_excel(str_c("./data_1/", file_names), range = cell_rows(3:53))
+}
+
+hate_crime =
+  files %>% 
+  mutate(map(files$file_names, read_and_tidy)) %>% 
+  unnest() %>% 
+  janitor::clean_names() %>% 
+  rename(year = file_names) %>% 
+  mutate(year = str_replace(year, ".xls", "")) %>% 
+  filter(participating_state != "Total") %>%
+  select(year = year, state = participating_state, population = population_covered, total_incident = total_number_of_incidents_reported) %>%
+  mutate(annualprop = total_incident/population*100000)
+```
+
+## do the further cleaning of the merge data
+```{r}
+>>>>>>> 691d2d127d61adfde0e35263386314f92b6a3a32
 merge_data = merge_data %>%
   mutate(median_annual_household_income = str_replace(median_annual_household_income, ",", "")) %>%
   mutate(median_annual_household_income = gsub("\\$", "",median_annual_household_income )) %>%
@@ -185,26 +218,75 @@ mutate(median_annual_household_income = as.numeric(median_annual_household_incom
   select(state, median_income = median_annual_household_income, everything())
 ```
 
-##regression part
+## regression part
 ```{r}
 sum(is.na(merge_data))
 mle = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ crime_rate, data = merge_data)
-multi.fit = step(mle, direction='backward')
+summary(mle)
+multi.fit = step(mle, direction = 'backward')
 summary(multi.fit)
+
+# see distribution of crime rate 
+merge_data %>% 
+  ggplot(aes(x = crime_rate)) + geom_histogram()
+
+# transform crime rate variable
+merge_data_log = merge_data %>% 
+  mutate(crime_rate = log(crime_rate)) 
+
+mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ crime_rate, data = merge_data_log)
+
+summary(step(mle_log, direction = "both"))
 ```
 
+## see correlation between variables 
 ```{r}
-merge_data%>%
-  select(-state, -share_voters_voted_trump)%>%
-  select(crime_rate, everything())%>%
+merge_data %>%
+  select(-state, -share_voters_voted_trump) %>%
+  select(crime_rate, everything()) %>%
   pairs()
 ```
 
+## see distribution of hate crime rate 
 ```{r}
 ggplot(merge_data, aes(x = crime_rate)) + 
   geom_density(alpha = .4, adjust = .5, color = "blue")
 ```
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 691d2d127d61adfde0e35263386314f92b6a3a32
+
+##Building the Map of hate crime rate based on 2016 
+```{r}
+map_data_2016 = merge_data %>% 
+  mutate(#hate_crimes_per_100k_splc = as.numeric(hate_crimes_per_100k_splc),
+         #median_household_income = as.numeric(median_household_income),
+         state = as.factor(state),
+         code = state.abb[state],
+         hover = with(merge_data, paste(state,'<br>' ,"share for trump",share_voters_voted_trump))
+         ) %>% 
+  select(code, crime_rate, hover )
+
+l <- list(color = toRGB("white"), width = 2)
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white')
+)
 
 
+plot_geo(map_data_2016, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~ crime_rate, text = ~hover, locations = ~code,
+    color = ~ crime_rate, colors = 'Reds'
+  ) %>%
+  colorbar(title = "Hate crime rate ") %>%
+  layout(
+    title = 'Hate crime rate in 2016 all over U.S. ',
+    geo = g
+  )
+```
 

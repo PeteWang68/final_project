@@ -1,0 +1,80 @@
+---
+title: "Shiny Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(viridis)
+## Loading required package: viridisLite
+library(p8105.datasets)
+library(plotly)
+library(readxl)
+```
+
+```{r}
+
+hate_crime<-read_csv("./data/hate_crime.csv")
+
+l <- list(color = toRGB("white"), width = 2)
+
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa')
+)
+```
+
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+```{r}
+years = hate_crime %>% distinct(year) %>% pull()
+selectInput("year_choice", label = h3("Select year"),
+            choices = years, selected = "2010")
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+renderPlotly({  
+  hate_crime %>% 
+  mutate(
+         state = as.factor(state),
+         code = state.abb[state]
+         ) %>% 
+  select(year,code, everything()) %>% 
+  filter(year == input$year_choice) %>% 
+  plot_geo(locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~ annualprop,  locations = ~code,
+    color = ~ annualprop, colors = 'Greens'
+  ) %>%
+  colorbar(title = "Hate crime rate ") %>%
+  layout(
+    title = 'Hate crime rate in 2016 all over U.S. ',
+        geo = g
+  )
+})
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
