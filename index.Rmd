@@ -1,9 +1,5 @@
 ---
-<<<<<<< HEAD
-title: "Change of Hate Crime over Last Decade"
-=======
 title: "Hate Crime Over the Last Decade"
->>>>>>> ddf20f7c0c5fa29ba86905870b758132d1b544dc
 ---
 
 
