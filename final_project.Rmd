@@ -174,3 +174,17 @@ hate_crime =
   select(year = year, state = participating_state, population = population_covered, total_incident = total_number_of_incidents_reported)%>%
   mutate(annualprop = total_incident/population*100000)
 ```
+
+
+##do the further cleaning of the merge data
+```{r}
+merge_data = merge_data%>%
+  mutate(median_annual_household_income = str_replace(median_annual_household_income, ",", ""))%>%
+  mutate(median_annual_household_income = gsub("\\$", "",median_annual_household_income ))%>%
+mutate(median_annual_household_income = as.numeric(median_annual_household_income))%>%
+  select(state, median_income = median_annual_household_income, everything())
+```
+
+
+
+
