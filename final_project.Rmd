@@ -149,7 +149,7 @@ merge_data =
   rename(state = location, share_unemployed = unemployed, share_non_citizen = non_citizen, share_white = white)
 ```
 
-<<<<<<< HEAD
+
 
 #dataset for annual report in state division
 ```{r}
@@ -175,21 +175,20 @@ hate_crime = hate_crime%>%
   filter(state != "Total") %>%
   mutate(annualprop = total_incident/population*100000)%>%
   mutate(year = str_replace(year, ".xls", "")) 
-=======
+```
+
 ## import and clean the annual data from 2005-2017
 ```{r}
 
 #list the files
 files = as.data.frame(list.files(path = "./data_1")) 
 colnames(files)[1] = "file_names"
->>>>>>> 691d2d127d61adfde0e35263386314f92b6a3a32
+
 ```
 
 ## import the annual data from 2005-2017
 ```{r}
-<<<<<<< HEAD
 #do the further cleaning of the merge data
-=======
 library(readxl)
 library(tidyverse)
 read_and_tidy = function(file_names){
@@ -210,7 +209,6 @@ hate_crime =
 
 ## do the further cleaning of the merge data
 ```{r}
->>>>>>> 691d2d127d61adfde0e35263386314f92b6a3a32
 merge_data = merge_data %>%
   mutate(median_annual_household_income = str_replace(median_annual_household_income, ",", "")) %>%
   mutate(median_annual_household_income = gsub("\\$", "",median_annual_household_income )) %>%
@@ -253,10 +251,6 @@ ggplot(merge_data, aes(x = crime_rate)) +
   geom_density(alpha = .4, adjust = .5, color = "blue")
 ```
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 691d2d127d61adfde0e35263386314f92b6a3a32
 
 ##Building the Map of hate crime rate based on 2016 
 ```{r}
