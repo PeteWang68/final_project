@@ -230,8 +230,8 @@ g <- list(
   lakecolor = toRGB('white')
 )
 
-#p <-
-  plot_geo(map_data_2016, locationmode = 'USA-states') %>%
+
+plot_geo(map_data_2016, locationmode = 'USA-states') %>%
   add_trace(
     z = ~ crime_rate, text = ~hover, locations = ~code,
     color = ~ crime_rate, colors = 'Reds'
@@ -243,8 +243,4 @@ g <- list(
   )
 
 
-# Create a shareable link to your chart
-# Set up API credentials: https://plot.ly/r/getting-started
-#chart_link = api_create(p, filename="choropleth-ag")
-#chart_link
 ```
