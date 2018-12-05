@@ -25,8 +25,10 @@ Did questions change as we did this project
 
   We first created a dataset containing the number of hate crime incidents and offenses from 2005 to 2017 by compiling the yearly hate crime data from the FBI data source (the links to the datasets are provided below). We excluded the number of victims and known offenders also offered by these datasets, since they were not releveant to our analysis. 
   
-    Then we created a dataset containing the annual hate crime rate for each state from 2005 to 2017. This was done by compiling data from the FBI data source and extracting the total number of hate crime incidents and the total population for each state. These values were then used to calculate the hate crime rate.
-
+  Then we created a dataset containing the annual hate crime rate for each state from 2005 to 2017. This was done by compiling data from the FBI data source and extracting the total number of hate crime incidents and the total population for each state. These values were then used to calculate the hate crime rate.
+    
+  Next, we created the dataset containing several factors associate with the hate crime. The resource of the raw data of each factor is showing below:
+  
 *FBI data resource，state division：*
 2005：https://ucr.fbi.gov/hate-crime/2005
 2006: https://ucr.fbi.gov/hate-crime/2006
@@ -42,8 +44,6 @@ Did questions change as we did this project
 2016: https://ucr.fbi.gov/hate-crime/2016
 2017: https://ucr.fbi.gov/hate-crime/2017
 
-   Next, we created the dataset containing several factors associate with the hate crime. The resource of the raw data of each factor is showing below:
- 
 *Median annual household income:* https://www.kff.org/other/state-indicator/median-annual-income/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
  
 *Share of the population that is unemployed:* https://www.kff.org/other/state-indicator/unemployment-rate/?currentTimeframe=2&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
