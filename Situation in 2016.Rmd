@@ -70,4 +70,6 @@ merge_data =
 
 ## Introduction
 
+Since we found there is a significant increasement of hate crime rate in 2016, we would like to further explore the reason associated with this change. Therefore we found several datasets contain different factors relevant to the hate crime and combined them together. These factors include "Median annual household income", "Share of the population that is unemployed", "Share of the population with high school degree", "Share of the population that are not U.S. citizens", "Share of the population that is white", "Share of 2016 U.S. presidential voters who voted for Donald Trump".
+
 ## Regression

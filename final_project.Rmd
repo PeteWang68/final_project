@@ -241,6 +241,4 @@ plot_geo(map_data_2016, locationmode = 'USA-states') %>%
     title = 'Hate crime rate in 2016 all over U.S. ',
     geo = g
   )
-
-
 ```
