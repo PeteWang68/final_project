@@ -253,3 +253,4 @@ plot_geo(map_data_2016, locationmode = 'USA-states') %>%
     geo = g
   )
 ```
+
