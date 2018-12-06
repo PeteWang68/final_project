@@ -119,18 +119,21 @@ race = read_csv("./data/Race.csv") %>%
 vote = read_csv("./data/Vote.csv") %>% 
   janitor::clean_names()
 
-crime_rate = read_excel("./data/2016.xls",  range = cell_rows(3:53)) %>%
+crime_rate = read_excel("./data/2016.xls",  range = cell_rows(3:54)) %>%
   janitor::clean_names() %>%
   filter(participating_state != "Total") %>%
   select(location = participating_state, population_covered,       total_number_of_incidents_reported) %>%
-  mutate(crime_rate = total_number_of_incidents_reported/population_covered*100000) 
+  mutate(crime_rate = total_number_of_incidents_reported/population_covered*100000)
 
+crime_rate_10_days = read_csv("./data/hate_crime_10days.csv") %>%
+  janitor::clean_names()%>%
+  select(location = state, hate_crime_10_day = hate_crimes_per_100k_splc)
 
 ctizenship =
   ctizenship %>% 
   select(location, non_citizen)
 
-race = 
+race =
   race %>% 
   select(location, white)
 
@@ -144,20 +147,19 @@ merge_data =
   merge(., ctizenship, by = "location") %>% 
   merge(., race, by = "location") %>% 
   merge(., vote, by = "location") %>%
-  merge(., crime_rate, by = "location") %>% 
+  merge(., crime_rate, by = "location") %>%
+  merge(., crime_rate_10_days, by = "location") %>%
   filter(location != "United States") %>% 
   rename(state = location, share_unemployed = unemployed, share_non_citizen = non_citizen, share_white = white)
 ```
 
 
-
 #dataset for annual report in state division
-
 ```{r}
 #list
 df = list.files(path = "./annual")
 #function
-read_data = function(x){read_excel(str_c("./annual/", x),  range = "A3:E53")%>%
+read_data = function(x){read_excel(str_c("./annual/", x),  range = "A3:E54")%>%
     mutate(year = x)}
 #map
 hate_crime = map(df, read_data)%>%
@@ -175,8 +177,7 @@ hate_crime = hate_crime%>%
   select(year, state = participating_state, population = population_covered, total_incident)%>%
   filter(state != "Total") %>%
   mutate(annualprop = total_incident/population*100000)%>%
-  mutate(year = str_replace(year, ".xls", ""))
-
+  mutate(year = str_replace(year, ".xls", "")) 
 ```
 
 
@@ -208,9 +209,10 @@ merge_data %>%
 merge_data_log = merge_data %>% 
   mutate(crime_rate = log(crime_rate)) 
 
-mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ crime_rate, data = merge_data_log)
+mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white, data = merge_data_log)
 
 summary(step(mle_log, direction = "both"))
+
 ```
 
 ## see correlation between variables 
@@ -237,16 +239,44 @@ mle_log_1 = lm(crime_rate~median_income+share_unemployed+share_population_with_h
   
 summary(step(mle_log_1, direction = "both"))
 
+##see the correlation between trump and income
 cor(merge_data_log$share_voters_voted_trump, merge_data_log$median_income)
 
-slr = lm(crime_rate~share_voters_voted_trump, data = merge_data_log)
-summary(slr)
+```
+
+###the final model 1 crime&income
+```{r}
+crime_income_slr =lm(crime_rate~median_income, data = merge_data_log)
+summary(crime_income_slr)%>%
+  broom::tidy()%>%
+  knitr::kable()
+```
+
+###the final model 2 crime~Trump&income
+```{r}
+crime_trump_slr = lm(crime_rate~share_voters_voted_trump, data = merge_data_log)
+summary(crime_trump_slr)%>%
+  broom::tidy()%>%
+  knitr::kable()
+```
+
+###the final model 3 crime&Trump&income
+```{r}
+mlr_trump_income = lm(crime_rate~share_voters_voted_trump + median_income, data = merge_data_log)
+summary(mlr_trump_income)%>%
+  broom::tidy()%>%
+  knitr::kable()
 ```
 
 ## do scatter plot 
 ```{r}
-merge_data%>%
+merge_data_log%>%
   ggplot(aes(x = median_income,y = crime_rate))+
+  geom_smooth(method = "lm", color="black", formula = y ~ x) +
+  geom_point()
+
+merge_data_log%>%
+  ggplot(aes(x = share_voters_voted_trump, y = crime_rate))+
   geom_smooth(method = "lm", color="black", formula = y ~ x) +
   geom_point()
 ```
@@ -263,19 +293,19 @@ map_data_2016 = merge_data %>%
          ) %>% 
   select(code, crime_rate, hover )
 
-l <- list(color = toRGB("white"), width = 2)
+l <- list(color = toRGB("grey"), width = 1)
 g <- list(
   scope = 'usa',
   projection = list(type = 'albers usa'),
-  showlakes = TRUE,
-  lakecolor = toRGB('white')
+  showlakes = F#,
+  #lakecolor = toRGB('white')
 )
 
 
 plot_geo(map_data_2016, locationmode = 'USA-states') %>%
   add_trace(
     z = ~ crime_rate, text = ~hover, locations = ~code,
-    color = ~ crime_rate, colors = 'Reds'
+    color = ~ crime_rate, colors = 'Reds',marker = list(line = l)
   ) %>%
   colorbar(title = "Hate crime rate ") %>%
   layout(
@@ -284,6 +314,8 @@ plot_geo(map_data_2016, locationmode = 'USA-states') %>%
   )
 ```
 
+<<<<<<< HEAD
+=======
 ```{r}
 
 library(reshape2)
@@ -291,30 +323,31 @@ library(reshape2)
 hate_crime_10days<-read_csv("./data/hate_crime_10days.csv")
 hate_crime_ave<-hate_crime %>% 
   na.omit() %>% 
-  filter(year!=c(2017,2016)) %>%
-  group_by(state) %>% 
-  summarise(ave_annualprop = (sum(annualprop)/n_distinct(year))) 
+  filter(year==2016) 
 
 
-
-compare_rate<-merge(hate_crime_10days, hate_crime_ave,by= "state")
+compare_rate<-merge(hate_crime_10days, hate_crime_ave, by= "state")
 
 compare_rate %>% 
-  mutate(hate_crimes_per_100k_year = hate_crimes_per_100k_splc/10 * 365) %>% 
-  select(state, hate_crimes_per_100k_year, ave_annualprop) %>% 
+  mutate(hate_crimes_per_100k_after = hate_crimes_per_100k_splc/10 * 365) %>% 
+  select(state, hate_crimes_per_100k_after, annualprop) %>% 
   melt(, id = "state") %>% 
   ggplot(aes(x = state, y = value, color = variable, group = variable))+
   geom_point()+
   geom_line()+
   theme(axis.text.x = element_text(angle = 90, hjust = 0.2))
 
-
+ 
+  saveRDS(compare_rate,file = "./data/compare_data")
+  
 compare_rate %>% 
   mutate(hate_crimes_10days_year = hate_crimes_per_100k_splc/10 * 365) %>% 
-  select(state, hate_crimes_10days_year, ave_annualprop) %>% 
+  select(state, hate_crimes_10days_year, annualprop) %>% 
   melt(, id = "state") %>% 
-  ggplot(aes(x = state, y = value, fill = variable, group = variable))+
-  geom_bar(stat="identity")+
+  mutate(state = reorder(state, value)) %>% 
+  ggplot(aes(x = state, y = value, fill = variable, group = variable)) +
+  geom_bar(stat = "identity") +
   theme(axis.text.x = element_text(angle = 90, size = 10, hjust = 1),legend.position = "right")
 ```
 
+>>>>>>> 3e49180c6ce829d61e38b012d35be11aaf965984

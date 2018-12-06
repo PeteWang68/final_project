@@ -7,7 +7,7 @@ navbar:
       href: about.html
     - text: "Trump Election and Hate Crime"
       href: voting.html
-    - text: "Situation in 2016"
+    - text: "Predicting Hate Crime "
       href: Situation_in_2016.html
     - text: "Shiny"
       href: https://petewang.shinyapps.io/shiny/
