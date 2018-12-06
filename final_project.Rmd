@@ -298,8 +298,7 @@ l <- list(color = toRGB("grey"), width = 1)
 g <- list(
   scope = 'usa',
   projection = list(type = 'albers usa'),
-  showlakes = F#,
-  #lakecolor = toRGB('white')
+  showlakes = F
 )
 
 
@@ -315,8 +314,7 @@ plot_geo(map_data_2016, locationmode = 'USA-states') %>%
   )
 ```
 
-<<<<<<< HEAD
-=======
+
 ```{r}
 
 library(reshape2)
@@ -351,4 +349,4 @@ compare_rate %>%
   theme(axis.text.x = element_text(angle = 90, size = 10, hjust = 1),legend.position = "right")
 ```
 
->>>>>>> 3e49180c6ce829d61e38b012d35be11aaf965984
+
