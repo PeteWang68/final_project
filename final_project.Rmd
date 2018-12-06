@@ -224,7 +224,20 @@ ggplot(merge_data, aes(x = crime_rate)) +
   geom_density(alpha = .4, adjust = .5, color = "blue")
 ```
 
-<<<<<<< HEAD
+##see whether Trump rate influence the model
+```{r}
+merge_data_log = merge_data_log%>%
+  mutate(share_voters_voted_trump = sub("\\%", "",share_voters_voted_trump))%>%
+  mutate(share_voters_voted_trump = as.numeric(share_voters_voted_trump)/100)
+
+mle_log_1 = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ share_voters_voted_trump, data = merge_data_log)
+  
+summary(step(mle_log_1, direction = "both"))
+
+cor(merge_data_log$share_voters_voted_trump, merge_data_log$median_income)
+
+```
+
 ## do scatter plot 
 ```{r}
 merge_data%>%
