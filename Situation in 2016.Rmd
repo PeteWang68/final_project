@@ -101,6 +101,7 @@ scatter_plot_1 = merge_data_log %>%
     y = "Hate crime rate(per 100,000 population)",
     caption = "Data from FBI"
   )
+ggplotly(scatter_plot_1)
 ```
 
 $$log\textrm{ crime_rate} = -0.74 + 0.000021 \textrm{median_income}$$
