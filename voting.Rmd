@@ -58,7 +58,8 @@ compare_rate %>%
   mutate(hate_crimes_10days_year = hate_crimes_per_100k_splc/10 * 365) %>% 
   select(state, hate_crimes_10days_year, annualprop) %>% 
   melt(, id = "state") %>% 
- mutate(state = factor(state, levels = state %>% unique %>% sort(decreasing = T))) %>% 
+  mutate(state = factor(state, levels = state %>% unique %>% sort(decreasing = T))) %>% 
+  mutate(state = reorder(state, value)) %>% 
   ggplot(aes(x = state, y = value, fill = variable, group = variable))+
   geom_bar(stat="identity", position = "dodge", width = 0.5)+
   scale_y_continuous(expand = c(0, 0), limits = c(0, 60))+
