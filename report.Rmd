@@ -32,7 +32,6 @@ How do hate crimes differ by state?
   
   To create the line chart showing the number of different kinds of hate crime incidents during 2005 to 2017, we combined the annual data from FBI. The merged dataset contains year, the incidents of hate crime, three type of hate crime motivation we want to see:"race", "religion" and "sexual orientation" and the specific bias motivation. FBI changed the way they categoried three types of hate crime at 2013 and 2015, we make some change to the categorical name to make the plot more presentable over years. We change the type name from "Anti-Black or African American" to "Anti-Black", "Anti-American Indian or Alaska Native" to "Anti-American Indian/Alaskan Native", "Anti-Islamic (Muslim)" to "Anti-Islamic", "Anti-Gay (Male)" to "Anti-Male Homosexual", "Anti-Lesbian" to "Anti-Female Homosexual" and "Anti-Lesbian, Gay, Bisexual, or Transgender (Mixed Group)" to "Anti-Homosexual" in order to make them identical with previous years. From 2005 to 2014, the "Anti-Hispanic or Latino" hate crime is categorized as "Ethnicity", we change it as "race". Also since 2013, FBI seperate "Anti-Asian" and "Anti-Native Hawaiian or Other Pacific Islander", we combine there two type as one.
   
-  
 *FBI data resource，state division：*
 2005：https://ucr.fbi.gov/hate-crime/2005
 2006: https://ucr.fbi.gov/hate-crime/2006
@@ -73,7 +72,7 @@ https://www.splcenter.org/20161129/ten-days-after-harassment-and-intimidation-af
   
   Inspired by these heat maps, we decided to create a shiny app containing heat maps depicting the hate crime rate for the years 2005 to 2017. These maps allowed for analysis of the variation in the crime rate amongst the states. 
   
-Lastly, we 
+  Lastly, we created line plots through Shiny to depict the number of hate crime incidents over time for all the specific types of hate crime. The data used in this plots were taken from the hate crime raw data taken from the FBI data source.
   
 ## Additional Analysis
 
@@ -91,12 +90,7 @@ Lastly, we
   
   Next, to see what predictors were significant factors in predicting hate crime rate, we performed regression analyses. The results showed that 
   
+ Finally, the line chart was used to show the number of incidents for every specific type of bias motivation from 2005 to 2017. The motivations were separated into three categories: "race", "religion" and "sexual orientation". The most common type of motivation in "race" was "anti-black"; after 2008 the incident number decreased over the years, but from 2016 to 2017, it increased again. All types of race motivation hate crime increased comparing 2017 to 2016. For "religion", the most common type of motivation was "anti- Jewish". Similar to "anti-black" hate crime, the incidents number has a decreasing trend since 2008, but started to increase at 2014 and reached a peak at 2017. "Anti-Islamic" hate crime increased significantly since 2014 and reached a peak at 2016. As for sexual orientation, "anti-male homosexual" hate crime was the biggest incident number. The number does not change significantly over the years. We were surprised to see that "anti-Arab" was one of the lowest in incidents amongst race motivated hate crimes. Additionally, we were surprised to see that "anti-Jewish" was the highest in religion motivated hate crimes, while "anti-Islamic" was a distant second. However, since the data only represents up to 2017, the number of hate crimes for these biases might not yet reflect the current sentiments in 2018 America, which has increasingly shown anger towards Islamic nations. 
 
-
-<<<<<<< HEAD
- The line chart shows the number of incidents for every specific type of bis motivation each year, they are separated into three categories: "race", "religion" and "sexual orientation". The most common type of motivation in "race" is "anti-black", after 2008 the incident number has decreased over the years, but from 2016 to 2017, it increased again. Hate crime targeting American Indian or Alaskan Native keeps increasing over the years. All types of race motivation hate crime increased comparing 2017 to 2016. For "religion", the most common type of motivation is "anti- Jewish", like "anti-black" hate crime, the incidents number has a decreasing trend since 2008, but start to increase at 2014 and reach to peak at 2017. "Anti-Islamic" hate crime increased significantly since 2014 and reached a peak at 2016. As for "sexual orientation", "anti-male homosexual" hate crime has the biggest incident number. The number does not change significantly over the years.
-=======
- The line chart showing 
  
  potential limits: all variables might be correlated with each other. data might not reflect actual hate crimes (not reported, reported falsely). dataset is very small
->>>>>>> b61c253c78092e885498ec0e1777870cb3faf7a8
