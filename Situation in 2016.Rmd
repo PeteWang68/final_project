@@ -74,6 +74,35 @@ Since we found there is a significant increasement of hate crime rate in 2016, w
 
 ## Regression
 
+```{r, include = FALSE}
+merge_data_log = merge_data %>% 
+  mutate(crime_rate = log(crime_rate)) 
+```
+
+```{r, include = FALSE}
+crime_income_slr = lm(crime_rate~median_income, data = merge_data_log)
+summary(crime_income_slr) %>%
+  broom::tidy() %>%
+  knitr::kable()
+
+merge_data_log %>%
+  ggplot(aes(x = median_income,y = crime_rate)) +
+  geom_smooth(method = "lm", color = "black", formula = y ~ x) +
+  geom_point()
+```
+
 $$log\textrm{ crime_rate} = -0.74 + 0.000021 \textrm{median_income}$$
+
+```{r, include = FALSE}
+crime_trump_slr = lm(crime_rate~share_voters_voted_trump, data = merge_data_log)
+summary(crime_trump_slr) %>%
+  broom::tidy() %>%
+  knitr::kable()
+
+merge_data_log %>%
+  ggplot(aes(x = share_voters_voted_trump, y = crime_rate)) +
+  geom_smooth(method = "lm", color = "black", formula = y ~ x) +
+  geom_point()
+```
 
 $$log\textrm{ crime_rate} = 2.03 - 3.06 \textrm{share_voters_voted_trump}$$
