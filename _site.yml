@@ -12,7 +12,7 @@ navbar:
     - text: "Shiny"
       href: https://petewang.shinyapps.io/shiny/
     - text: "Codes"
-      icon: codes.html
+      href: codes.html
     - icon: fa-envelope fa-lg
       href: mailto:ks3663@cumc.columbia.edu
     - icon: fa-github fa-lg
