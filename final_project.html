@@ -234,9 +234,28 @@ $(document).ready(function () {
 </div>
 
 
-<pre class="r"><code>library(tidyverse)
-library(readxl)
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.8
+## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
+## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(readxl)
 library(plotly)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plotly&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     last_plot</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter</code></pre>
+<pre><code>## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     layout</code></pre>
 <div id="import-hate-crime-incident-count-from-2005-to-2017" class="section level2">
 <h2>import hate crime incident count from 2005 to 2017</h2>
 <pre class="r"><code>hate_offenses_2017 = read_xls(&quot;./table-1.xls&quot;) %&gt;% 
@@ -378,18 +397,25 @@ income = read_csv(&quot;./data/Income.csv&quot;) %&gt;%
 ##   Location = col_character(),
 ##   share_voters_voted_trump = col_character()
 ## )</code></pre>
-<pre class="r"><code>crime_rate = read_excel(&quot;./data/2016.xls&quot;,  range = cell_rows(3:53)) %&gt;%
+<pre class="r"><code>crime_rate = read_excel(&quot;./data/2016.xls&quot;,  range = cell_rows(3:54)) %&gt;%
   janitor::clean_names() %&gt;%
   filter(participating_state != &quot;Total&quot;) %&gt;%
   select(location = participating_state, population_covered,       total_number_of_incidents_reported) %&gt;%
-  mutate(crime_rate = total_number_of_incidents_reported/population_covered*100000) 
+  mutate(crime_rate = total_number_of_incidents_reported/population_covered*100000)
 
-
-ctizenship =
+crime_rate_10_days = read_csv(&quot;./data/hate_crime_10days.csv&quot;) %&gt;%
+  janitor::clean_names()%&gt;%
+  select(location = state, hate_crime_10_day = hate_crimes_per_100k_splc)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   state = col_character(),
+##   hate_crimes_per_100k_splc = col_double()
+## )</code></pre>
+<pre class="r"><code>ctizenship =
   ctizenship %&gt;% 
   select(location, non_citizen)
 
-race = 
+race =
   race %&gt;% 
   select(location, white)
 
@@ -403,7 +429,8 @@ merge_data =
   merge(., ctizenship, by = &quot;location&quot;) %&gt;% 
   merge(., race, by = &quot;location&quot;) %&gt;% 
   merge(., vote, by = &quot;location&quot;) %&gt;%
-  merge(., crime_rate, by = &quot;location&quot;) %&gt;% 
+  merge(., crime_rate, by = &quot;location&quot;) %&gt;%
+  merge(., crime_rate_10_days, by = &quot;location&quot;) %&gt;%
   filter(location != &quot;United States&quot;) %&gt;% 
   rename(state = location, share_unemployed = unemployed, share_non_citizen = non_citizen, share_white = white)</code></pre>
 </div>
@@ -412,7 +439,7 @@ merge_data =
 <pre class="r"><code>#list
 df = list.files(path = &quot;./annual&quot;)
 #function
-read_data = function(x){read_excel(str_c(&quot;./annual/&quot;, x),  range = &quot;A3:E53&quot;)%&gt;%
+read_data = function(x){read_excel(str_c(&quot;./annual/&quot;, x),  range = &quot;A3:E54&quot;)%&gt;%
     mutate(year = x)}
 #map
 hate_crime = map(df, read_data)%&gt;%
@@ -430,7 +457,7 @@ hate_crime = hate_crime%&gt;%
   select(year, state = participating_state, population = population_covered, total_incident)%&gt;%
   filter(state != &quot;Total&quot;) %&gt;%
   mutate(annualprop = total_incident/population*100000)%&gt;%
-  mutate(year = str_replace(year, &quot;.xls&quot;, &quot;&quot;))</code></pre>
+  mutate(year = str_replace(year, &quot;.xls&quot;, &quot;&quot;)) </code></pre>
 <p>do the further cleaning of the merge data</p>
 <pre class="r"><code>merge_data = merge_data %&gt;%
   mutate(median_annual_household_income = str_replace(median_annual_household_income, &quot;,&quot;, &quot;&quot;)) %&gt;%
@@ -455,29 +482,29 @@ mutate(median_annual_household_income = as.numeric(median_annual_household_incom
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -4.2784 -1.2477 -0.4031  0.7281 11.7359 
+## -4.0409 -1.1745 -0.5750  0.7245 11.7523 
 ## 
 ## Coefficients:
 ##                                            Estimate Std. Error t value
-## (Intercept)                              -9.757e+00  1.598e+01  -0.611
-## median_income                             7.644e-05  7.327e-05   1.043
-## share_unemployed                          4.933e+01  5.222e+01   0.945
-## share_population_with_high_school_degree  1.050e+01  2.125e+01   0.494
-## share_non_citizen                        -1.414e+01  2.093e+01  -0.676
-## share_white                              -4.416e+00  4.824e+00  -0.915
+## (Intercept)                              -5.432e+00  1.508e+01  -0.360
+## median_income                             8.688e-05  7.197e-05   1.207
+## share_unemployed                          3.955e+01  5.074e+01   0.779
+## share_population_with_high_school_degree  5.541e+00  2.034e+01   0.272
+## share_non_citizen                        -1.571e+01  2.078e+01  -0.756
+## share_white                              -4.622e+00  4.802e+00  -0.963
 ##                                          Pr(&gt;|t|)
-## (Intercept)                                 0.545
-## median_income                               0.303
-## share_unemployed                            0.350
-## share_population_with_high_school_degree    0.624
-## share_non_citizen                           0.503
-## share_white                                 0.365
+## (Intercept)                                 0.720
+## median_income                               0.234
+## share_unemployed                            0.440
+## share_population_with_high_school_degree    0.787
+## share_non_citizen                           0.454
+## share_white                                 0.341
 ## 
-## Residual standard error: 2.465 on 43 degrees of freedom
-## Multiple R-squared:  0.1394, Adjusted R-squared:  0.03936 
-## F-statistic: 1.393 on 5 and 43 DF,  p-value: 0.2459</code></pre>
+## Residual standard error: 2.456 on 44 degrees of freedom
+## Multiple R-squared:  0.1349, Adjusted R-squared:  0.0366 
+## F-statistic: 1.372 on 5 and 44 DF,  p-value: 0.2531</code></pre>
 <pre class="r"><code>multi.fit = step(mle, direction = &#39;backward&#39;)</code></pre>
-<pre><code>## Start:  AIC=94
+<pre><code>## Start:  AIC=95.47
 ## crime_rate ~ median_income + share_unemployed + share_population_with_high_school_degree + 
 ##     share_non_citizen + share_white + crime_rate</code></pre>
 <pre><code>## Warning in model.matrix.default(object, data = structure(list(crime_rate =
@@ -487,65 +514,71 @@ mutate(median_annual_household_income = as.numeric(median_annual_household_incom
 ## = c(1.3808898651561, : problem with term 6 in model.matrix: no columns are
 ## assigned</code></pre>
 <pre><code>## 
-## Step:  AIC=94
+## Step:  AIC=95.47
 ## crime_rate ~ median_income + share_unemployed + share_population_with_high_school_degree + 
 ##     share_non_citizen + share_white
 ## 
 ##                                            Df Sum of Sq    RSS    AIC
-## - share_population_with_high_school_degree  1    1.4839 262.66 92.273
-## - share_non_citizen                         1    2.7738 263.95 92.513
-## - share_white                               1    5.0901 266.27 92.942
-## - share_unemployed                          1    5.4210 266.60 93.002
-## - median_income                             1    6.6106 267.79 93.221
-## &lt;none&gt;                                                  261.18 93.996
+## - share_population_with_high_school_degree  1    0.4476 265.92 93.559
+## - share_non_citizen                         1    3.4486 268.92 94.120
+## - share_unemployed                          1    3.6656 269.14 94.160
+## - share_white                               1    5.5897 271.06 94.516
+## - median_income                             1    8.7930 274.27 95.104
+## &lt;none&gt;                                                  265.47 95.474
 ## 
-## Step:  AIC=92.27
+## Step:  AIC=93.56
 ## crime_rate ~ median_income + share_unemployed + share_non_citizen + 
 ##     share_white
 ## 
 ##                     Df Sum of Sq    RSS    AIC
-## - share_white        1    3.8270 266.49 90.982
-## - share_non_citizen  1    4.4476 267.11 91.096
-## - share_unemployed   1    4.6526 267.31 91.134
-## &lt;none&gt;                           262.66 92.273
-## - median_income      1   28.9317 291.59 95.394
+## - share_unemployed   1    3.4309 269.35 92.200
+## - share_non_citizen  1    4.5181 270.44 92.401
+## - share_white        1    5.1956 271.12 92.526
+## &lt;none&gt;                           265.92 93.559
+## - median_income      1   27.7787 293.70 96.527
 ## 
-## Step:  AIC=90.98
-## crime_rate ~ median_income + share_unemployed + share_non_citizen
+## Step:  AIC=92.2
+## crime_rate ~ median_income + share_non_citizen + share_white
 ## 
 ##                     Df Sum of Sq    RSS    AIC
-## - share_non_citizen  1    0.9663 267.46 89.160
-## &lt;none&gt;                           266.49 90.982
-## - share_unemployed   1   17.9287 284.42 92.173
-## - median_income      1   27.1547 293.64 93.737
+## - share_non_citizen  1    7.6123 276.96 91.593
+## &lt;none&gt;                           269.35 92.200
+## - share_white        1   17.9088 287.26 93.418
+## - median_income      1   24.5931 293.94 94.568
 ## 
-## Step:  AIC=89.16
-## crime_rate ~ median_income + share_unemployed
+## Step:  AIC=91.59
+## crime_rate ~ median_income + share_white
 ## 
-##                    Df Sum of Sq    RSS    AIC
-## &lt;none&gt;                          267.46 89.160
-## - share_unemployed  1    17.140 284.60 90.203
-## - median_income     1    29.397 296.85 92.269</code></pre>
+##                 Df Sum of Sq    RSS    AIC
+## - share_white    1    10.736 287.70 91.495
+## &lt;none&gt;                       276.96 91.593
+## - median_income  1    17.044 294.01 92.579
+## 
+## Step:  AIC=91.49
+## crime_rate ~ median_income
+## 
+##                 Df Sum of Sq    RSS    AIC
+## &lt;none&gt;                       287.70 91.495
+## - median_income  1    19.174 306.87 92.721</code></pre>
 <pre class="r"><code>summary(multi.fit)</code></pre>
 <pre><code>## 
 ## Call:
-## lm(formula = crime_rate ~ median_income + share_unemployed, data = merge_data)
+## lm(formula = crime_rate ~ median_income, data = merge_data)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -3.6887 -1.1373 -0.4420  0.6579 12.5892 
+## -2.7797 -1.3866 -0.5861  0.5338 13.6819 
 ## 
 ## Coefficients:
-##                    Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)      -5.985e+00  3.393e+00  -1.764   0.0844 .
-## median_income     9.098e-05  4.046e-05   2.249   0.0294 *
-## share_unemployed  6.475e+01  3.771e+01   1.717   0.0927 .
+##                 Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)   -1.754e+00  2.325e+00  -0.754    0.454  
+## median_income  6.980e-05  3.902e-05   1.789    0.080 .
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 2.411 on 46 degrees of freedom
-## Multiple R-squared:  0.1187, Adjusted R-squared:  0.08043 
-## F-statistic: 3.099 on 2 and 46 DF,  p-value: 0.05462</code></pre>
+## Residual standard error: 2.448 on 48 degrees of freedom
+## Multiple R-squared:  0.06248,    Adjusted R-squared:  0.04295 
+## F-statistic: 3.199 on 1 and 48 DF,  p-value: 0.08</code></pre>
 <pre class="r"><code># see distribution of crime rate 
 merge_data %&gt;% 
   ggplot(aes(x = crime_rate)) + geom_histogram()</code></pre>
@@ -555,125 +588,83 @@ merge_data %&gt;%
 merge_data_log = merge_data %&gt;% 
   mutate(crime_rate = log(crime_rate)) 
 
-mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ crime_rate, data = merge_data_log)</code></pre>
-<pre><code>## Warning in model.matrix.default(mt, mf, contrasts): the response appeared
-## on the right-hand side and was dropped</code></pre>
-<pre><code>## Warning in model.matrix.default(mt, mf, contrasts): problem with term 6 in
-## model.matrix: no columns are assigned</code></pre>
-<pre class="r"><code>summary(step(mle_log, direction = &quot;both&quot;))</code></pre>
-<pre><code>## Start:  AIC=-19.25
+mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white, data = merge_data_log)
+
+summary(step(mle_log, direction = &quot;both&quot;))</code></pre>
+<pre><code>## Start:  AIC=-17.38
 ## crime_rate ~ median_income + share_unemployed + share_population_with_high_school_degree + 
-##     share_non_citizen + share_white + crime_rate</code></pre>
-<pre><code>## Warning in model.matrix.default(object, data = structure(list(crime_rate =
-## c(0.322728121178959, : the response appeared on the right-hand side and was
-## dropped</code></pre>
-<pre><code>## Warning in model.matrix.default(object, data = structure(list(crime_rate =
-## c(0.322728121178959, : problem with term 6 in model.matrix: no columns are
-## assigned</code></pre>
-<pre><code>## 
-## Step:  AIC=-19.25
-## crime_rate ~ median_income + share_unemployed + share_population_with_high_school_degree + 
-##     share_non_citizen + share_white</code></pre>
-<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg =
-## object$contrasts): the response appeared on the right-hand side and was
-## dropped</code></pre>
-<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg =
-## object$contrasts): problem with term 6 in model.matrix: no columns are
-## assigned</code></pre>
-<pre><code>##                                            Df Sum of Sq    RSS     AIC
-## - share_population_with_high_school_degree  1   0.09028 25.985 -21.081
-## - median_income                             1   0.38149 26.276 -20.535
-## - share_non_citizen                         1   0.39604 26.290 -20.508
-## - share_white                               1   0.65766 26.552 -20.023
-## &lt;none&gt;                                                  25.894 -19.252
-## - share_unemployed                          1   1.39731 27.292 -18.677
+##     share_non_citizen + share_white
 ## 
-## Step:  AIC=-21.08
+##                                            Df Sum of Sq    RSS     AIC
+## - share_population_with_high_school_degree  1   0.00712 27.789 -19.369
+## - share_non_citizen                         1   0.25928 28.041 -18.918
+## - share_white                               1   0.55094 28.333 -18.400
+## - median_income                             1   0.74481 28.527 -18.059
+## - share_unemployed                          1   0.80726 28.589 -17.950
+## &lt;none&gt;                                                  27.782 -17.382
+## 
+## Step:  AIC=-19.37
 ## crime_rate ~ median_income + share_unemployed + share_non_citizen + 
-##     share_white</code></pre>
-<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg =
-## object$contrasts): the response appeared on the right-hand side and was
-## dropped
-
-## Warning in model.matrix.default(Terms, m, contrasts.arg =
-## object$contrasts): problem with term 6 in model.matrix: no columns are
-## assigned</code></pre>
-<pre><code>##                                            Df Sum of Sq    RSS     AIC
-## - share_non_citizen                         1   0.32099 26.306 -22.480
-## - share_white                               1   0.94874 26.933 -21.324
-## &lt;none&gt;                                                  25.985 -21.081
-## - share_unemployed                          1   1.31849 27.303 -20.656
-## - median_income                             1   1.69336 27.678 -19.988
-## + share_population_with_high_school_degree  1   0.09028 25.894 -19.252
+##     share_white
 ## 
-## Step:  AIC=-22.48
-## crime_rate ~ median_income + share_unemployed + share_white</code></pre>
-<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg =
-## object$contrasts): the response appeared on the right-hand side and was
-## dropped
-
-## Warning in model.matrix.default(Terms, m, contrasts.arg =
-## object$contrasts): problem with term 6 in model.matrix: no columns are
-## assigned</code></pre>
-<pre><code>##                                            Df Sum of Sq    RSS     AIC
-## - share_white                               1   0.68044 26.986 -23.228
-## - share_unemployed                          1   1.06356 27.369 -22.538
-## &lt;none&gt;                                                  26.306 -22.480
-## + share_non_citizen                         1   0.32099 25.985 -21.081
-## + share_population_with_high_school_degree  1   0.01523 26.290 -20.508
-## - median_income                             1   2.77954 29.085 -19.558
+##                                            Df Sum of Sq    RSS     AIC
+## - share_non_citizen                         1   0.30720 28.096 -20.820
+## - share_white                               1   0.58711 28.376 -20.324
+## - share_unemployed                          1   0.83409 28.623 -19.891
+## &lt;none&gt;                                                  27.789 -19.369
+## - median_income                             1   1.47558 29.265 -18.782
+## + share_population_with_high_school_degree  1   0.00712 27.782 -17.382
 ## 
-## Step:  AIC=-23.23
-## crime_rate ~ median_income + share_unemployed</code></pre>
-<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg =
-## object$contrasts): the response appeared on the right-hand side and was
-## dropped
-
-## Warning in model.matrix.default(Terms, m, contrasts.arg =
-## object$contrasts): problem with term 6 in model.matrix: no columns are
-## assigned</code></pre>
-<pre><code>##                                            Df Sum of Sq    RSS     AIC
-## - share_unemployed                          1   0.43557 27.422 -24.444
-## &lt;none&gt;                                                  26.986 -23.228
-## + share_white                               1   0.68044 26.306 -22.480
-## + share_population_with_high_school_degree  1   0.39111 26.595 -21.944
-## - median_income                             1   2.19357 29.180 -21.399
-## + share_non_citizen                         1   0.05269 26.933 -21.324
+## Step:  AIC=-20.82
+## crime_rate ~ median_income + share_unemployed + share_white
 ## 
-## Step:  AIC=-24.44
-## crime_rate ~ median_income</code></pre>
-<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg =
-## object$contrasts): the response appeared on the right-hand side and was
-## dropped
-
-## Warning in model.matrix.default(Terms, m, contrasts.arg =
-## object$contrasts): problem with term 6 in model.matrix: no columns are
-## assigned</code></pre>
-<pre><code>##                                            Df Sum of Sq    RSS     AIC
-## &lt;none&gt;                                                  27.422 -24.444
-## - median_income                             1   1.80137 29.223 -23.326
-## + share_unemployed                          1   0.43557 26.986 -23.228
-## + share_white                               1   0.05244 27.369 -22.538
-## + share_population_with_high_school_degree  1   0.03897 27.383 -22.514
-## + share_non_citizen                         1   0.00000 27.422 -22.444</code></pre>
+##                                            Df Sum of Sq    RSS     AIC
+## - share_white                               1   0.28076 28.377 -22.322
+## - share_unemployed                          1   0.62270 28.719 -21.724
+## &lt;none&gt;                                                  28.096 -20.820
+## + share_non_citizen                         1   0.30720 27.789 -19.369
+## + share_population_with_high_school_degree  1   0.05504 28.041 -18.918
+## - median_income                             1   2.46311 30.559 -18.618
+## 
+## Step:  AIC=-22.32
+## crime_rate ~ median_income + share_unemployed
+## 
+##                                            Df Sum of Sq    RSS     AIC
+## - share_unemployed                          1   0.34569 28.723 -23.717
+## &lt;none&gt;                                                  28.377 -22.322
+## + share_white                               1   0.28076 28.096 -20.820
+## - median_income                             1   2.18417 30.561 -20.615
+## + share_population_with_high_school_degree  1   0.03205 28.345 -20.379
+## + share_non_citizen                         1   0.00085 28.376 -20.324
+## 
+## Step:  AIC=-23.72
+## crime_rate ~ median_income
+## 
+##                                            Df Sum of Sq    RSS     AIC
+## &lt;none&gt;                                                  28.723 -23.717
+## - median_income                             1   1.85613 30.579 -22.586
+## + share_unemployed                          1   0.34569 28.377 -22.322
+## + share_non_citizen                         1   0.02462 28.698 -21.760
+## + share_population_with_high_school_degree  1   0.01502 28.707 -21.743
+## + share_white                               1   0.00374 28.719 -21.724</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = crime_rate ~ median_income, data = merge_data_log)
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -1.36159 -0.51441  0.00213  0.50080  2.01031 
+## -1.34328 -0.49755  0.00989  0.52203  2.02950 
 ## 
 ## Coefficients:
 ##                 Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)   -7.028e-01  7.260e-01  -0.968   0.3380  
-## median_income  2.140e-05  1.218e-05   1.757   0.0854 .
+## (Intercept)   -7.447e-01  7.347e-01  -1.014   0.3158  
+## median_income  2.172e-05  1.233e-05   1.761   0.0846 .
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.7638 on 47 degrees of freedom
-## Multiple R-squared:  0.06164,    Adjusted R-squared:  0.04168 
-## F-statistic: 3.088 on 1 and 47 DF,  p-value: 0.08541</code></pre>
+## Residual standard error: 0.7736 on 48 degrees of freedom
+## Multiple R-squared:  0.0607, Adjusted R-squared:  0.04113 
+## F-statistic: 3.102 on 1 and 48 DF,  p-value: 0.08457</code></pre>
 </div>
 <div id="see-correlation-between-variables" class="section level2">
 <h2>see correlation between variables</h2>
@@ -698,128 +689,223 @@ mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_hig
 mle_log_1 = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ share_voters_voted_trump, data = merge_data_log)
   
 summary(step(mle_log_1, direction = &quot;both&quot;))</code></pre>
-<pre><code>## Start:  AIC=-24.03
+<pre><code>## Start:  AIC=-24.44
 ## crime_rate ~ median_income + share_unemployed + share_population_with_high_school_degree + 
 ##     share_non_citizen + share_white + share_voters_voted_trump
 ## 
 ##                                            Df Sum of Sq    RSS     AIC
-## - share_population_with_high_school_degree  1    0.0001 22.551 -26.026
-## - median_income                             1    0.0481 22.599 -25.922
-## - share_non_citizen                         1    0.2138 22.765 -25.564
-## - share_unemployed                          1    0.6754 23.226 -24.581
-## &lt;none&gt;                                                  22.551 -24.027
-## - share_white                               1    1.1602 23.711 -23.569
-## - share_voters_voted_trump                  1    3.3437 25.894 -19.252
+## - share_population_with_high_school_degree  1    0.0613 23.241 -26.304
+## - median_income                             1    0.0895 23.270 -26.244
+## - share_non_citizen                         1    0.1421 23.322 -26.131
+## - share_unemployed                          1    0.4039 23.584 -25.573
+## &lt;none&gt;                                                  23.180 -24.436
+## - share_white                               1    1.1517 24.332 -24.012
+## - share_voters_voted_trump                  1    4.6017 27.782 -17.382
 ## 
-## Step:  AIC=-26.03
+## Step:  AIC=-26.3
 ## crime_rate ~ median_income + share_unemployed + share_non_citizen + 
 ##     share_white + share_voters_voted_trump
 ## 
 ##                                            Df Sum of Sq    RSS     AIC
-## - median_income                             1    0.0998 22.651 -27.810
-## - share_non_citizen                         1    0.2322 22.783 -27.525
-## - share_unemployed                          1    0.6977 23.248 -26.534
-## &lt;none&gt;                                                  22.551 -26.026
-## - share_white                               1    1.3406 23.891 -25.197
-## + share_population_with_high_school_degree  1    0.0001 22.551 -24.027
-## - share_voters_voted_trump                  1    3.4339 25.985 -21.081
+## - median_income                             1    0.0308 23.272 -28.238
+## - share_non_citizen                         1    0.2163 23.458 -27.841
+## - share_unemployed                          1    0.4481 23.689 -27.349
+## &lt;none&gt;                                                  23.241 -26.304
+## - share_white                               1    1.1205 24.362 -25.950
+## + share_population_with_high_school_degree  1    0.0613 23.180 -24.436
+## - share_voters_voted_trump                  1    4.5475 27.789 -19.369
 ## 
-## Step:  AIC=-27.81
+## Step:  AIC=-28.24
 ## crime_rate ~ share_unemployed + share_non_citizen + share_white + 
 ##     share_voters_voted_trump
 ## 
 ##                                            Df Sum of Sq    RSS     AIC
-## - share_non_citizen                         1    0.3892 23.040 -28.975
-## - share_unemployed                          1    0.6016 23.252 -28.526
-## &lt;none&gt;                                                  22.651 -27.810
-## - share_white                               1    1.4667 24.117 -26.736
-## + median_income                             1    0.0998 22.551 -26.026
-## + share_population_with_high_school_degree  1    0.0518 22.599 -25.922
-## - share_voters_voted_trump                  1    5.0274 27.678 -19.988
+## - share_non_citizen                         1    0.3131 23.585 -29.570
+## - share_unemployed                          1    0.4176 23.690 -29.349
+## &lt;none&gt;                                                  23.272 -28.238
+## - share_white                               1    1.2118 24.484 -27.700
+## + median_income                             1    0.0308 23.241 -26.304
+## + share_population_with_high_school_degree  1    0.0026 23.270 -26.244
+## - share_voters_voted_trump                  1    5.9923 29.265 -18.782
 ## 
-## Step:  AIC=-28.98
+## Step:  AIC=-29.57
 ## crime_rate ~ share_unemployed + share_white + share_voters_voted_trump
 ## 
 ##                                            Df Sum of Sq    RSS     AIC
-## - share_unemployed                          1    0.3158 23.356 -30.308
-## &lt;none&gt;                                                  23.040 -28.975
-## - share_white                               1    1.2311 24.271 -28.424
-## + share_non_citizen                         1    0.3892 22.651 -27.810
-## + median_income                             1    0.2569 22.783 -27.525
-## + share_population_with_high_school_degree  1    0.0552 22.985 -27.093
-## - share_voters_voted_trump                  1    6.0454 29.085 -19.558
+## - share_unemployed                          1    0.2042 23.789 -31.139
+## &lt;none&gt;                                                  23.585 -29.570
+## - share_white                               1    1.0313 24.616 -29.430
+## + share_non_citizen                         1    0.3131 23.272 -28.238
+## + median_income                             1    0.1276 23.458 -27.841
+## + share_population_with_high_school_degree  1    0.0008 23.584 -27.572
+## - share_voters_voted_trump                  1    6.9740 30.559 -18.618
 ## 
-## Step:  AIC=-30.31
+## Step:  AIC=-31.14
 ## crime_rate ~ share_white + share_voters_voted_trump
 ## 
 ##                                            Df Sum of Sq    RSS     AIC
-## - share_white                               1    0.9218 24.277 -30.411
-## &lt;none&gt;                                                  23.356 -30.308
-## + share_unemployed                          1    0.3158 23.040 -28.975
-## + share_non_citizen                         1    0.1035 23.252 -28.526
-## + median_income                             1    0.0412 23.314 -28.395
-## + share_population_with_high_school_degree  1    0.0000 23.356 -28.308
-## - share_voters_voted_trump                  1    5.8497 29.205 -21.356
+## - share_white                               1    0.8458 24.635 -31.392
+## &lt;none&gt;                                                  23.789 -31.139
+## + share_unemployed                          1    0.2042 23.585 -29.570
+## + share_non_citizen                         1    0.0997 23.690 -29.349
+## + share_population_with_high_school_degree  1    0.0303 23.759 -29.203
+## + median_income                             1    0.0178 23.772 -29.177
+## - share_voters_voted_trump                  1    6.7878 30.577 -20.588
 ## 
-## Step:  AIC=-30.41
+## Step:  AIC=-31.39
 ## crime_rate ~ share_voters_voted_trump
 ## 
 ##                                            Df Sum of Sq    RSS     AIC
-## &lt;none&gt;                                                  24.277 -30.411
-## + share_white                               1    0.9218 23.356 -30.308
-## + share_population_with_high_school_degree  1    0.3949 23.883 -29.215
-## + share_non_citizen                         1    0.1589 24.119 -28.733
-## + median_income                             1    0.0975 24.180 -28.608
-## + share_unemployed                          1    0.0065 24.271 -28.424
-## - share_voters_voted_trump                  1    4.9455 29.223 -23.326</code></pre>
+## &lt;none&gt;                                                  24.635 -31.392
+## + share_white                               1    0.8458 23.789 -31.139
+## + share_population_with_high_school_degree  1    0.2158 24.419 -29.832
+## + share_non_citizen                         1    0.1420 24.493 -29.681
+## + median_income                             1    0.0595 24.576 -29.513
+## + share_unemployed                          1    0.0187 24.616 -29.430
+## - share_voters_voted_trump                  1    5.9435 30.579 -22.586</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = crime_rate ~ share_voters_voted_trump, data = merge_data_log)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.4316 -0.3671  0.1436  0.5008  1.3143 
+## -1.4448 -0.4594  0.1266  0.5046  1.3476 
 ## 
 ## Coefficients:
 ##                          Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                 1.956      0.463   4.223  0.00011 ***
-## share_voters_voted_trump   -2.878      0.930  -3.094  0.00332 ** 
+## (Intercept)                2.0337     0.4519   4.500 4.32e-05 ***
+## share_voters_voted_trump  -3.0629     0.9000  -3.403  0.00135 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.7187 on 47 degrees of freedom
-## Multiple R-squared:  0.1692, Adjusted R-squared:  0.1516 
-## F-statistic: 9.574 on 1 and 47 DF,  p-value: 0.003319</code></pre>
-<pre class="r"><code>cor(merge_data_log$share_voters_voted_trump, merge_data_log$median_income)</code></pre>
-<pre><code>## [1] -0.4803755</code></pre>
-<pre class="r"><code>slr = lm(crime_rate~share_voters_voted_trump, data = merge_data_log)
-summary(slr)</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = crime_rate ~ share_voters_voted_trump, data = merge_data_log)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1.4316 -0.3671  0.1436  0.5008  1.3143 
-## 
-## Coefficients:
-##                          Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                 1.956      0.463   4.223  0.00011 ***
-## share_voters_voted_trump   -2.878      0.930  -3.094  0.00332 ** 
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 0.7187 on 47 degrees of freedom
-## Multiple R-squared:  0.1692, Adjusted R-squared:  0.1516 
-## F-statistic: 9.574 on 1 and 47 DF,  p-value: 0.003319</code></pre>
+## Residual standard error: 0.7164 on 48 degrees of freedom
+## Multiple R-squared:  0.1944, Adjusted R-squared:  0.1776 
+## F-statistic: 11.58 on 1 and 48 DF,  p-value: 0.001353</code></pre>
+<pre class="r"><code>##see the correlation between trump and income
+cor(merge_data_log$share_voters_voted_trump, merge_data_log$median_income)</code></pre>
+<pre><code>## [1] -0.4705399</code></pre>
+<div id="the-final-model-1-crimeincome" class="section level3">
+<h3>the final model 1 crime&amp;income</h3>
+<pre class="r"><code>crime_income_slr =lm(crime_rate~median_income, data = merge_data_log)
+summary(crime_income_slr)%&gt;%
+  broom::tidy()%&gt;%
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.7447166</td>
+<td align="right">0.7347082</td>
+<td align="right">-1.013622</td>
+<td align="right">0.3158453</td>
+</tr>
+<tr class="even">
+<td align="left">median_income</td>
+<td align="right">0.0000217</td>
+<td align="right">0.0000123</td>
+<td align="right">1.761218</td>
+<td align="right">0.0845705</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="the-final-model-2-crimetrumpincome" class="section level3">
+<h3>the final model 2 crime~Trump&amp;income</h3>
+<pre class="r"><code>crime_trump_slr = lm(crime_rate~share_voters_voted_trump, data = merge_data_log)
+summary(crime_trump_slr)%&gt;%
+  broom::tidy()%&gt;%
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">2.033682</td>
+<td align="right">0.4519470</td>
+<td align="right">4.499824</td>
+<td align="right">0.0000432</td>
+</tr>
+<tr class="even">
+<td align="left">share_voters_voted_trump</td>
+<td align="right">-3.062861</td>
+<td align="right">0.9000421</td>
+<td align="right">-3.403020</td>
+<td align="right">0.0013531</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="the-final-model-3-crimetrumpincome" class="section level3">
+<h3>the final model 3 crime&amp;Trump&amp;income</h3>
+<pre class="r"><code>mlr_trump_income = lm(crime_rate~share_voters_voted_trump + median_income, data = merge_data_log)
+summary(mlr_trump_income)%&gt;%
+  broom::tidy()%&gt;%
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">1.6940485</td>
+<td align="right">1.1052713</td>
+<td align="right">1.5326993</td>
+<td align="right">0.1320542</td>
+</tr>
+<tr class="even">
+<td align="left">share_voters_voted_trump</td>
+<td align="right">-2.8994265</td>
+<td align="right">1.0295662</td>
+<td align="right">-2.8161633</td>
+<td align="right">0.0070822</td>
+</tr>
+<tr class="odd">
+<td align="left">median_income</td>
+<td align="right">0.0000044</td>
+<td align="right">0.0000131</td>
+<td align="right">0.3373593</td>
+<td align="right">0.7373481</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="do-scatter-plot" class="section level2">
 <h2>do scatter plot</h2>
-<pre class="r"><code>merge_data%&gt;%
+<pre class="r"><code>merge_data_log%&gt;%
   ggplot(aes(x = median_income,y = crime_rate))+
   geom_smooth(method = &quot;lm&quot;, color=&quot;black&quot;, formula = y ~ x) +
   geom_point()</code></pre>
-<p><img src="final_project_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="final_project_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre class="r"><code>merge_data_log%&gt;%
+  ggplot(aes(x = share_voters_voted_trump, y = crime_rate))+
+  geom_smooth(method = &quot;lm&quot;, color=&quot;black&quot;, formula = y ~ x) +
+  geom_point()</code></pre>
+<p><img src="final_project_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
 </div>
 <div id="building-the-map-of-hate-crime-rate-based-on-2016" class="section level2">
 <h2>Building the Map of hate crime rate based on 2016</h2>
@@ -851,8 +937,12 @@ plot_geo(map_data_2016, locationmode = &#39;USA-states&#39;) %&gt;%
     title = &#39;Hate crime rate in 2016 all over U.S. &#39;,
     geo = g
   )</code></pre>
-<div id="htmlwidget-ee62cc0da472d4ae3cd3" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ee62cc0da472d4ae3cd3">{"x":{"visdat":{"5e243ef52872":["function () ","plotlyVisDat"]},"cur_data":"5e243ef52872","attrs":{"5e243ef52872":{"locationmode":"USA-states","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"z":{},"text":{},"locations":{},"color":{},"colors":"Reds","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","scene":{"zaxis":{"title":"crime_rate"}},"geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa","projection":{"type":"albers usa"},"showlakes":true,"lakecolor":"rgba(255,255,255,1)"},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5},"title":"Hate crime rate in 2016 all over U.S. "},"source":"A","config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"data":[{"colorbar":{"title":"Hate crime rate ","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(255,245,240,1)"],["0.00329001034965554","rgba(255,244,239,1)"],["0.00762014405241635","rgba(255,244,238,1)"],["0.0118128844458941","rgba(255,243,237,1)"],["0.018814600741361","rgba(255,242,235,1)"],["0.028949136181773","rgba(255,240,233,1)"],["0.0393364566619348","rgba(255,238,230,1)"],["0.0470859540746992","rgba(255,237,229,1)"],["0.0591667818940808","rgba(255,235,226,1)"],["0.0625611082445715","rgba(255,234,225,1)"],["0.0649280001670427","rgba(255,234,224,1)"],["0.0718998492218171","rgba(255,233,223,1)"],["0.0889080142040883","rgba(254,230,219,1)"],["0.0910438710949724","rgba(254,230,218,1)"],["0.107466073312285","rgba(254,227,214,1)"],["0.113330689929598","rgba(254,226,213,1)"],["0.118568890948765","rgba(254,225,212,1)"],["0.139284228485111","rgba(254,220,204,1)"],["0.154494303171325","rgba(254,215,198,1)"],["0.15756424338281","rgba(254,214,197,1)"],["0.177833826601441","rgba(254,208,189,1)"],["0.220577334956098","rgba(253,196,172,1)"],["0.254912415636233","rgba(252,185,159,1)"],["0.297279912165542","rgba(253,172,143,1)"],["1","rgba(103,0,13,1)"]],"showscale":true,"locationmode":"USA-states","z":[1.3808898651561,1.48937264916067,3.34805113558664,0.420514815262585,2.37241981189183,1.88413647670102,2.96383119359633,1.57552267964897,16.8827165024884,1.06807949849217,0.474675629191675,1.60414463443326,0.897081333757898,2.71343987643412,0.545959163539177,1.89091504080132,4.65270703981678,0.730244567331498,3.00417806063783,0.614980901518787,5.89066918001885,4.05170339094064,2.29774753161092,1.19565328787573,1.44502572063679,1.91929738361381,1.67873732959462,1.39453031198704,2.19578565995122,3.15335468296094,4.50639387962382,3.01436916852553,1.45875512794317,1.05611537004302,4.61693441404417,0.852912632023768,2.93130321795085,0.482428071556262,1.13590540179814,0.465873547335386,2.28618749023607,2.13495501709919,0.638849301766425,2.18964298866362,4.00260008901783,1.45040839696109,5.3143966868925,2.52873194577905,0.601473858619324],"text":["Alabama <br> share for trump 59.90%","Alaska <br> share for trump 54.20%","Arizona <br> share for trump 52.70%","Arkansas <br> share for trump 60.10%","California <br> share for trump 36.40%","Colorado <br> share for trump 45.70%","Connecticut <br> share for trump 40.30%","Delaware <br> share for trump 39.40%","District of Columbia <br> share for trump 7.40%","Florida <br> share for trump 48.30%","Georgia <br> share for trump 52.20%","Idaho <br> share for trump 64.10%","Illinois <br> share for trump 40.20%","Indiana <br> share for trump 53.70%","Iowa <br> share for trump 46.00%","Kansas <br> share for trump 59.40%","Kentucky <br> share for trump 60.20%","Louisiana <br> share for trump 57.10%","Maine <br> share for trump 40.70%","Maryland <br> share for trump 35.10%","Massachusetts <br> share for trump 37.20%","Michigan <br> share for trump 44.60%","Minnesota <br> share for trump 44.50%","Mississippi <br> share for trump 54.40%","Missouri <br> share for trump 53.50%","Montana <br> share for trump 55.20%","Nebraska <br> share for trump 59.30%","Nevada <br> share for trump 44.70%","New Hampshire <br> share for trump 46.30%","New Jersey <br> share for trump 39.70%","New Mexico <br> share for trump 42.20%","New York <br> share for trump 34.60%","North Carolina <br> share for trump 49.80%","North Dakota <br> share for trump 57.90%","Ohio <br> share for trump 47.40%","Oklahoma <br> share for trump 66.10%","Oregon <br> share for trump 41.80%","Pennsylvania <br> share for trump 46.30%","Rhode Island <br> share for trump 35.10%","South Carolina <br> share for trump 54.50%","South Dakota <br> share for trump 57.40%","Tennessee <br> share for trump 59.00%","Texas <br> share for trump 56.10%","Utah <br> share for trump 72.10%","Vermont <br> share for trump 31.10%","Virginia <br> share for trump 46.60%","Washington <br> share for trump 40.90%","West Virginia <br> share for trump 62.00%","Wisconsin <br> share for trump 45.60%"],"locations":["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI"],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":0.420514815262585,"cmax":16.8827165024884,"colorscale":[["0","rgba(255,245,240,1)"],["0.00329001034965554","rgba(255,244,239,1)"],["0.00762014405241635","rgba(255,244,238,1)"],["0.0118128844458941","rgba(255,243,237,1)"],["0.018814600741361","rgba(255,242,235,1)"],["0.028949136181773","rgba(255,240,233,1)"],["0.0393364566619348","rgba(255,238,230,1)"],["0.0470859540746992","rgba(255,237,229,1)"],["0.0591667818940808","rgba(255,235,226,1)"],["0.0625611082445715","rgba(255,234,225,1)"],["0.0649280001670427","rgba(255,234,224,1)"],["0.0718998492218171","rgba(255,233,223,1)"],["0.0889080142040883","rgba(254,230,219,1)"],["0.0910438710949724","rgba(254,230,218,1)"],["0.107466073312285","rgba(254,227,214,1)"],["0.113330689929598","rgba(254,226,213,1)"],["0.118568890948765","rgba(254,225,212,1)"],["0.139284228485111","rgba(254,220,204,1)"],["0.154494303171325","rgba(254,215,198,1)"],["0.15756424338281","rgba(254,214,197,1)"],["0.177833826601441","rgba(254,208,189,1)"],["0.220577334956098","rgba(253,196,172,1)"],["0.254912415636233","rgba(252,185,159,1)"],["0.297279912165542","rgba(253,172,143,1)"],["1","rgba(103,0,13,1)"]],"showscale":false,"color":[1.3808898651561,1.48937264916067,3.34805113558664,0.420514815262585,2.37241981189183,1.88413647670102,2.96383119359633,1.57552267964897,16.8827165024884,1.06807949849217,0.474675629191675,1.60414463443326,0.897081333757898,2.71343987643412,0.545959163539177,1.89091504080132,4.65270703981678,0.730244567331498,3.00417806063783,0.614980901518787,5.89066918001885,4.05170339094064,2.29774753161092,1.19565328787573,1.44502572063679,1.91929738361381,1.67873732959462,1.39453031198704,2.19578565995122,3.15335468296094,4.50639387962382,3.01436916852553,1.45875512794317,1.05611537004302,4.61693441404417,0.852912632023768,2.93130321795085,0.482428071556262,1.13590540179814,0.465873547335386,2.28618749023607,2.13495501709919,0.638849301766425,2.18964298866362,4.00260008901783,1.45040839696109,5.3143966868925,2.52873194577905,0.601473858619324]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
+<div id="htmlwidget-a4f08c64874268e30e51" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a4f08c64874268e30e51">{"x":{"visdat":{"5f7423434096":["function () ","plotlyVisDat"]},"cur_data":"5f7423434096","attrs":{"5f7423434096":{"locationmode":"USA-states","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"z":{},"text":{},"locations":{},"color":{},"colors":"Reds","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","scene":{"zaxis":{"title":"crime_rate"}},"geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa","projection":{"type":"albers usa"},"showlakes":true,"lakecolor":"rgba(255,255,255,1)"},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5},"title":"Hate crime rate in 2016 all over U.S. "},"source":"A","config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"data":[{"colorbar":{"title":"Hate crime rate ","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(255,245,240,1)"],["0.00330963217412319","rgba(255,244,239,1)"],["0.00724020198316851","rgba(255,244,238,1)"],["0.0110949572353315","rgba(255,243,237,1)"],["0.0141880797722171","rgba(255,243,237,1)"],["0.026825064958664","rgba(255,240,234,1)"],["0.0387913839853059","rgba(255,238,231,1)"],["0.0445151303107185","rgba(255,238,229,1)"],["0.0586143872998826","rgba(255,235,226,1)"],["0.0623567508465392","rgba(255,235,225,1)"],["0.0638430771992925","rgba(255,234,225,1)"],["0.0709580821887039","rgba(255,233,223,1)"],["0.0826695064088102","rgba(255,231,220,1)"],["0.0902536624681912","rgba(254,230,218,1)"],["0.106081893039716","rgba(254,227,215,1)"],["0.111271385408798","rgba(254,226,213,1)"],["0.11705689634643","rgba(254,225,212,1)"],["0.136011692559199","rgba(254,221,206,1)"],["0.154000323443347","rgba(254,215,198,1)"],["0.157435272330399","rgba(254,214,197,1)"],["0.175862680251306","rgba(254,209,190,1)"],["0.2202044861199","rgba(253,196,173,1)"],["0.25435284824806","rgba(252,186,159,1)"],["0.295605142138706","rgba(253,172,144,1)"],["1","rgba(103,0,13,1)"]],"showscale":true,"locationmode":"USA-states","z":[1.3808898651561,1.48937264916067,3.34805113558664,0.420514815262585,2.37241981189183,1.88413647670102,2.96383119359633,1.57552267964897,16.8827165024884,1.06807949849217,0.474675629191675,1.60414463443326,0.897081333757898,2.71343987643412,0.545959163539177,1.89091504080132,4.65270703981678,0.730244567331498,3.00417806063783,0.614980901518787,5.89066918001885,4.05170339094064,2.29774753161092,1.19565328787573,1.44502572063679,1.91929738361381,1.67873732959462,1.39453031198704,2.19578565995122,3.15335468296094,4.50639387962382,3.01436916852553,1.45875512794317,1.05611537004302,4.61693441404417,0.852912632023768,2.93130321795085,0.482428071556262,1.13590540179814,0.465873547335386,2.28618749023607,2.13495501709919,0.638849301766425,2.18964298866362,4.00260008901783,1.45040839696109,5.3143966868925,2.52873194577905,0.601473858619324,0.539135873022719],"text":["Alabama <br> share for trump 59.90%","Alaska <br> share for trump 54.20%","Arizona <br> share for trump 52.70%","Arkansas <br> share for trump 60.10%","California <br> share for trump 36.40%","Colorado <br> share for trump 45.70%","Connecticut <br> share for trump 40.30%","Delaware <br> share for trump 39.40%","District of Columbia <br> share for trump 7.40%","Florida <br> share for trump 48.30%","Georgia <br> share for trump 52.20%","Idaho <br> share for trump 64.10%","Illinois <br> share for trump 40.20%","Indiana <br> share for trump 53.70%","Iowa <br> share for trump 46.00%","Kansas <br> share for trump 59.40%","Kentucky <br> share for trump 60.20%","Louisiana <br> share for trump 57.10%","Maine <br> share for trump 40.70%","Maryland <br> share for trump 35.10%","Massachusetts <br> share for trump 37.20%","Michigan <br> share for trump 44.60%","Minnesota <br> share for trump 44.50%","Mississippi <br> share for trump 54.40%","Missouri <br> share for trump 53.50%","Montana <br> share for trump 55.20%","Nebraska <br> share for trump 59.30%","Nevada <br> share for trump 44.70%","New Hampshire <br> share for trump 46.30%","New Jersey <br> share for trump 39.70%","New Mexico <br> share for trump 42.20%","New York <br> share for trump 34.60%","North Carolina <br> share for trump 49.80%","North Dakota <br> share for trump 57.90%","Ohio <br> share for trump 47.40%","Oklahoma <br> share for trump 66.10%","Oregon <br> share for trump 41.80%","Pennsylvania <br> share for trump 46.30%","Rhode Island <br> share for trump 35.10%","South Carolina <br> share for trump 54.50%","South Dakota <br> share for trump 57.40%","Tennessee <br> share for trump 59.00%","Texas <br> share for trump 56.10%","Utah <br> share for trump 72.10%","Vermont <br> share for trump 31.10%","Virginia <br> share for trump 46.60%","Washington <br> share for trump 40.90%","West Virginia <br> share for trump 62.00%","Wisconsin <br> share for trump 45.60%","Wyoming <br> share for trump 67.80%"],"locations":["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":0.420514815262585,"cmax":16.8827165024884,"colorscale":[["0","rgba(255,245,240,1)"],["0.00330963217412319","rgba(255,244,239,1)"],["0.00724020198316851","rgba(255,244,238,1)"],["0.0110949572353315","rgba(255,243,237,1)"],["0.0141880797722171","rgba(255,243,237,1)"],["0.026825064958664","rgba(255,240,234,1)"],["0.0387913839853059","rgba(255,238,231,1)"],["0.0445151303107185","rgba(255,238,229,1)"],["0.0586143872998826","rgba(255,235,226,1)"],["0.0623567508465392","rgba(255,235,225,1)"],["0.0638430771992925","rgba(255,234,225,1)"],["0.0709580821887039","rgba(255,233,223,1)"],["0.0826695064088102","rgba(255,231,220,1)"],["0.0902536624681912","rgba(254,230,218,1)"],["0.106081893039716","rgba(254,227,215,1)"],["0.111271385408798","rgba(254,226,213,1)"],["0.11705689634643","rgba(254,225,212,1)"],["0.136011692559199","rgba(254,221,206,1)"],["0.154000323443347","rgba(254,215,198,1)"],["0.157435272330399","rgba(254,214,197,1)"],["0.175862680251306","rgba(254,209,190,1)"],["0.2202044861199","rgba(253,196,173,1)"],["0.25435284824806","rgba(252,186,159,1)"],["0.295605142138706","rgba(253,172,144,1)"],["1","rgba(103,0,13,1)"]],"showscale":false,"color":[1.3808898651561,1.48937264916067,3.34805113558664,0.420514815262585,2.37241981189183,1.88413647670102,2.96383119359633,1.57552267964897,16.8827165024884,1.06807949849217,0.474675629191675,1.60414463443326,0.897081333757898,2.71343987643412,0.545959163539177,1.89091504080132,4.65270703981678,0.730244567331498,3.00417806063783,0.614980901518787,5.89066918001885,4.05170339094064,2.29774753161092,1.19565328787573,1.44502572063679,1.91929738361381,1.67873732959462,1.39453031198704,2.19578565995122,3.15335468296094,4.50639387962382,3.01436916852553,1.45875512794317,1.05611537004302,4.61693441404417,0.852912632023768,2.93130321795085,0.482428071556262,1.13590540179814,0.465873547335386,2.28618749023607,2.13495501709919,0.638849301766425,2.18964298866362,4.00260008901783,1.45040839696109,5.3143966868925,2.52873194577905,0.601473858619324,0.539135873022719]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="head" class="section level1">
+<h1>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</h1>
 <pre class="r"><code>library(reshape2)</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;reshape2&#39;</code></pre>
@@ -860,10 +950,8 @@ plot_geo(map_data_2016, locationmode = &#39;USA-states&#39;) %&gt;%
 ## 
 ##     smiths</code></pre>
 <pre class="r"><code>hate_crime_10days&lt;-read_csv(&quot;./data/hate_crime_10days.csv&quot;)</code></pre>
-<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
-##   X1 = col_integer(),
 ##   state = col_character(),
 ##   hate_crimes_per_100k_splc = col_double()
 ## )</code></pre>
@@ -882,7 +970,7 @@ compare_rate %&gt;%
   geom_point()+
   geom_line()+
   theme(axis.text.x = element_text(angle = 90, hjust = 0.2))</code></pre>
-<p><img src="final_project_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="final_project_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <pre class="r"><code>compare_rate %&gt;% 
   mutate(hate_crimes_10days_year = hate_crimes_per_100k_splc/10 * 365) %&gt;% 
   select(state, hate_crimes_10days_year, annualprop) %&gt;% 
@@ -891,8 +979,22 @@ compare_rate %&gt;%
   ggplot(aes(x = state, y = value, fill = variable, group = variable)) +
   geom_bar(stat = &quot;identity&quot;) +
   theme(axis.text.x = element_text(angle = 90, size = 10, hjust = 1),legend.position = &quot;right&quot;)</code></pre>
-<p><img src="final_project_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
-</div>
+<p><img src="final_project_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>3e49180c6ce829d61e38b012d35be11aaf965984</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 </div>
 
 
