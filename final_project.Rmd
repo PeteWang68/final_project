@@ -177,7 +177,8 @@ hate_crime = hate_crime%>%
   select(year, state = participating_state, population = population_covered, total_incident)%>%
   filter(state != "Total") %>%
   mutate(annualprop = total_incident/population*100000)%>%
-  mutate(year = str_replace(year, ".xls", "")) 
+  mutate(year = str_replace(year, ".xls", ""))%>%
+  filter(state!="Guam1")
 ```
 
 
