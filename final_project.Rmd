@@ -150,9 +150,7 @@ merge_data =
 ```
 
 
-
 #dataset for annual report in state division
-
 ```{r}
 #list
 df = list.files(path = "./annual")
