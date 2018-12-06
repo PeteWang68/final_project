@@ -25,6 +25,13 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.8.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
 <script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
 <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
@@ -328,12 +335,9 @@ div.tocify {
 </div>
 <div id="regression" class="section level2">
 <h2>Regression</h2>
-<<<<<<< HEAD
 <p>Firstly, we do the regression based on several common socioeconomic factors including “Median annual household income”, “Share of the population that is unemployed”, “Share of the population with high school degree”, “Share of the population that are not U.S. citizens”, “Share of the population that is white”. After the log transforation and stepwise regression, we get model 1 as following, with median income as the only predictor.</p>
 <div id="model-1" class="section level3">
 <h3>Model 1</h3>
-=======
->>>>>>> 56c70956f1f8f24818d3c6af3715cb3dd2be405a
 <table>
 <thead>
 <tr class="header">
@@ -347,7 +351,6 @@ div.tocify {
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<<<<<<< HEAD
 <td align="right">-0.7028500</td>
 <td align="right">0.7260155</td>
 <td align="right">-0.9680922</td>
@@ -359,31 +362,15 @@ div.tocify {
 <td align="right">0.0000122</td>
 <td align="right">1.7571310</td>
 <td align="right">0.0854082</td>
-=======
-<td align="right">-0.7447166</td>
-<td align="right">0.7347082</td>
-<td align="right">-1.013622</td>
-<td align="right">0.3158453</td>
-</tr>
-<tr class="even">
-<td align="left">median_income</td>
-<td align="right">0.0000217</td>
-<td align="right">0.0000123</td>
-<td align="right">1.761218</td>
-<td align="right">0.0845705</td>
->>>>>>> 56c70956f1f8f24818d3c6af3715cb3dd2be405a
 </tr>
 </tbody>
 </table>
-<p><img src="Situation_in_2016_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p><span class="math display">\[log\textrm{ crime_rate} = -0.74 + 0.000021 \textrm{median_income}\]</span></p>
-<<<<<<< HEAD
-<p>After that, we enter the factor of Share of 2016 U.S. presidential voters who voted for Donald Trump to make the prediction since a significant crime increase has been observed with the election. After log transformation and stepwise, the second model is thus made.</p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD After that, we enter the factor of Share of 2016 U.S. presidential voters who voted for Donald Trump to make the prediction since a significant crime increase has been observed with the election. After log transformation and stepwise, the second model is thus made.</p>
 </div>
 <div id="model-2" class="section level3">
 <h3>Model 2</h3>
-=======
->>>>>>> 56c70956f1f8f24818d3c6af3715cb3dd2be405a
+<p>======= &gt;&gt;&gt;&gt;&gt;&gt;&gt; 56c70956f1f8f24818d3c6af3715cb3dd2be405a</p>
 <table>
 <thead>
 <tr class="header">
@@ -397,7 +384,6 @@ div.tocify {
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<<<<<<< HEAD
 <td align="right">1.955463</td>
 <td align="right">0.4630424</td>
 <td align="right">4.223075</td>
@@ -409,345 +395,11 @@ div.tocify {
 <td align="right">0.9299823</td>
 <td align="right">-3.094242</td>
 <td align="right">0.0033187</td>
-=======
-<td align="right">1.3869442</td>
-<td align="right">0.817485</td>
-<td align="right">1.6965989</td>
-<td align="right">0.2318636</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump34.60%</td>
-<td align="right">-0.2835536</td>
-<td align="right">1.156098</td>
-<td align="right">-0.2452677</td>
-<td align="right">0.8291204</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump35.10%</td>
-<td align="right">-1.5663112</td>
-<td align="right">1.001211</td>
-<td align="right">-1.5644174</td>
-<td align="right">0.2581784</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump36.40%</td>
-<td align="right">-0.5230337</td>
-<td align="right">1.156098</td>
-<td align="right">-0.4524128</td>
-<td align="right">0.6953071</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump37.20%</td>
-<td align="right">0.3864254</td>
-<td align="right">1.156098</td>
-<td align="right">0.3342496</td>
-<td align="right">0.7699870</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump39.40%</td>
-<td align="right">-0.9323571</td>
-<td align="right">1.156098</td>
-<td align="right">-0.8064686</td>
-<td align="right">0.5046269</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump39.70%</td>
-<td align="right">-0.2384773</td>
-<td align="right">1.156098</td>
-<td align="right">-0.2062777</td>
-<td align="right">0.8556669</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump40.20%</td>
-<td align="right">-1.4955529</td>
-<td align="right">1.156098</td>
-<td align="right">-1.2936208</td>
-<td align="right">0.3250530</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump40.30%</td>
-<td align="right">-0.3004614</td>
-<td align="right">1.156098</td>
-<td align="right">-0.2598926</td>
-<td align="right">0.8192549</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump40.70%</td>
-<td align="right">-0.2869402</td>
-<td align="right">1.156098</td>
-<td align="right">-0.2481970</td>
-<td align="right">0.8271401</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump40.90%</td>
-<td align="right">0.2834753</td>
-<td align="right">1.156098</td>
-<td align="right">0.2452000</td>
-<td align="right">0.8291662</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump41.80%</td>
-<td align="right">-0.3114971</td>
-<td align="right">1.156098</td>
-<td align="right">-0.2694382</td>
-<td align="right">0.8128449</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump42.20%</td>
-<td align="right">0.1185531</td>
-<td align="right">1.156098</td>
-<td align="right">0.1025458</td>
-<td align="right">0.9276790</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump44.50%</td>
-<td align="right">-0.5550149</td>
-<td align="right">1.156098</td>
-<td align="right">-0.4800758</td>
-<td align="right">0.6785515</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump44.60%</td>
-<td align="right">0.0121932</td>
-<td align="right">1.156098</td>
-<td align="right">0.0105469</td>
-<td align="right">0.9925424</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump44.70%</td>
-<td align="right">-1.0543865</td>
-<td align="right">1.156098</td>
-<td align="right">-0.9120214</td>
-<td align="right">0.4580302</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump45.60%</td>
-<td align="right">-1.8953164</td>
-<td align="right">1.156098</td>
-<td align="right">-1.6394075</td>
-<td align="right">0.2428028</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump45.70%</td>
-<td align="right">-0.7534746</td>
-<td align="right">1.156098</td>
-<td align="right">-0.6517391</td>
-<td align="right">0.5814580</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump46.00%</td>
-<td align="right">-1.9921553</td>
-<td align="right">1.156098</td>
-<td align="right">-1.7231711</td>
-<td align="right">0.2269991</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump46.30%</td>
-<td align="right">-1.3581359</td>
-<td align="right">1.001211</td>
-<td align="right">-1.3564938</td>
-<td align="right">0.3077740</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump46.60%</td>
-<td align="right">-1.0150990</td>
-<td align="right">1.156098</td>
-<td align="right">-0.8780386</td>
-<td align="right">0.4725283</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump47.40%</td>
-<td align="right">0.1427868</td>
-<td align="right">1.156098</td>
-<td align="right">0.1235075</td>
-<td align="right">0.9129982</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump48.30%</td>
-<td align="right">-1.3210820</td>
-<td align="right">1.156098</td>
-<td align="right">-1.1427072</td>
-<td align="right">0.3715105</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump49.80%</td>
-<td align="right">-1.0093608</td>
-<td align="right">1.156098</td>
-<td align="right">-0.8730751</td>
-<td align="right">0.4746856</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump52.20%</td>
-<td align="right">-2.1320678</td>
-<td align="right">1.156098</td>
-<td align="right">-1.8441923</td>
-<td align="right">0.2064628</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump52.70%</td>
-<td align="right">-0.1785657</td>
-<td align="right">1.156098</td>
-<td align="right">-0.1544555</td>
-<td align="right">0.8914291</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump53.50%</td>
-<td align="right">-1.0188171</td>
-<td align="right">1.156098</td>
-<td align="right">-0.8812546</td>
-<td align="right">0.4711360</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump53.70%</td>
-<td align="right">-0.3887270</td>
-<td align="right">1.156098</td>
-<td align="right">-0.3362404</td>
-<td align="right">0.7686901</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump54.20%</td>
-<td align="right">-0.9885892</td>
-<td align="right">1.156098</td>
-<td align="right">-0.8551082</td>
-<td align="right">0.4825796</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump54.40%</td>
-<td align="right">-1.2082515</td>
-<td align="right">1.156098</td>
-<td align="right">-1.0451113</td>
-<td align="right">0.4056740</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump54.50%</td>
-<td align="right">-2.1507852</td>
-<td align="right">1.156098</td>
-<td align="right">-1.8603825</td>
-<td align="right">0.2039044</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump55.20%</td>
-<td align="right">-0.7349850</td>
-<td align="right">1.156098</td>
-<td align="right">-0.6357461</td>
-<td align="right">0.5899840</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump56.10%</td>
-<td align="right">-1.8350309</td>
-<td align="right">1.156098</td>
-<td align="right">-1.5872619</td>
-<td align="right">0.2533653</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump57.10%</td>
-<td align="right">-1.7013199</td>
-<td align="right">1.156098</td>
-<td align="right">-1.4716048</td>
-<td align="right">0.2789733</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump57.40%</td>
-<td align="right">-0.5600586</td>
-<td align="right">1.156098</td>
-<td align="right">-0.4844385</td>
-<td align="right">0.6759359</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump57.90%</td>
-<td align="right">-1.3323467</td>
-<td align="right">1.156098</td>
-<td align="right">-1.1524510</td>
-<td align="right">0.3682846</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump59.00%</td>
-<td align="right">-0.6284986</td>
-<td align="right">1.156098</td>
-<td align="right">-0.5436376</td>
-<td align="right">0.6411880</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump59.30%</td>
-<td align="right">-0.8689023</td>
-<td align="right">1.156098</td>
-<td align="right">-0.7515816</td>
-<td align="right">0.5307081</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump59.40%</td>
-<td align="right">-0.7498833</td>
-<td align="right">1.156098</td>
-<td align="right">-0.6486328</td>
-<td align="right">0.5831055</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump59.90%</td>
-<td align="right">-1.0642161</td>
-<td align="right">1.156098</td>
-<td align="right">-0.9205238</td>
-<td align="right">0.4544764</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump60.10%</td>
-<td align="right">-2.2532197</td>
-<td align="right">1.156098</td>
-<td align="right">-1.9489862</td>
-<td align="right">0.1906262</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump60.20%</td>
-<td align="right">0.1505050</td>
-<td align="right">1.156098</td>
-<td align="right">0.1301836</td>
-<td align="right">0.9083339</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump62.00%</td>
-<td align="right">-0.4592262</td>
-<td align="right">1.156098</td>
-<td align="right">-0.3972207</td>
-<td align="right">0.7295868</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump64.10%</td>
-<td align="right">-0.9143535</td>
-<td align="right">1.156098</td>
-<td align="right">-0.7908959</td>
-<td align="right">0.5118964</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump66.10%</td>
-<td align="right">-1.5460423</td>
-<td align="right">1.156098</td>
-<td align="right">-1.3372931</td>
-<td align="right">0.3129294</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump67.80%</td>
-<td align="right">-2.0047318</td>
-<td align="right">1.156098</td>
-<td align="right">-1.7340495</td>
-<td align="right">0.2250462</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump7.40%</td>
-<td align="right">1.4393462</td>
-<td align="right">1.156098</td>
-<td align="right">1.2450032</td>
-<td align="right">0.3392240</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump72.10%</td>
-<td align="right">-0.6032057</td>
-<td align="right">1.156098</td>
-<td align="right">-0.5217598</td>
-<td align="right">0.6538661</td>
->>>>>>> 56c70956f1f8f24818d3c6af3715cb3dd2be405a
 </tr>
 </tbody>
 </table>
-<p><img src="Situation_in_2016_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div id="htmlwidget-22383e2ec8c097adaee4" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-22383e2ec8c097adaee4">{"x":{"data":[{"x":[0.074,0.0821898734177215,0.090379746835443,0.0985696202531646,0.106759493670886,0.114949367088608,0.123139240506329,0.131329113924051,0.139518987341772,0.147708860759494,0.155898734177215,0.164088607594937,0.172278481012658,0.18046835443038,0.188658227848101,0.196848101265823,0.205037974683544,0.213227848101266,0.221417721518987,0.229607594936709,0.23779746835443,0.245987341772152,0.254177215189873,0.262367088607595,0.270556962025316,0.278746835443038,0.28693670886076,0.295126582278481,0.303316455696203,0.311506329113924,0.319696202531646,0.327886075949367,0.336075949367089,0.34426582278481,0.352455696202532,0.360645569620253,0.368835443037975,0.377025316455696,0.385215189873418,0.393405063291139,0.401594936708861,0.409784810126582,0.417974683544304,0.426164556962025,0.434354430379747,0.442544303797468,0.45073417721519,0.458924050632911,0.467113924050633,0.475303797468354,0.483493670886076,0.491683544303797,0.499873417721519,0.508063291139241,0.516253164556962,0.524443037974684,0.532632911392405,0.540822784810127,0.549012658227848,0.55720253164557,0.565392405063291,0.573582278481013,0.581772151898734,0.589962025316456,0.598151898734177,0.606341772151899,0.61453164556962,0.622721518987342,0.630911392405063,0.639101265822785,0.647291139240506,0.655481012658228,0.663670886075949,0.671860759493671,0.680050632911392,0.688240506329114,0.696430379746835,0.704620253164557,0.712810126582279,0.721],"y":[1.74252114629779,1.71895404400121,1.69538694170462,1.67181983940804,1.64825273711145,1.62468563481487,1.60111853251829,1.5775514302217,1.55398432792512,1.53041722562853,1.50685012333195,1.48328302103536,1.45971591873878,1.43614881644219,1.41258171414561,1.38901461184902,1.36544750955244,1.34188040725586,1.31831330495927,1.29474620266269,1.2711791003661,1.24761199806952,1.22404489577293,1.20047779347635,1.17691069117976,1.15334358888318,1.12977648658659,1.10620938429001,1.08264228199342,1.05907517969684,1.03550807740026,1.01194097510367,0.988373872807087,0.964806770510502,0.941239668213918,0.917672565917333,0.894105463620748,0.870538361324164,0.846971259027579,0.823404156730995,0.79983705443441,0.776269952137826,0.752702849841241,0.729135747544656,0.705568645248072,0.682001542951487,0.658434440654903,0.634867338358318,0.611300236061734,0.587733133765149,0.564166031468565,0.54059892917198,0.517031826875396,0.493464724578811,0.469897622282226,0.446330519985642,0.422763417689057,0.399196315392473,0.375629213095888,0.352062110799303,0.328495008502719,0.304927906206134,0.28136080390955,0.257793701612965,0.234226599316381,0.210659497019796,0.187092394723211,0.163525292426627,0.139958190130042,0.116391087833458,0.0928239855368733,0.0692568832402889,0.0456897809437038,0.0221226786471194,-0.00144442364946507,-0.0250115259460497,-0.0485786282426341,-0.0721457305392186,-0.0957128328358035,-0.119279935132388],"text":["share_voters_voted_trump: 0.07400000<br />crime_rate:  1.742521146","share_voters_voted_trump: 0.08218987<br />crime_rate:  1.718954044","share_voters_voted_trump: 0.09037975<br />crime_rate:  1.695386942","share_voters_voted_trump: 0.09856962<br />crime_rate:  1.671819839","share_voters_voted_trump: 0.10675949<br />crime_rate:  1.648252737","share_voters_voted_trump: 0.11494937<br />crime_rate:  1.624685635","share_voters_voted_trump: 0.12313924<br />crime_rate:  1.601118533","share_voters_voted_trump: 0.13132911<br />crime_rate:  1.577551430","share_voters_voted_trump: 0.13951899<br />crime_rate:  1.553984328","share_voters_voted_trump: 0.14770886<br />crime_rate:  1.530417226","share_voters_voted_trump: 0.15589873<br />crime_rate:  1.506850123","share_voters_voted_trump: 0.16408861<br />crime_rate:  1.483283021","share_voters_voted_trump: 0.17227848<br />crime_rate:  1.459715919","share_voters_voted_trump: 0.18046835<br />crime_rate:  1.436148816","share_voters_voted_trump: 0.18865823<br />crime_rate:  1.412581714","share_voters_voted_trump: 0.19684810<br />crime_rate:  1.389014612","share_voters_voted_trump: 0.20503797<br />crime_rate:  1.365447510","share_voters_voted_trump: 0.21322785<br />crime_rate:  1.341880407","share_voters_voted_trump: 0.22141772<br />crime_rate:  1.318313305","share_voters_voted_trump: 0.22960759<br />crime_rate:  1.294746203","share_voters_voted_trump: 0.23779747<br />crime_rate:  1.271179100","share_voters_voted_trump: 0.24598734<br />crime_rate:  1.247611998","share_voters_voted_trump: 0.25417722<br />crime_rate:  1.224044896","share_voters_voted_trump: 0.26236709<br />crime_rate:  1.200477793","share_voters_voted_trump: 0.27055696<br />crime_rate:  1.176910691","share_voters_voted_trump: 0.27874684<br />crime_rate:  1.153343589","share_voters_voted_trump: 0.28693671<br />crime_rate:  1.129776487","share_voters_voted_trump: 0.29512658<br />crime_rate:  1.106209384","share_voters_voted_trump: 0.30331646<br />crime_rate:  1.082642282","share_voters_voted_trump: 0.31150633<br />crime_rate:  1.059075180","share_voters_voted_trump: 0.31969620<br />crime_rate:  1.035508077","share_voters_voted_trump: 0.32788608<br />crime_rate:  1.011940975","share_voters_voted_trump: 0.33607595<br />crime_rate:  0.988373873","share_voters_voted_trump: 0.34426582<br />crime_rate:  0.964806771","share_voters_voted_trump: 0.35245570<br />crime_rate:  0.941239668","share_voters_voted_trump: 0.36064557<br />crime_rate:  0.917672566","share_voters_voted_trump: 0.36883544<br />crime_rate:  0.894105464","share_voters_voted_trump: 0.37702532<br />crime_rate:  0.870538361","share_voters_voted_trump: 0.38521519<br />crime_rate:  0.846971259","share_voters_voted_trump: 0.39340506<br />crime_rate:  0.823404157","share_voters_voted_trump: 0.40159494<br />crime_rate:  0.799837054","share_voters_voted_trump: 0.40978481<br />crime_rate:  0.776269952","share_voters_voted_trump: 0.41797468<br />crime_rate:  0.752702850","share_voters_voted_trump: 0.42616456<br />crime_rate:  0.729135748","share_voters_voted_trump: 0.43435443<br />crime_rate:  0.705568645","share_voters_voted_trump: 0.44254430<br />crime_rate:  0.682001543","share_voters_voted_trump: 0.45073418<br />crime_rate:  0.658434441","share_voters_voted_trump: 0.45892405<br />crime_rate:  0.634867338","share_voters_voted_trump: 0.46711392<br />crime_rate:  0.611300236","share_voters_voted_trump: 0.47530380<br />crime_rate:  0.587733134","share_voters_voted_trump: 0.48349367<br />crime_rate:  0.564166031","share_voters_voted_trump: 0.49168354<br />crime_rate:  0.540598929","share_voters_voted_trump: 0.49987342<br />crime_rate:  0.517031827","share_voters_voted_trump: 0.50806329<br />crime_rate:  0.493464725","share_voters_voted_trump: 0.51625316<br />crime_rate:  0.469897622","share_voters_voted_trump: 0.52444304<br />crime_rate:  0.446330520","share_voters_voted_trump: 0.53263291<br />crime_rate:  0.422763418","share_voters_voted_trump: 0.54082278<br />crime_rate:  0.399196315","share_voters_voted_trump: 0.54901266<br />crime_rate:  0.375629213","share_voters_voted_trump: 0.55720253<br />crime_rate:  0.352062111","share_voters_voted_trump: 0.56539241<br />crime_rate:  0.328495009","share_voters_voted_trump: 0.57358228<br />crime_rate:  0.304927906","share_voters_voted_trump: 0.58177215<br />crime_rate:  0.281360804","share_voters_voted_trump: 0.58996203<br />crime_rate:  0.257793702","share_voters_voted_trump: 0.59815190<br />crime_rate:  0.234226599","share_voters_voted_trump: 0.60634177<br />crime_rate:  0.210659497","share_voters_voted_trump: 0.61453165<br />crime_rate:  0.187092395","share_voters_voted_trump: 0.62272152<br />crime_rate:  0.163525292","share_voters_voted_trump: 0.63091139<br />crime_rate:  0.139958190","share_voters_voted_trump: 0.63910127<br />crime_rate:  0.116391088","share_voters_voted_trump: 0.64729114<br />crime_rate:  0.092823986","share_voters_voted_trump: 0.65548101<br />crime_rate:  0.069256883","share_voters_voted_trump: 0.66367089<br />crime_rate:  0.045689781","share_voters_voted_trump: 0.67186076<br />crime_rate:  0.022122679","share_voters_voted_trump: 0.68005063<br />crime_rate: -0.001444424","share_voters_voted_trump: 0.68824051<br />crime_rate: -0.025011526","share_voters_voted_trump: 0.69643038<br />crime_rate: -0.048578628","share_voters_voted_trump: 0.70462025<br />crime_rate: -0.072145731","share_voters_voted_trump: 0.71281013<br />crime_rate: -0.095712833","share_voters_voted_trump: 0.72100000<br />crime_rate: -0.119279935"],"type":"scatter","mode":"lines","name":"fitted values","line":{"width":3.77952755905512,"color":"rgba(0,0,255,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.074,0.0821898734177215,0.090379746835443,0.0985696202531646,0.106759493670886,0.114949367088608,0.123139240506329,0.131329113924051,0.139518987341772,0.147708860759494,0.155898734177215,0.164088607594937,0.172278481012658,0.18046835443038,0.188658227848101,0.196848101265823,0.205037974683544,0.213227848101266,0.221417721518987,0.229607594936709,0.23779746835443,0.245987341772152,0.254177215189873,0.262367088607595,0.270556962025316,0.278746835443038,0.28693670886076,0.295126582278481,0.303316455696203,0.311506329113924,0.319696202531646,0.327886075949367,0.336075949367089,0.34426582278481,0.352455696202532,0.360645569620253,0.368835443037975,0.377025316455696,0.385215189873418,0.393405063291139,0.401594936708861,0.409784810126582,0.417974683544304,0.426164556962025,0.434354430379747,0.442544303797468,0.45073417721519,0.458924050632911,0.467113924050633,0.475303797468354,0.483493670886076,0.491683544303797,0.499873417721519,0.508063291139241,0.516253164556962,0.524443037974684,0.532632911392405,0.540822784810127,0.549012658227848,0.55720253164557,0.565392405063291,0.573582278481013,0.581772151898734,0.589962025316456,0.598151898734177,0.606341772151899,0.61453164556962,0.622721518987342,0.630911392405063,0.639101265822785,0.647291139240506,0.655481012658228,0.663670886075949,0.671860759493671,0.680050632911392,0.688240506329114,0.696430379746835,0.704620253164557,0.712810126582279,0.721,0.721,0.721,0.712810126582279,0.704620253164557,0.696430379746835,0.688240506329114,0.680050632911392,0.671860759493671,0.663670886075949,0.655481012658228,0.647291139240506,0.639101265822785,0.630911392405063,0.622721518987342,0.61453164556962,0.606341772151899,0.598151898734177,0.589962025316456,0.581772151898734,0.573582278481013,0.565392405063291,0.55720253164557,0.549012658227848,0.540822784810127,0.532632911392405,0.524443037974684,0.516253164556962,0.508063291139241,0.499873417721519,0.491683544303797,0.483493670886076,0.475303797468354,0.467113924050633,0.458924050632911,0.45073417721519,0.442544303797468,0.434354430379747,0.426164556962025,0.417974683544304,0.409784810126582,0.401594936708861,0.393405063291139,0.385215189873418,0.377025316455696,0.368835443037975,0.360645569620253,0.352455696202532,0.34426582278481,0.336075949367089,0.327886075949367,0.319696202531646,0.311506329113924,0.303316455696203,0.295126582278481,0.28693670886076,0.278746835443038,0.270556962025316,0.262367088607595,0.254177215189873,0.245987341772152,0.23779746835443,0.229607594936709,0.221417721518987,0.213227848101266,0.205037974683544,0.196848101265823,0.188658227848101,0.18046835443038,0.172278481012658,0.164088607594937,0.155898734177215,0.147708860759494,0.139518987341772,0.131329113924051,0.123139240506329,0.114949367088608,0.106759493670886,0.0985696202531646,0.090379746835443,0.0821898734177215,0.074,0.074],"y":[0.945407645507399,0.936629418839887,0.92783026587891,0.919008955085309,0.910164158427124,0.901294441964781,0.89239825534172,0.883473920033744,0.874519616188345,0.865533367859606,0.856513026414374,0.847456251850549,0.838360491727672,0.829222957362484,0.820040596886674,0.810810064699295,0.801527686770766,0.792189421167363,0.782790813062714,0.773326943384138,0.763792370104642,0.754181061034175,0.74448631678485,0.734700682383611,0.724815845783294,0.714822521282599,0.704710315615084,0.694467574221438,0.684081205002658,0.67353647670469,0.662816789070311,0.65190341210707,0.640775192401992,0.629408225568029,0.617775495918086,0.605846487713696,0.593586777319834,0.580957622904759,0.567915578579461,0.55441217358553,0.540393714411907,0.525801287736732,0.510571062396805,0.494635004231249,0.477922120527448,0.460360329952757,0.441878997728493,0.422412077416416,0.401901665335799,0.380301625981085,0.357580831368436,0.333725526196673,0.30874041971684,0.282648308678785,0.255488299702476,0.22731294195909,0.198184730277586,0.168172464516344,0.137347871008124,0.1057827536051,0.073546796012088,0.0407060187636294,0.00732181756905642,-0.026549527152385,-0.0608569870353804,-0.0955546757466909,-0.130601580276701,-0.165961201042771,-0.20160114949575,-0.237492736424998,-0.273610572245694,-0.309932191868891,-0.346437710704534,-0.383109514311258,-0.419931981639791,-0.456891240281988,-0.493974951303804,-0.531172120866902,-0.568472935760584,-0.605868620057314,-0.605868620057314,0.367308749792538,0.377047270088977,0.386880659788465,0.396817694818536,0.406868188389889,0.417043134340861,0.427354871605497,0.437817272591941,0.448445958349468,0.45925854331944,0.470274912091913,0.481517529755835,0.493011785896024,0.504786369723124,0.516873669786284,0.529310185668142,0.542136930378315,0.555399790250043,0.569149793648639,0.58344322099335,0.598341467993507,0.613910555183652,0.630220166268601,0.647342105100528,0.665348098012193,0.684306944861977,0.704281140478836,0.725323234033951,0.747472332147287,0.770751231568693,0.795164641549213,0.820698806787668,0.84732259930022,0.874989883581312,0.903642755950218,0.933215169968696,0.963636490858064,0.994834637285676,1.02673861653892,1.05928039445691,1.09239613987646,1.1260269394757,1.16011909974357,1.19462414992166,1.22949864412097,1.26470384050975,1.30020531545298,1.33597255321218,1.37197853810027,1.4081993657302,1.44461388268899,1.48120335898419,1.51795119435858,1.5548426575581,1.59186465648376,1.62900553657623,1.66625490456909,1.70360347476101,1.74104293510486,1.77856583062756,1.81616546194123,1.85383579685583,1.89157139334435,1.92936733233411,1.96721915899875,2.00512283140454,2.0430746755219,2.08107134574988,2.11910979022018,2.15718722024952,2.19530108339746,2.23344903966189,2.27162894040966,2.30983880969485,2.34807682766496,2.38634131579579,2.42463072373077,2.46294361753034,2.50127866916253,2.53963464708819,0.945407645507399],"text":["share_voters_voted_trump: 0.07400000<br />crime_rate:  1.742521146","share_voters_voted_trump: 0.08218987<br />crime_rate:  1.718954044","share_voters_voted_trump: 0.09037975<br />crime_rate:  1.695386942","share_voters_voted_trump: 0.09856962<br />crime_rate:  1.671819839","share_voters_voted_trump: 0.10675949<br />crime_rate:  1.648252737","share_voters_voted_trump: 0.11494937<br />crime_rate:  1.624685635","share_voters_voted_trump: 0.12313924<br />crime_rate:  1.601118533","share_voters_voted_trump: 0.13132911<br />crime_rate:  1.577551430","share_voters_voted_trump: 0.13951899<br />crime_rate:  1.553984328","share_voters_voted_trump: 0.14770886<br />crime_rate:  1.530417226","share_voters_voted_trump: 0.15589873<br />crime_rate:  1.506850123","share_voters_voted_trump: 0.16408861<br />crime_rate:  1.483283021","share_voters_voted_trump: 0.17227848<br />crime_rate:  1.459715919","share_voters_voted_trump: 0.18046835<br />crime_rate:  1.436148816","share_voters_voted_trump: 0.18865823<br />crime_rate:  1.412581714","share_voters_voted_trump: 0.19684810<br />crime_rate:  1.389014612","share_voters_voted_trump: 0.20503797<br />crime_rate:  1.365447510","share_voters_voted_trump: 0.21322785<br />crime_rate:  1.341880407","share_voters_voted_trump: 0.22141772<br />crime_rate:  1.318313305","share_voters_voted_trump: 0.22960759<br />crime_rate:  1.294746203","share_voters_voted_trump: 0.23779747<br />crime_rate:  1.271179100","share_voters_voted_trump: 0.24598734<br />crime_rate:  1.247611998","share_voters_voted_trump: 0.25417722<br />crime_rate:  1.224044896","share_voters_voted_trump: 0.26236709<br />crime_rate:  1.200477793","share_voters_voted_trump: 0.27055696<br />crime_rate:  1.176910691","share_voters_voted_trump: 0.27874684<br />crime_rate:  1.153343589","share_voters_voted_trump: 0.28693671<br />crime_rate:  1.129776487","share_voters_voted_trump: 0.29512658<br />crime_rate:  1.106209384","share_voters_voted_trump: 0.30331646<br />crime_rate:  1.082642282","share_voters_voted_trump: 0.31150633<br />crime_rate:  1.059075180","share_voters_voted_trump: 0.31969620<br />crime_rate:  1.035508077","share_voters_voted_trump: 0.32788608<br />crime_rate:  1.011940975","share_voters_voted_trump: 0.33607595<br />crime_rate:  0.988373873","share_voters_voted_trump: 0.34426582<br />crime_rate:  0.964806771","share_voters_voted_trump: 0.35245570<br />crime_rate:  0.941239668","share_voters_voted_trump: 0.36064557<br />crime_rate:  0.917672566","share_voters_voted_trump: 0.36883544<br />crime_rate:  0.894105464","share_voters_voted_trump: 0.37702532<br />crime_rate:  0.870538361","share_voters_voted_trump: 0.38521519<br />crime_rate:  0.846971259","share_voters_voted_trump: 0.39340506<br />crime_rate:  0.823404157","share_voters_voted_trump: 0.40159494<br />crime_rate:  0.799837054","share_voters_voted_trump: 0.40978481<br />crime_rate:  0.776269952","share_voters_voted_trump: 0.41797468<br />crime_rate:  0.752702850","share_voters_voted_trump: 0.42616456<br />crime_rate:  0.729135748","share_voters_voted_trump: 0.43435443<br />crime_rate:  0.705568645","share_voters_voted_trump: 0.44254430<br />crime_rate:  0.682001543","share_voters_voted_trump: 0.45073418<br />crime_rate:  0.658434441","share_voters_voted_trump: 0.45892405<br />crime_rate:  0.634867338","share_voters_voted_trump: 0.46711392<br />crime_rate:  0.611300236","share_voters_voted_trump: 0.47530380<br />crime_rate:  0.587733134","share_voters_voted_trump: 0.48349367<br />crime_rate:  0.564166031","share_voters_voted_trump: 0.49168354<br />crime_rate:  0.540598929","share_voters_voted_trump: 0.49987342<br />crime_rate:  0.517031827","share_voters_voted_trump: 0.50806329<br />crime_rate:  0.493464725","share_voters_voted_trump: 0.51625316<br />crime_rate:  0.469897622","share_voters_voted_trump: 0.52444304<br />crime_rate:  0.446330520","share_voters_voted_trump: 0.53263291<br />crime_rate:  0.422763418","share_voters_voted_trump: 0.54082278<br />crime_rate:  0.399196315","share_voters_voted_trump: 0.54901266<br />crime_rate:  0.375629213","share_voters_voted_trump: 0.55720253<br />crime_rate:  0.352062111","share_voters_voted_trump: 0.56539241<br />crime_rate:  0.328495009","share_voters_voted_trump: 0.57358228<br />crime_rate:  0.304927906","share_voters_voted_trump: 0.58177215<br />crime_rate:  0.281360804","share_voters_voted_trump: 0.58996203<br />crime_rate:  0.257793702","share_voters_voted_trump: 0.59815190<br />crime_rate:  0.234226599","share_voters_voted_trump: 0.60634177<br />crime_rate:  0.210659497","share_voters_voted_trump: 0.61453165<br />crime_rate:  0.187092395","share_voters_voted_trump: 0.62272152<br />crime_rate:  0.163525292","share_voters_voted_trump: 0.63091139<br />crime_rate:  0.139958190","share_voters_voted_trump: 0.63910127<br />crime_rate:  0.116391088","share_voters_voted_trump: 0.64729114<br />crime_rate:  0.092823986","share_voters_voted_trump: 0.65548101<br />crime_rate:  0.069256883","share_voters_voted_trump: 0.66367089<br />crime_rate:  0.045689781","share_voters_voted_trump: 0.67186076<br />crime_rate:  0.022122679","share_voters_voted_trump: 0.68005063<br />crime_rate: -0.001444424","share_voters_voted_trump: 0.68824051<br />crime_rate: -0.025011526","share_voters_voted_trump: 0.69643038<br />crime_rate: -0.048578628","share_voters_voted_trump: 0.70462025<br />crime_rate: -0.072145731","share_voters_voted_trump: 0.71281013<br />crime_rate: -0.095712833","share_voters_voted_trump: 0.72100000<br />crime_rate: -0.119279935","share_voters_voted_trump: 0.72100000<br />crime_rate: -0.119279935","share_voters_voted_trump: 0.72100000<br />crime_rate: -0.119279935","share_voters_voted_trump: 0.71281013<br />crime_rate: -0.095712833","share_voters_voted_trump: 0.70462025<br />crime_rate: -0.072145731","share_voters_voted_trump: 0.69643038<br />crime_rate: -0.048578628","share_voters_voted_trump: 0.68824051<br />crime_rate: -0.025011526","share_voters_voted_trump: 0.68005063<br />crime_rate: -0.001444424","share_voters_voted_trump: 0.67186076<br />crime_rate:  0.022122679","share_voters_voted_trump: 0.66367089<br />crime_rate:  0.045689781","share_voters_voted_trump: 0.65548101<br />crime_rate:  0.069256883","share_voters_voted_trump: 0.64729114<br />crime_rate:  0.092823986","share_voters_voted_trump: 0.63910127<br />crime_rate:  0.116391088","share_voters_voted_trump: 0.63091139<br />crime_rate:  0.139958190","share_voters_voted_trump: 0.62272152<br />crime_rate:  0.163525292","share_voters_voted_trump: 0.61453165<br />crime_rate:  0.187092395","share_voters_voted_trump: 0.60634177<br />crime_rate:  0.210659497","share_voters_voted_trump: 0.59815190<br />crime_rate:  0.234226599","share_voters_voted_trump: 0.58996203<br />crime_rate:  0.257793702","share_voters_voted_trump: 0.58177215<br />crime_rate:  0.281360804","share_voters_voted_trump: 0.57358228<br />crime_rate:  0.304927906","share_voters_voted_trump: 0.56539241<br />crime_rate:  0.328495009","share_voters_voted_trump: 0.55720253<br />crime_rate:  0.352062111","share_voters_voted_trump: 0.54901266<br />crime_rate:  0.375629213","share_voters_voted_trump: 0.54082278<br />crime_rate:  0.399196315","share_voters_voted_trump: 0.53263291<br />crime_rate:  0.422763418","share_voters_voted_trump: 0.52444304<br />crime_rate:  0.446330520","share_voters_voted_trump: 0.51625316<br />crime_rate:  0.469897622","share_voters_voted_trump: 0.50806329<br />crime_rate:  0.493464725","share_voters_voted_trump: 0.49987342<br />crime_rate:  0.517031827","share_voters_voted_trump: 0.49168354<br />crime_rate:  0.540598929","share_voters_voted_trump: 0.48349367<br />crime_rate:  0.564166031","share_voters_voted_trump: 0.47530380<br />crime_rate:  0.587733134","share_voters_voted_trump: 0.46711392<br />crime_rate:  0.611300236","share_voters_voted_trump: 0.45892405<br />crime_rate:  0.634867338","share_voters_voted_trump: 0.45073418<br />crime_rate:  0.658434441","share_voters_voted_trump: 0.44254430<br />crime_rate:  0.682001543","share_voters_voted_trump: 0.43435443<br />crime_rate:  0.705568645","share_voters_voted_trump: 0.42616456<br />crime_rate:  0.729135748","share_voters_voted_trump: 0.41797468<br />crime_rate:  0.752702850","share_voters_voted_trump: 0.40978481<br />crime_rate:  0.776269952","share_voters_voted_trump: 0.40159494<br />crime_rate:  0.799837054","share_voters_voted_trump: 0.39340506<br />crime_rate:  0.823404157","share_voters_voted_trump: 0.38521519<br />crime_rate:  0.846971259","share_voters_voted_trump: 0.37702532<br />crime_rate:  0.870538361","share_voters_voted_trump: 0.36883544<br />crime_rate:  0.894105464","share_voters_voted_trump: 0.36064557<br />crime_rate:  0.917672566","share_voters_voted_trump: 0.35245570<br />crime_rate:  0.941239668","share_voters_voted_trump: 0.34426582<br />crime_rate:  0.964806771","share_voters_voted_trump: 0.33607595<br />crime_rate:  0.988373873","share_voters_voted_trump: 0.32788608<br />crime_rate:  1.011940975","share_voters_voted_trump: 0.31969620<br />crime_rate:  1.035508077","share_voters_voted_trump: 0.31150633<br />crime_rate:  1.059075180","share_voters_voted_trump: 0.30331646<br />crime_rate:  1.082642282","share_voters_voted_trump: 0.29512658<br />crime_rate:  1.106209384","share_voters_voted_trump: 0.28693671<br />crime_rate:  1.129776487","share_voters_voted_trump: 0.27874684<br />crime_rate:  1.153343589","share_voters_voted_trump: 0.27055696<br />crime_rate:  1.176910691","share_voters_voted_trump: 0.26236709<br />crime_rate:  1.200477793","share_voters_voted_trump: 0.25417722<br />crime_rate:  1.224044896","share_voters_voted_trump: 0.24598734<br />crime_rate:  1.247611998","share_voters_voted_trump: 0.23779747<br />crime_rate:  1.271179100","share_voters_voted_trump: 0.22960759<br />crime_rate:  1.294746203","share_voters_voted_trump: 0.22141772<br />crime_rate:  1.318313305","share_voters_voted_trump: 0.21322785<br />crime_rate:  1.341880407","share_voters_voted_trump: 0.20503797<br />crime_rate:  1.365447510","share_voters_voted_trump: 0.19684810<br />crime_rate:  1.389014612","share_voters_voted_trump: 0.18865823<br />crime_rate:  1.412581714","share_voters_voted_trump: 0.18046835<br />crime_rate:  1.436148816","share_voters_voted_trump: 0.17227848<br />crime_rate:  1.459715919","share_voters_voted_trump: 0.16408861<br />crime_rate:  1.483283021","share_voters_voted_trump: 0.15589873<br />crime_rate:  1.506850123","share_voters_voted_trump: 0.14770886<br />crime_rate:  1.530417226","share_voters_voted_trump: 0.13951899<br />crime_rate:  1.553984328","share_voters_voted_trump: 0.13132911<br />crime_rate:  1.577551430","share_voters_voted_trump: 0.12313924<br />crime_rate:  1.601118533","share_voters_voted_trump: 0.11494937<br />crime_rate:  1.624685635","share_voters_voted_trump: 0.10675949<br />crime_rate:  1.648252737","share_voters_voted_trump: 0.09856962<br />crime_rate:  1.671819839","share_voters_voted_trump: 0.09037975<br />crime_rate:  1.695386942","share_voters_voted_trump: 0.08218987<br />crime_rate:  1.718954044","share_voters_voted_trump: 0.07400000<br />crime_rate:  1.742521146","share_voters_voted_trump: 0.07400000<br />crime_rate:  1.742521146"],"type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(0,0,255,0.4)","dash":"solid"},"fill":"toself","fillcolor":"rgba(153,153,153,0.4)","hoveron":"points","hoverinfo":"x+y","showlegend":false,"xaxis":"x","yaxis":"y","frame":null},{"x":[0.599,0.542,0.527,0.601,0.364,0.457,0.403,0.394,0.074,0.483,0.522,0.641,0.402,0.537,0.46,0.594,0.602,0.571,0.407,0.351,0.372,0.446,0.445,0.544,0.535,0.552,0.593,0.447,0.463,0.397,0.422,0.346,0.498,0.579,0.474,0.661,0.418,0.463,0.351,0.545,0.574,0.59,0.561,0.721,0.311,0.466,0.409,0.62,0.456],"y":[0.322728121178959,0.398354990463024,1.2083784259833,-0.866275567698499,0.863910451938893,0.633469613393069,1.08648275358404,0.454587077318801,2.82629040646213,0.0658621745581461,-0.745123594132549,0.47259067647221,-0.108608747948169,0.998217157074493,-0.605211098087086,0.63706086048157,1.53744920931078,-0.314375777205844,1.10000400665848,-0.486164066098815,1.77336960411646,1.39913738305083,0.831929308991953,0.178692720420829,0.368127121154625,0.651959173030625,0.518041921303148,0.332557664663108,0.786539914125534,1.14846686486777,1.50549725044544,1.10339057728415,0.377583419911969,0.0545974312511931,1.52973093810539,-0.159098161092852,1.07544710842533,-0.728923443810596,0.127430043766546,-0.763841039330027,0.826885578735623,0.758445577184241,-0.448086686899264,0.78373851166433,1.38694417220139,0.371845169852312,1.6704194939479,0.927717969891159,-0.508372204828832],"text":["share_voters_voted_trump: 0.599<br />crime_rate:  0.32272812","share_voters_voted_trump: 0.542<br />crime_rate:  0.39835499","share_voters_voted_trump: 0.527<br />crime_rate:  1.20837843","share_voters_voted_trump: 0.601<br />crime_rate: -0.86627557","share_voters_voted_trump: 0.364<br />crime_rate:  0.86391045","share_voters_voted_trump: 0.457<br />crime_rate:  0.63346961","share_voters_voted_trump: 0.403<br />crime_rate:  1.08648275","share_voters_voted_trump: 0.394<br />crime_rate:  0.45458708","share_voters_voted_trump: 0.074<br />crime_rate:  2.82629041","share_voters_voted_trump: 0.483<br />crime_rate:  0.06586217","share_voters_voted_trump: 0.522<br />crime_rate: -0.74512359","share_voters_voted_trump: 0.641<br />crime_rate:  0.47259068","share_voters_voted_trump: 0.402<br />crime_rate: -0.10860875","share_voters_voted_trump: 0.537<br />crime_rate:  0.99821716","share_voters_voted_trump: 0.460<br />crime_rate: -0.60521110","share_voters_voted_trump: 0.594<br />crime_rate:  0.63706086","share_voters_voted_trump: 0.602<br />crime_rate:  1.53744921","share_voters_voted_trump: 0.571<br />crime_rate: -0.31437578","share_voters_voted_trump: 0.407<br />crime_rate:  1.10000401","share_voters_voted_trump: 0.351<br />crime_rate: -0.48616407","share_voters_voted_trump: 0.372<br />crime_rate:  1.77336960","share_voters_voted_trump: 0.446<br />crime_rate:  1.39913738","share_voters_voted_trump: 0.445<br />crime_rate:  0.83192931","share_voters_voted_trump: 0.544<br />crime_rate:  0.17869272","share_voters_voted_trump: 0.535<br />crime_rate:  0.36812712","share_voters_voted_trump: 0.552<br />crime_rate:  0.65195917","share_voters_voted_trump: 0.593<br />crime_rate:  0.51804192","share_voters_voted_trump: 0.447<br />crime_rate:  0.33255766","share_voters_voted_trump: 0.463<br />crime_rate:  0.78653991","share_voters_voted_trump: 0.397<br />crime_rate:  1.14846686","share_voters_voted_trump: 0.422<br />crime_rate:  1.50549725","share_voters_voted_trump: 0.346<br />crime_rate:  1.10339058","share_voters_voted_trump: 0.498<br />crime_rate:  0.37758342","share_voters_voted_trump: 0.579<br />crime_rate:  0.05459743","share_voters_voted_trump: 0.474<br />crime_rate:  1.52973094","share_voters_voted_trump: 0.661<br />crime_rate: -0.15909816","share_voters_voted_trump: 0.418<br />crime_rate:  1.07544711","share_voters_voted_trump: 0.463<br />crime_rate: -0.72892344","share_voters_voted_trump: 0.351<br />crime_rate:  0.12743004","share_voters_voted_trump: 0.545<br />crime_rate: -0.76384104","share_voters_voted_trump: 0.574<br />crime_rate:  0.82688558","share_voters_voted_trump: 0.590<br />crime_rate:  0.75844558","share_voters_voted_trump: 0.561<br />crime_rate: -0.44808669","share_voters_voted_trump: 0.721<br />crime_rate:  0.78373851","share_voters_voted_trump: 0.311<br />crime_rate:  1.38694417","share_voters_voted_trump: 0.466<br />crime_rate:  0.37184517","share_voters_voted_trump: 0.409<br />crime_rate:  1.67041949","share_voters_voted_trump: 0.620<br />crime_rate:  0.92771797","share_voters_voted_trump: 0.456<br />crime_rate: -0.50837220"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":37.2602739726027},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":"Scatterplot between hate crime rate and shared voters who voted Trump","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.04165,0.75335],"tickmode":"array","ticktext":["0.2","0.4","0.6"],"tickvals":[0.2,0.4,0.6],"categoryorder":"array","categoryarray":["0.2","0.4","0.6"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"Median annual household income","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-1.05090386640653,3.01091870517016],"tickmode":"array","ticktext":["-1","0","1","2","3"],"tickvals":[-1,0,1,2,3],"categoryorder":"array","categoryarray":["-1","0","1","2","3"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"Hate crime rate(per 100,000 population)","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"source":"A","attrs":{"c3a33b89a93d":{"x":{},"y":{},"type":"scatter"},"c3a34ac60254":{"x":{},"y":{}}},"cur_data":"c3a33b89a93d","visdat":{"c3a33b89a93d":["function (y) ","x"],"c3a34ac60254":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
 <p><span class="math display">\[log\textrm{ crime_rate} = 2.03 - 3.06 \textrm{share_voters_voted_trump}\]</span></p>
 </div>
 </div>
