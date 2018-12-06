@@ -314,3 +314,38 @@ plot_geo(map_data_2016, locationmode = 'USA-states') %>%
   )
 ```
 
+<<<<<<< HEAD
+=======
+```{r}
+
+library(reshape2)
+
+hate_crime_10days<-read_csv("./data/hate_crime_10days.csv")
+hate_crime_ave<-hate_crime %>% 
+  na.omit() %>% 
+  filter(year==2016) 
+
+
+compare_rate<-merge(hate_crime_10days, hate_crime_ave, by= "state")
+
+compare_rate %>% 
+  mutate(hate_crimes_per_100k_after = hate_crimes_per_100k_splc/10 * 365) %>% 
+  select(state, hate_crimes_per_100k_after, annualprop) %>% 
+  melt(, id = "state") %>% 
+  ggplot(aes(x = state, y = value, color = variable, group = variable))+
+  geom_point()+
+  geom_line()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 0.2))
+
+
+compare_rate %>% 
+  mutate(hate_crimes_10days_year = hate_crimes_per_100k_splc/10 * 365) %>% 
+  select(state, hate_crimes_10days_year, annualprop) %>% 
+  melt(, id = "state") %>% 
+  mutate(state = reorder(state, value)) %>% 
+  ggplot(aes(x = state, y = value, fill = variable, group = variable)) +
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, size = 10, hjust = 1),legend.position = "right")
+```
+
+>>>>>>> 3e49180c6ce829d61e38b012d35be11aaf965984

@@ -17,9 +17,11 @@ output: html_document
   
 ## Initial Questions
 
-  There were seveal questions that we wanted to find out. Did hate crimes increase over the past decade? Was this change in part due to the change in the U.S. presidency? How do hate crimes differ by state? 
-
-Did questions change as we did this project
+  There were several questions that we wanted to find out.  
+  Did hate crimes increase over the past decade? 
+  Was this change in part due to the change in the U.S. presidency? 
+  How do hate crimes differ by state? 
+  Did questions change as we did this project
 
 ## Data
 
@@ -62,6 +64,8 @@ https://www.splcenter.org/20161129/ten-days-after-harassment-and-intimidation-af
 ## Exploratory Analysis 
 
   We first created a simple plot to see how hate crimes in the U.S. changed from 2005 to 2017. This was done by aggregating the yearly hate crime reports and creating a line chart that depicting the total number of hate crime incidences over the specified timeline. We used the incidence counts for simplicity, since there could be multiple offenses commited per incident. 
+  
+  Next we found there was a change from 2016 to 2017 when it was the time for the election. We compare the hate crime rate for 10 days after the election(from 11.09.2016 - 11.18.2016) to the annual crime rate of 2016. This shows a great change. So we then change to see the relationship with share of the vote for Trump and the hate crime rate by state.
   
 ## Additional Analysis
 
