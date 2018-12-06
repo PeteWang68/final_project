@@ -65,7 +65,7 @@ compare_rate %>%
   geom_bar(stat="identity", position = "dodge", width = 0.5)+
   scale_y_continuous(expand = c(0, 0), limits = c(0, 60))+
   coord_flip() +
-  theme(axis.text.x = element_text(angle = 90, size = 10, hjust = 1),legend.position = "right") +
+  theme(axis.text.x = element_text(angle = 0, size = 10, hjust = 1),legend.position = "right") +
   ggtitle("Hate Crime Rate Before and After Trump Election") +
   labs(y = "Hate Crime Rate (per 100,000)", x = "State")
 ```
