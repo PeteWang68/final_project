@@ -17,11 +17,10 @@ output: html_document
   
 ## Initial Questions
 
-  There were several questions that we wanted to find out.  
-  Did hate crimes increase over the past decade? 
-  Was this change in part due to the change in the U.S. presidency? 
-  How do hate crimes differ by state? 
-  Did questions change as we did this project
+  There were several questions that we wanted to find out. Did hate crimes increase over the past decade? Was this change in part due to the change in the U.S. presidency? 
+How do hate crimes differ by state? 
+  
+  As we progressed through the project, some new questions arised. To see if the election affected hate crime rates, we wanted to find the relationship between the amount of Trump voters to the level of hate crime. Additionally, we wanted to find out if certain variables could be used to predict hate crime rate. 
 
 ## Data
 
@@ -68,29 +67,36 @@ https://www.splcenter.org/20161129/ten-days-after-harassment-and-intimidation-af
 
   We first created a simple plot to see how hate crimes in the U.S. changed from 2005 to 2017. This was done by aggregating the yearly hate crime reports and creating a line chart that depicting the total number of hate crime incidences over the specified timeline. We used the incidence counts for simplicity, since there could be multiple offenses commited per incident. 
   
-<<<<<<< HEAD
-## 
-  
-=======
   Next we tried to see if there was a change in the hate crime rate after Trump was elected. We did this by creating a stacked bar plot comparing the hate crime rate for 2016 to the hate crime rate in the 10 days after the election. To accurately compare these figures, we extrapolated the yearly equivalent for the hate crime rate for the 10 days after the election. This was done by calculating the average daily hate crime rate in the 10 day period and multiplying by 365. 
   
-  Initially, we wanted to show how the hate crime rate changed as the percent of trump voters increased. However, since, many states shared similar proportions of Trump voters, the plot was not able to accurately show this change. Instead, we decided to create an interactive map of the U.S. that showed the hate crime rate for each state and its share of Trump voters for 2016.
+  Initially, we wanted to show how the hate crime rate changed as the percent of trump voters increased. However, since, many states shared similar proportions of Trump voters, the plot was not able to accurately show this change. Instead, we decided to create an interactive map of the U.S. that showed the hate crime rate for each state and its share of Trump voters for 2016. When creating the map, R was not recognizing "District of Columbia" as a state since it was not abbreviated like the other states. Therefore we manipulated the code to make R recognize this value. 
   
   Inspired by these heat maps, we decided to create a shiny app containing heat maps depicting the hate crime rate for the years 2005 to 2017. These maps allowed for analysis of the variation in the crime rate amongst the states. 
   
 Lastly, we 
->>>>>>> 5370719f22ac092742de2778b04efd9ef5939db6
   
 ## Additional Analysis
 
-  We performed a multilinear regression to see if predictors including
+  To determine if there were variables that were involved with hate crime rates, we conducted regression analyses. First, we explored the distribution of the variables. We noticed that the distribution of our outcome hate crime rate was skewed. Therefore, we transformed these values using log. To find the best model, we performed backward elimination on predictors that included household median income, proportion unemployed, proportion with high school degree, proportion of whites, and the proportion of non-citizens. In the end of the selection process, the model only contained household median income, and was itself not too significant of a factor. 
   
-  potential limits: all variables might be correlated with each other. data might not reflect actual hate crimes (not reported, reported falsely)
+  Not satisfied by the relatively insignificant results, we then repeated the process with all the previously included variables in addition to the proportion of Trump voters. After backward elimination, median household income was replaced by the proportion of Trump voters as the only significant predictor with a much lower p-value. 
   
 ## Discussion
 
   The line plot depicting the total hate crime incidence counts from 2005 to 2017 showed a wave-like pattern, decreasing from 2008 to 2014 and increasing from 2014 to 2017. There was a spike in the number of hate crimes from 2016 to 2017, potentially caused by Trump's election to Presidency at the end of 2016. We decided to look into this increase by comparing each state's share of Trump voters to the change in its hate crime rate before and after Trump was elected. 
   
-  The reesulting heat map, depicting the 
+  The stacked bar plot comparing the hate crime rate before and after Trump's election showed that hate crimes increased after the election for all states, indicating that Trump's election was a catalyst for this change. The degree of change in hate crime rate was greatest for D.C. This result is not unexpected since D.C. is the political hub for the U.S. and therefore, sentiments could be much stronger in this area, leading to more crimes.
+  
+  The heat map for 2016 showed the hate crime rate for each state and their share of Trump voters. We expected higher rates for those states with high shares of Trump voters. However, the results showed that the relationship was not as defined as we predicted. There were some states with high proportion of Trump voters that had low hate crime rates, and vice versa. 
+  
+  Next, to see what predictors were significant factors in predicting hate crime rate, we performed regression analyses. The results showed that 
+  
 
+
+<<<<<<< HEAD
  The line chart shows the number of incidents for every specific type of bis motivation each year, they are separated into three categories: "race", "religion" and "sexual orientation". The most common type of motivation in "race" is "anti-black", after 2008 the incident number has decreased over the years, but from 2016 to 2017, it increased again. Hate crime targeting American Indian or Alaskan Native keeps increasing over the years. All types of race motivation hate crime increased comparing 2017 to 2016. For "religion", the most common type of motivation is "anti- Jewish", like "anti-black" hate crime, the incidents number has a decreasing trend since 2008, but start to increase at 2014 and reach to peak at 2017. "Anti-Islamic" hate crime increased significantly since 2014 and reached a peak at 2016. As for "sexual orientation", "anti-male homosexual" hate crime has the biggest incident number. The number does not change significantly over the years.
+=======
+ The line chart showing 
+ 
+ potential limits: all variables might be correlated with each other. data might not reflect actual hate crimes (not reported, reported falsely). dataset is very small
+>>>>>>> b61c253c78092e885498ec0e1777870cb3faf7a8

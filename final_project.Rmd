@@ -177,7 +177,8 @@ hate_crime = hate_crime%>%
   select(year, state = participating_state, population = population_covered, total_incident)%>%
   filter(state != "Total") %>%
   mutate(annualprop = total_incident/population*100000)%>%
-  mutate(year = str_replace(year, ".xls", "")) 
+  mutate(year = str_replace(year, ".xls", ""))%>%
+  filter(state!="Guam1")
 ```
 
 
@@ -284,14 +285,20 @@ merge_data_log%>%
 
 ##Building the Map of hate crime rate based on 2016 
 ```{r}
-map_data_2016 = merge_data %>% 
-  mutate(#hate_crimes_per_100k_splc = as.numeric(hate_crimes_per_100k_splc),
-         #median_household_income = as.numeric(median_household_income),
+map_data_2016 = merge_data %>%
+  rbind(c("Hawaii",71223,	0.034, 0.904,	0 ,0.81, '33.1%', 0 ,0)) %>% 
+  as.tibble() %>% 
+  arrange(state)
+
+map_data<-map_data_2016 %>%         
+  mutate(
          state = as.factor(state),
          code = state.abb[state],
-         hover = with(merge_data, paste(state,'<br>' ,"share for trump",share_voters_voted_trump))
+         code = c(code[1:8],'DC',code[9:50]),
+         hover = with(map_data_2016, paste(state,'<br>' ,"share for trump",share_voters_voted_trump)),
+         crime_rate = as.numeric(crime_rate)
          ) %>% 
-  select(code, crime_rate, hover )
+  select(code, crime_rate, hover)
 
 l <- list(color = toRGB("grey"), width = 1)
 g <- list(
@@ -301,7 +308,7 @@ g <- list(
 )
 
 
-plot_geo(map_data_2016, locationmode = 'USA-states') %>%
+plot_geo(map_data, locationmode = 'USA-states') %>%
   add_trace(
     z = ~ crime_rate, text = ~hover, locations = ~code,
     color = ~ crime_rate, colors = 'Reds',marker = list(line = l)
@@ -313,8 +320,7 @@ plot_geo(map_data_2016, locationmode = 'USA-states') %>%
   )
 ```
 
-<<<<<<< HEAD
-=======
+
 ```{r}
 
 library(reshape2)
@@ -349,4 +355,19 @@ compare_rate %>%
   theme(axis.text.x = element_text(angle = 90, size = 10, hjust = 1),legend.position = "right")
 ```
 
->>>>>>> 3e49180c6ce829d61e38b012d35be11aaf965984
+
+change the bar plot
+
+```{r}
+compare_rate %>% 
+  mutate(hate_crimes_10days_year = hate_crimes_per_100k_splc/10 * 365) %>% 
+  select(state, hate_crimes_10days_year, annualprop) %>% 
+  melt(, id = "state") %>% 
+  mutate(state = factor(state, levels = state %>% unique %>% sort(decreasing = T))) %>% 
+  ggplot(aes(x = state, y = value, fill = variable, group = variable))+
+  geom_bar(stat="identity", position = "dodge", width = 0.5)+
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 60))+
+  coord_flip()
+```
+
+

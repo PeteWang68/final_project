@@ -328,6 +328,72 @@ div.tocify {
 </div>
 <div id="regression" class="section level2">
 <h2>Regression</h2>
+<p>Firstly, we do the regression based on several common socioeconomic factors including “Median annual household income”, “Share of the population that is unemployed”, “Share of the population with high school degree”, “Share of the population that are not U.S. citizens”, “Share of the population that is white”. After the log transforation and stepwise regression, we get model 1 as following, with median income as the only predictor.</p>
+<div id="model-1" class="section level3">
+<h3>Model 1</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.7028500</td>
+<td align="right">0.7260155</td>
+<td align="right">-0.9680922</td>
+<td align="right">0.3379538</td>
+</tr>
+<tr class="even">
+<td align="left">median_income</td>
+<td align="right">0.0000214</td>
+<td align="right">0.0000122</td>
+<td align="right">1.7571310</td>
+<td align="right">0.0854082</td>
+</tr>
+</tbody>
+</table>
+<p><img src="Situation_in_2016_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><span class="math display">\[log\textrm{ crime_rate} = -0.74 + 0.000021 \textrm{median_income}\]</span></p>
+<p>After that, we enter the factor of Share of 2016 U.S. presidential voters who voted for Donald Trump to make the prediction since a significant crime increase has been observed with the election. After log transformation and stepwise, the second model is thus made.</p>
+</div>
+<div id="model-2" class="section level3">
+<h3>Model 2</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">1.955463</td>
+<td align="right">0.4630424</td>
+<td align="right">4.223075</td>
+<td align="right">0.0001096</td>
+</tr>
+<tr class="even">
+<td align="left">share_voters_voted_trump</td>
+<td align="right">-2.877591</td>
+<td align="right">0.9299823</td>
+<td align="right">-3.094242</td>
+<td align="right">0.0033187</td>
+</tr>
+</tbody>
+</table>
+<p><img src="Situation_in_2016_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><span class="math display">\[log\textrm{ crime_rate} = 2.03 - 3.06 \textrm{share_voters_voted_trump}\]</span></p>
+</div>
 </div>
 
 

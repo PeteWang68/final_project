@@ -1,6 +1,7 @@
 ---
 title: "Trump Election and Hate Crime"
 ---
+<br>
 
 ```{r include=FALSE}
 library(tidyverse)
@@ -9,62 +10,6 @@ library(plotly)
 library(reshape2)
 ```
 
-```{r include=FALSE}
-
-# data in 2016
-income = read_csv("./data/Income.csv") %>% 
-  janitor::clean_names()
-
-unemployment = read_csv("./data/Unemployment.csv") %>% 
-  janitor::clean_names()
-
-education = read_csv("./data/Educational_level.csv") %>% 
-  janitor::clean_names()
-
-ctizenship = read_csv("./data/Ctizenship.csv") %>% 
-  janitor::clean_names()
-
-race = read_csv("./data/Race.csv") %>% 
-  janitor::clean_names()
-
-vote = read_csv("./data/Vote.csv") %>% 
-  janitor::clean_names()
-
-crime_rate = read_excel("./data/2016.xls",  range = cell_rows(3:53)) %>%
-  janitor::clean_names() %>%
-  filter(participating_state != "Total") %>%
-  select(location = participating_state, population_covered,       total_number_of_incidents_reported) %>%
-  mutate(crime_rate = total_number_of_incidents_reported/population_covered*100000) 
-
-
-ctizenship =
-  ctizenship %>% 
-  select(location, non_citizen)
-
-race = 
-  race %>% 
-  select(location, white)
-
-crime_rate =
-  crime_rate %>% 
-  select(location, crime_rate)
-
-merge_data = 
-  merge(income, unemployment, by = "location") %>% 
-  merge(., education, by = "location") %>% 
-  merge(., ctizenship, by = "location") %>% 
-  merge(., race, by = "location") %>% 
-  merge(., vote, by = "location") %>%
-  merge(., crime_rate, by = "location") %>% 
-  filter(location != "United States") %>% 
-  rename(state = location, share_unemployed = unemployed, share_non_citizen = non_citizen, share_white = white)
-
-merge_data = merge_data %>%
-  mutate(median_annual_household_income = str_replace(median_annual_household_income, ",", "")) %>%
-  mutate(median_annual_household_income = gsub("\\$", "",median_annual_household_income )) %>%
-mutate(median_annual_household_income = as.numeric(median_annual_household_income)) %>%
-  select(state, median_income = median_annual_household_income, everything())
-```
 ```{r include=FALSE}
 
 #list
@@ -94,6 +39,8 @@ hate_crime = hate_crime%>%
 
 ```{r include=FALSE}
 hate_crime_10days<-read_csv("./data/hate_crime_10days.csv")
+
+merge_data<-read_csv("./data/merge_data.csv")
 hate_crime_2016<-hate_crime %>% 
   na.omit() %>% 
   filter(year == 2016) %>%
@@ -106,40 +53,54 @@ compare_rate<-merge(hate_crime_10days, hate_crime_2016, by= "state")
 
 
 ```{r echo=FALSE, fig.align="center"}
+
 compare_rate %>% 
   mutate(hate_crimes_10days_year = hate_crimes_per_100k_splc/10 * 365) %>% 
   select(state, hate_crimes_10days_year, annualprop) %>% 
   melt(, id = "state") %>% 
-  mutate(state = reorder(state, value)) %>% 
-  ggplot(aes(x = state, y = value, fill = variable, group = variable)) +
-  geom_bar(stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, size = 10, hjust = 1),legend.position = "right")
+ mutate(state = factor(state, levels = state %>% unique %>% sort(decreasing = T))) %>% 
+  ggplot(aes(x = state, y = value, fill = variable, group = variable))+
+  geom_bar(stat="identity", position = "dodge", width = 0.5)+
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 60))+
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 90, size = 10, hjust = 1),legend.position = "right") +
+  ggtitle("Hate Crime Rate Before and After Trump Election") +
+  labs(y = "Hate Crime Rate (per 100,000)", x = "State")
 ```
+
+The plot above compares the hate crime rates before and after Trump's election. The green portion depicts the rate for 2016. The red bar represents the hate crime rate in the 10 days after Trump's election, extrapolated into a year rate (for comparison purposes). As can be seen by the plot, the hate crime rate increased substantially in the days after Trump's election for most states. D.C. experienced the greatest increase, most likely due to the fact that D.C. is the political hub in the U.S. 
 
 <br>
 
 ```{r echo=FALSE}
 
-map_data_2016 = merge_data %>% 
-  mutate(state = as.factor(state),
-         code = state.abb[state],
-         hover = with(merge_data, paste(state,'<br>' ,"share for trump",share_voters_voted_trump))
-         ) %>% 
-  select(code, crime_rate, hover )
+map_data_2016 = merge_data %>%
+  rbind(c("Hawaii",71223,	0.034, 0.904,	0 ,0.81, '33.1%', 0 ,0)) %>% 
+  as.tibble() %>% 
+  arrange(state)
 
-l <- list(color = toRGB("white"), width = 2)
+map_data<-map_data_2016 %>%         
+  mutate(
+         state = as.factor(state),
+         code = state.abb[state],
+         code = c(code[1:8],'DC',code[9:50]),
+         hover = with(map_data_2016, paste(state,'<br>' ,"share for trump",share_voters_voted_trump)),
+         crime_rate = as.numeric(crime_rate)
+         ) %>% 
+  select(code, crime_rate, hover)
+
+l <- list(color = toRGB("grey"), width = 1)
 g <- list(
   scope = 'usa',
   projection = list(type = 'albers usa'),
-  showlakes = TRUE,
-  lakecolor = toRGB('white')
+  showlakes = F
 )
 
 
-plot_geo(map_data_2016, locationmode = 'USA-states') %>%
+plot_geo(map_data, locationmode = 'USA-states') %>%
   add_trace(
     z = ~ crime_rate, text = ~hover, locations = ~code,
-    color = ~ crime_rate, colors = 'Reds'
+    color = ~ crime_rate, colors = 'Reds',marker = list(line = l)
   ) %>%
   colorbar(title = "Hate crime rate ") %>%
   layout(
@@ -148,3 +109,4 @@ plot_geo(map_data_2016, locationmode = 'USA-states') %>%
   )
 ```
 
+This heat map shows each state's hate crime rate for the year 2016 and its share of Trump voters. Though our group expected to see a higher rate for those states with a large proportion of Trump voters, we instead saw little relationship between the two variables. Some states had a high percent of Trump voters, but a relatively small hate crime rate (such as Oklahoma), while others states had both a high rate and a high share of Trump voters (such as Kentucky). 
