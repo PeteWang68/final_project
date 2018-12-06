@@ -125,26 +125,33 @@ The plot above compares the hate crime rates before and after Trump's election. 
 
 ```{r echo=FALSE}
 
-map_data_2016 = merge_data %>% 
-  mutate(state = as.factor(state),
-         code = state.abb[state],
-         hover = with(merge_data, paste(state,'<br>' ,"share for trump",share_voters_voted_trump))
-         ) %>% 
-  select(code, crime_rate, hover )
+map_data_2016 = merge_data %>%
+  rbind(c("Hawaii",71223,	0.034, 0.904,	0 ,0.81, '33.1%', 0 ,0)) %>% 
+  as.tibble() %>% 
+  arrange(state)
 
-l <- list(color = toRGB("white"), width = 2)
+map_data<-map_data_2016 %>%         
+  mutate(
+         state = as.factor(state),
+         code = state.abb[state],
+         code = c(code[1:8],'DC',code[9:50]),
+         hover = with(map_data_2016, paste(state,'<br>' ,"share for trump",share_voters_voted_trump)),
+         crime_rate = as.numeric(crime_rate)
+         ) %>% 
+  select(code, crime_rate, hover)
+
+l <- list(color = toRGB("grey"), width = 1)
 g <- list(
   scope = 'usa',
   projection = list(type = 'albers usa'),
-  showlakes = TRUE,
-  lakecolor = toRGB('white')
+  showlakes = F
 )
 
 
-plot_geo(map_data_2016, locationmode = 'USA-states') %>%
+plot_geo(map_data, locationmode = 'USA-states') %>%
   add_trace(
     z = ~ crime_rate, text = ~hover, locations = ~code,
-    color = ~ crime_rate, colors = 'Reds'
+    color = ~ crime_rate, colors = 'Reds',marker = list(line = l)
   ) %>%
   colorbar(title = "Hate crime rate ") %>%
   layout(
