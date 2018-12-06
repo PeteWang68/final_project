@@ -75,7 +75,7 @@ merged_data_no_percent %>%
 ```
 
 
-```{r}
+```{r include=FALSE}
 
 map_data_2016 = merge_data %>% 
   mutate(state = as.factor(state),
