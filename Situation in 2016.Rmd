@@ -34,7 +34,7 @@ race = read_csv("./data/Race.csv") %>%
 vote = read_csv("./data/Vote.csv") %>% 
   janitor::clean_names()
 
-crime_rate = read_excel("./data/2016.xls",  range = cell_rows(3:53)) %>%
+crime_rate = read_excel("./data/2016.xls",  range = cell_rows(3:54)) %>%
   janitor::clean_names() %>%
   filter(participating_state != "Total") %>%
   select(location = participating_state, population_covered,       total_number_of_incidents_reported) %>%
