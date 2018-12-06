@@ -19,9 +19,9 @@ Over the past few years, the United States has been facing increased divisions a
 
 ##Data Source
 
--  We collected annual hate crime  data from [FBI](https://ucr.fbi.gov/hate-crime), ranging from [2005](https://ucr.fbi.gov/hate-crime/2005) to [2017](https://ucr.fbi.gov/hate-crime/2017).
+-  We collected annual hate crime data from [FBI](https://ucr.fbi.gov/hate-crime), ranging from [2005](https://ucr.fbi.gov/hate-crime/2005) to [2017](https://ucr.fbi.gov/hate-crime/2017).
 
--  To predict the relationship between hate crime data and ocioeconomic issues, we select  factors  and collected the related data as following:
+-  To assess the relationship between hate crime and socioeconomic variables, we selected  various factors and collected data from the following sources:
    
     - [Median annual household income](https://www.kff.org/other/state-indicator/median-annual-income/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D)
     
@@ -33,7 +33,7 @@ Over the past few years, the United States has been facing increased divisions a
     
     - [Share of the population that is white](https://www.kff.org/other/state-indicator/distribution-by-raceethnicity/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D)
 
-- To compare the hate crime rate before and after election and explore whether Trump's election influence the hate crimes, we collected data as following:
+- To compare the hate crime rate before and after the election, and explore whether Trump's election influenced hate crimes, we collected data from the following sources:
 
     - [The hate crime rate from 11.09.2016 to 11.18.2016(10 days after election)](https://www.splcenter.org/20161129/ten-days-after-harassment-and-intimidation-aftermath-election)
     
