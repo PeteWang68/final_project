@@ -176,20 +176,10 @@ hate_crime = hate_crime%>%
   mutate(year = str_replace(year, ".xls", "")) 
 ```
 
-<<<<<<< HEAD
-=======
-## import and clean the annual data from 2005-2017
-```{r}
-
-#list the files
-files = as.data.frame(list.files(path = "./data_1")) 
-colnames(files)[1] = "file_names"
-
-```
 
 
->>>>>>> ae7b001931293ad50e40933bb0a1c8e2095c54a9
-## do the further cleaning of the merge data
+do the further cleaning of the merge data
+
 ```{r}
 merge_data = merge_data %>%
   mutate(median_annual_household_income = str_replace(median_annual_household_income, ",", "")) %>%
