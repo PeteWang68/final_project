@@ -123,14 +123,17 @@ crime_rate = read_excel("./data/2016.xls",  range = cell_rows(3:53)) %>%
   janitor::clean_names() %>%
   filter(participating_state != "Total") %>%
   select(location = participating_state, population_covered,       total_number_of_incidents_reported) %>%
-  mutate(crime_rate = total_number_of_incidents_reported/population_covered*100000) 
+  mutate(crime_rate = total_number_of_incidents_reported/population_covered*100000)
 
+crime_rate_10_days = read_csv("./data/hate_crime_10days.csv") %>%
+  janitor::clean_names()%>%
+  select(location = state, hate_crime_10_day = hate_crimes_per_100k_splc)
 
 ctizenship =
   ctizenship %>% 
   select(location, non_citizen)
 
-race = 
+race =
   race %>% 
   select(location, white)
 
@@ -144,7 +147,8 @@ merge_data =
   merge(., ctizenship, by = "location") %>% 
   merge(., race, by = "location") %>% 
   merge(., vote, by = "location") %>%
-  merge(., crime_rate, by = "location") %>% 
+  merge(., crime_rate, by = "location") %>%
+  merge(., crime_rate_10_days, by = "location") %>%
   filter(location != "United States") %>% 
   rename(state = location, share_unemployed = unemployed, share_non_citizen = non_citizen, share_white = white)
 ```
@@ -205,9 +209,10 @@ merge_data %>%
 merge_data_log = merge_data %>% 
   mutate(crime_rate = log(crime_rate)) 
 
-mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ crime_rate, data = merge_data_log)
+mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white, data = merge_data_log)
 
 summary(step(mle_log, direction = "both"))
+
 ```
 
 ## see correlation between variables 
@@ -234,16 +239,44 @@ mle_log_1 = lm(crime_rate~median_income+share_unemployed+share_population_with_h
   
 summary(step(mle_log_1, direction = "both"))
 
+##see the correlation between trump and income
 cor(merge_data_log$share_voters_voted_trump, merge_data_log$median_income)
 
-slr = lm(crime_rate~share_voters_voted_trump, data = merge_data_log)
-summary(slr)
+```
+
+###the final model 1 crime&income
+```{r}
+crime_income_slr =lm(crime_rate~median_income, data = merge_data_log)
+summary(crime_income_slr)%>%
+  broom::tidy()%>%
+  knitr::kable()
+```
+
+###the final model 2 crime~Trump&income
+```{r}
+crime_trump_slr = lm(crime_rate~share_voters_voted_trump, data = merge_data_log)
+summary(crime_trump_slr)%>%
+  broom::tidy()%>%
+  knitr::kable()
+```
+
+###the final model 3 crime&Trump&income
+```{r}
+mlr_trump_income = lm(crime_rate~share_voters_voted_trump + median_income, data = merge_data_log)
+summary(mlr_trump_income)%>%
+  broom::tidy()%>%
+  knitr::kable()
 ```
 
 ## do scatter plot 
 ```{r}
-merge_data%>%
+merge_data_log%>%
   ggplot(aes(x = median_income,y = crime_rate))+
+  geom_smooth(method = "lm", color="black", formula = y ~ x) +
+  geom_point()
+
+merge_data_log%>%
+  ggplot(aes(x = share_voters_voted_trump, y = crime_rate))+
   geom_smooth(method = "lm", color="black", formula = y ~ x) +
   geom_point()
 ```
