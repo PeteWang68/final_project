@@ -93,4 +93,4 @@ Lastly, we
   
   The reesulting heat map, depicting the 
 
- The line chart showing
+ The line chart shows the number of incidents for every specific type of bis motivation each year, they are separated into three categories: "race", "religion" and "sexual orientation". The most common type of motivation in "race" is "anti-black", after 2008 the incident number has decreased over the years, but from 2016 to 2017, it increased again. Hate crime targeting American Indian or Alaskan Native keeps increasing over the years. All types of race motivation hate crime increased comparing 2017 to 2016. For "religion", the most common type of motivation is "anti- Jewish", like "anti-black" hate crime, the incidents number has a decreasing trend since 2008, but start to increase at 2014 and reach to peak at 2017. "Anti-Islamic" hate crime increased significantly since 2014 and reached a peak at 2016. As for "sexual orientation", "anti-male homosexual" hate crime has the biggest incident number. The number does not change significantly over the years.
