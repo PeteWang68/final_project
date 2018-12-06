@@ -91,9 +91,9 @@ summary(crime_income_slr) %>%
   broom::tidy() %>%
   knitr::kable()
 
-merge_data_log %>%
+scatter_plot_1 = merge_data_log %>%
   ggplot(aes(x = median_income,y = crime_rate)) +
-  geom_smooth(method = "lm", color = "black", formula = y ~ x) +
+  geom_smooth(method = "lm", color = "blue", formula = y ~ x) +
   geom_point()+
   labs(
     title = "Scatterplot between hate crime rate and Median annual household income",
@@ -101,6 +101,7 @@ merge_data_log %>%
     y = "Hate crime rate(per 100,000 population)",
     caption = "Data from FBI"
   )
+ggplotly(scatter_plot_1)
 ```
 
 $$log\textrm{ crime_rate} = -0.74 + 0.000021 \textrm{median_income}$$
@@ -115,16 +116,17 @@ summary(crime_trump_slr) %>%
   broom::tidy() %>%
   knitr::kable()
 
-merge_data_log %>%
+scatter_plot_2 = merge_data_log %>%
   ggplot(aes(x = share_voters_voted_trump, y = crime_rate)) +
-  geom_smooth(method = "lm", color = "black", formula = y ~ x) +
+  geom_smooth(method = "lm", color = "blue", formula = y ~ x) +
   geom_point()+
   labs(
     title = "Scatterplot between hate crime rate and shared voters who voted Trump",
     x = "Median annual household income",
     y = "Hate crime rate(per 100,000 population)",
     caption = "Data from FBI"
-  )
+  ) 
+  ggplotly(scatter_plot_2)
 ```
 
 $$log\textrm{ crime_rate} = 2.03 - 3.06 \textrm{share_voters_voted_trump}$$
