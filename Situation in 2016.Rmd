@@ -125,7 +125,7 @@ scatter_plot_2 = merge_data_log %>%
   geom_point()+
   labs(
     title = "Scatterplot between hate crime rate and shared voters who voted Trump",
-    x = "Median annual household income",
+    x = "shared voters voted Trump",
     y = "Log transformation of Hate crime rate(per 100,000 population)",
     caption = "Data from FBI"
   ) 
