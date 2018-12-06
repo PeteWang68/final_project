@@ -1,9 +1,13 @@
 ---
 title: "Hate Crime Over the Last Decade"
+author: "Jingyu Xu | Kee-Young Shin | Man Luo | Runqi Ma | Zixu Wang "
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      collapse: true
+      smooth_scroll: false
 ---
-
-
-### Jingyu Xu | Kee-Young Shin | Man Luo | Runqi Ma | Zixu Wang 
 
 ***
 
