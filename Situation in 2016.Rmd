@@ -71,7 +71,7 @@ merge_data =
 
 ## Introduction
 
-Since we found there was a significant increase in hate crime rate in 2016, we attempted to see which factors contributed to this change. To do this, we conducted regression analyses to determine the predictors that affected hate crime rate. These predictors included median annual household income, share of the population that is unemployed, share of the population with high school degree, share of the population that are not U.S. citizens, share of the population that is white, share of 2016 U.S. presidential voters who voted for Donald Trump.
+Since we found there was a significant increase in hate crime rate in 2016, we attempted to see which factors contributed to this change. To do this, we conducted regression analyses to determine the predictors that affected hate crime rate. These predictors included median annual household income, share of the population that is unemployed, share of the population with high school degree, share of the population that are not U.S. citizens, share of the population that is white, and the share of 2016 U.S. voters who voted for Donald Trump.
 
 ## Regression
 
@@ -135,4 +135,4 @@ scatter_plot_2 = merge_data_log %>%
 
 $$log\textrm{ crime_rate} = 2.03 - 3.06 \textrm{share_voters_voted_trump}$$
 
-Interestingly, including the proportion of Trump voters as a predictor resulted in median household income dropping from the model, whil percent of Trump voters became a highly significant factor. The results showed a negative association between the predictor and the outcome; the higher the percent of Trump voters, the lower the rate of hate crime. Though the p-value was very small, the scatter plot again did not show an explicit linear relationship, therefore we will view these results with skepticism. These regression less than perfect regression results could be attributed to several factors such as confouder, multicollinearity amongst the socioeconomic predictors, and the small sample size. 
+Interestingly, including the proportion of Trump voters as a predictor resulted in median household income dropping from the model, while percent of Trump voters became a highly significant factor. The results showed a negative association between the predictor and the outcome; the higher the percent of Trump voters, the lower the rate of hate crime. Though the p-value was very small, the scatter plot again did not show an explicit linear relationship, therefore we will view these results with skepticism. These less than perfect regression results could be attributed to several factors such as confouders, multicollinearity amongst the socioeconomic predictors, and the small sample size. 
