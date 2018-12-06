@@ -17,11 +17,10 @@ output: html_document
   
 ## Initial Questions
 
-  There were several questions that we wanted to find out.  
-  Did hate crimes increase over the past decade? 
-  Was this change in part due to the change in the U.S. presidency? 
-  How do hate crimes differ by state? 
-  Did questions change as we did this project
+  There were several questions that we wanted to find out. Did hate crimes increase over the past decade? Was this change in part due to the change in the U.S. presidency? 
+How do hate crimes differ by state? 
+  
+  As we progressed through the project, some new questions arised. To see if the election affected hate crime rates, we wanted to find the relationship between the amount of Trump voters to the level of hate crime. Additionally, we wanted to find out if certain variables could be used to predict hate crime rate. 
 
 ## Data
 
