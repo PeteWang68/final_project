@@ -297,8 +297,7 @@ l <- list(color = toRGB("grey"), width = 1)
 g <- list(
   scope = 'usa',
   projection = list(type = 'albers usa'),
-  showlakes = F#,
-  #lakecolor = toRGB('white')
+  showlakes = F
 )
 
 
