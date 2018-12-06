@@ -69,7 +69,7 @@ https://www.splcenter.org/20161129/ten-days-after-harassment-and-intimidation-af
   
   Next we tried to see if there was a change in the hate crime rate after Trump was elected. We did this by creating a stacked bar plot comparing the hate crime rate for 2016 to the hate crime rate in the 10 days after the election. To accurately compare these figures, we extrapolated the yearly equivalent for the hate crime rate for the 10 days after the election. This was done by calculating the average daily hate crime rate in the 10 day period and multiplying by 365. 
   
-  Initially, we wanted to show how the hate crime rate changed as the percent of trump voters increased. However, since, many states shared similar proportions of Trump voters, the plot was not able to accurately show this change. Instead, we decided to create an interactive map of the U.S. that showed the hate crime rate for each state and its share of Trump voters for 2016.
+  Initially, we wanted to show how the hate crime rate changed as the percent of trump voters increased. However, since, many states shared similar proportions of Trump voters, the plot was not able to accurately show this change. Instead, we decided to create an interactive map of the U.S. that showed the hate crime rate for each state and its share of Trump voters for 2016. When creating the map, R was not recognizing "District of Columbia" as a state since it was not abbreviated like the other states. Therefore we manipulated the code to make R recognize this value. 
   
   Inspired by these heat maps, we decided to create a shiny app containing heat maps depicting the hate crime rate for the years 2005 to 2017. These maps allowed for analysis of the variation in the crime rate amongst the states. 
   
@@ -77,9 +77,9 @@ Lastly, we
   
 ## Additional Analysis
 
-  We performed a multilinear regression to see if predictors including
+  To determine if there were variables that were involved with hate crime rates, we conducted regression analyses. First, we explored the distribution of the variables. We noticed that the distribution of our outcome hate crime rate was skewed. Therefore, we transformed these values using log. To find the best model, we performed backward elimination on predictors that included household median income, proportion unemployed, proportion with high school degree, proportion of whites, and the proportion of non-citizens. In the end of the selection process, the model only contained household median income, and was itself not too significant of a factor. 
   
-  potential limits: all variables might be correlated with each other. data might not reflect actual hate crimes (not reported, reported falsely)
+  Not satisfied by the relatively insignificant results, we then repeated the process with all the previously included variables in addition to the proportion of Trump voters. After backward elimination, median household income was replaced by the proportion of Trump voters as the only significant predictor with a much lower p-value. 
   
 ## Discussion
 
@@ -87,4 +87,6 @@ Lastly, we
   
   The reesulting heat map, depicting the 
 
- The line chart showing
+ The line chart showing 
+ 
+ potential limits: all variables might be correlated with each other. data might not reflect actual hate crimes (not reported, reported falsely). dataset is very small
