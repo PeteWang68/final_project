@@ -1,0 +1,107 @@
+---
+title: "Trump Election and Hate Crime"
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(readxl)
+library(plotly)
+```
+
+```{r include=FALSE}
+
+# data in 2016
+income = read_csv("./data/Income.csv") %>% 
+  janitor::clean_names()
+
+unemployment = read_csv("./data/Unemployment.csv") %>% 
+  janitor::clean_names()
+
+education = read_csv("./data/Educational_level.csv") %>% 
+  janitor::clean_names()
+
+ctizenship = read_csv("./data/Ctizenship.csv") %>% 
+  janitor::clean_names()
+
+race = read_csv("./data/Race.csv") %>% 
+  janitor::clean_names()
+
+vote = read_csv("./data/Vote.csv") %>% 
+  janitor::clean_names()
+
+crime_rate = read_excel("./data/2016.xls",  range = cell_rows(3:53)) %>%
+  janitor::clean_names() %>%
+  filter(participating_state != "Total") %>%
+  select(location = participating_state, population_covered,       total_number_of_incidents_reported) %>%
+  mutate(crime_rate = total_number_of_incidents_reported/population_covered*100000) 
+
+
+ctizenship =
+  ctizenship %>% 
+  select(location, non_citizen)
+
+race = 
+  race %>% 
+  select(location, white)
+
+crime_rate =
+  crime_rate %>% 
+  select(location, crime_rate)
+
+merge_data = 
+  merge(income, unemployment, by = "location") %>% 
+  merge(., education, by = "location") %>% 
+  merge(., ctizenship, by = "location") %>% 
+  merge(., race, by = "location") %>% 
+  merge(., vote, by = "location") %>%
+  merge(., crime_rate, by = "location") %>% 
+  filter(location != "United States") %>% 
+  rename(state = location, share_unemployed = unemployed, share_non_citizen = non_citizen, share_white = white)
+
+merge_data = merge_data %>%
+  mutate(median_annual_household_income = str_replace(median_annual_household_income, ",", "")) %>%
+  mutate(median_annual_household_income = gsub("\\$", "",median_annual_household_income )) %>%
+mutate(median_annual_household_income = as.numeric(median_annual_household_income)) %>%
+  select(state, median_income = median_annual_household_income, everything())
+```
+
+```{r}
+merged_data_no_percent = merge_data %>% 
+  mutate(share_voters_voted_trump = sub("\\%", "", share_voters_voted_trump), 
+         share_voters_voted_trump = as.numeric(share_voters_voted_trump)) 
+
+merged_data_no_percent %>% 
+  ggplot(aes(x = share_voters_voted_trump, y = crime_rate)) + geom_point()
+```
+
+
+```{r}
+
+map_data_2016 = merge_data %>% 
+  mutate(state = as.factor(state),
+         code = state.abb[state],
+         hover = with(merge_data, paste(state,'<br>' ,"share for trump",share_voters_voted_trump))
+         ) %>% 
+  select(code, crime_rate, hover )
+
+l <- list(color = toRGB("white"), width = 2)
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white')
+)
+
+
+plot_geo(map_data_2016, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~ crime_rate, text = ~hover, locations = ~code,
+    color = ~ crime_rate, colors = 'Reds'
+  ) %>%
+  colorbar(title = "Hate crime rate ") %>%
+  layout(
+    title = 'Hate crime rate in 2016 all over U.S. ',
+    geo = g
+  )
+```
+

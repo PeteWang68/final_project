@@ -5,6 +5,8 @@ navbar:
   right:
     - text: "Change in Hate Crime Incidents"
       href: about.html
+    - text: "Trump Election and Hate Crime"
+      href: voting.html
     - text: "Situation in 2016"
       href: Situation_in_2016.html
     - text: "Shiny"
