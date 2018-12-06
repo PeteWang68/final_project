@@ -236,6 +236,8 @@ summary(step(mle_log_1, direction = "both"))
 
 cor(merge_data_log$share_voters_voted_trump, merge_data_log$median_income)
 
+slr = lm(crime_rate~share_voters_voted_trump, data = merge_data_log)
+summary(slr)
 ```
 
 ## do scatter plot 
