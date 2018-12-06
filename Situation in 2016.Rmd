@@ -74,9 +74,11 @@ merge_data =
 Since we found there is a significant increasement of hate crime rate in 2016, we would like to further explore the reason associated with this change. Therefore we found several datasets contain different factors relevant to the hate crime and combined them together. These factors include "Median annual household income", "Share of the population that is unemployed", "Share of the population with high school degree", "Share of the population that are not U.S. citizens", "Share of the population that is white", "Share of 2016 U.S. presidential voters who voted for Donald Trump".
 
 ## Regression
-Firstly, we do the regression based on several common socioeconomic factors including "Median annual household income", "Share of the population that is unemployed", "Share of the population with high school degree", "Share of the population that are not U.S. citizens", "Share of the population that is white". After the log transforation and stepwise regression, we get model 1 as following, with median income as the only predictor.
 
 ###Model 1
+
+Firstly, we do the regression based on several common socioeconomic factors including "Median annual household income", "Share of the population that is unemployed", "Share of the population with high school degree", "Share of the population that are not U.S. citizens", "Share of the population that is white". After the log transforation and stepwise regression, we get model 1 as following, with median income as the only predictor.
+
 
 ```{r, echo = FALSE}
 merge_data_log = merge_data %>% 
@@ -98,7 +100,7 @@ scatter_plot_1 = merge_data_log %>%
   labs(
     title = "Scatterplot between hate crime rate and Median annual household income",
     x = "Median annual household income",
-    y = "Hate crime rate(per 100,000 population)",
+    y = "Log transformation of hate crime rate(per 100,000 population)",
     caption = "Data from FBI"
   )
 ggplotly(scatter_plot_1)
@@ -106,9 +108,10 @@ ggplotly(scatter_plot_1)
 
 $$log\textrm{ crime_rate} = -0.74 + 0.000021 \textrm{median_income}$$
 
-After that, we enter the factor of Share of 2016 U.S. presidential voters who voted for Donald Trump to make the prediction since a significant crime increase has been observed with the election. After log transformation and stepwise, the second model is thus made. 
+From the sactter plot, a slightly positive association between median income and the hate crime rate is observed.
 
 ###Model 2
+After that, we enter the factor of Share of 2016 U.S. presidential voters who voted for Donald Trump to make the prediction since a significant crime increase has been observed with the election. After log transformation and stepwise, the second model is thus made. 
 
 ```{r, echo = FALSE}
 crime_trump_slr = lm(crime_rate~share_voters_voted_trump, data = merge_data_log)
@@ -123,7 +126,7 @@ scatter_plot_2 = merge_data_log %>%
   labs(
     title = "Scatterplot between hate crime rate and shared voters who voted Trump",
     x = "Median annual household income",
-    y = "Hate crime rate(per 100,000 population)",
+    y = "Log transformation of Hate crime rate(per 100,000 population)",
     caption = "Data from FBI"
   ) 
   ggplotly(scatter_plot_2)
@@ -131,3 +134,4 @@ scatter_plot_2 = merge_data_log %>%
 
 $$log\textrm{ crime_rate} = 2.03 - 3.06 \textrm{share_voters_voted_trump}$$
 
+From the sactter plot, a negative association between share voters who voted Trump and the hate crime rate is observed. And the P-value is quite small, which indicates a significant association.
