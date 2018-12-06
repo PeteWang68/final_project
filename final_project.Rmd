@@ -263,19 +263,19 @@ map_data_2016 = merge_data %>%
          ) %>% 
   select(code, crime_rate, hover )
 
-l <- list(color = toRGB("white"), width = 2)
+l <- list(color = toRGB("grey"), width = 1)
 g <- list(
   scope = 'usa',
   projection = list(type = 'albers usa'),
-  showlakes = TRUE,
-  lakecolor = toRGB('white')
+  showlakes = F#,
+  #lakecolor = toRGB('white')
 )
 
 
 plot_geo(map_data_2016, locationmode = 'USA-states') %>%
   add_trace(
     z = ~ crime_rate, text = ~hover, locations = ~code,
-    color = ~ crime_rate, colors = 'Reds'
+    color = ~ crime_rate, colors = 'Reds',marker = list(line = l)
   ) %>%
   colorbar(title = "Hate crime rate ") %>%
   layout(
@@ -305,7 +305,9 @@ compare_rate %>%
   geom_line()+
   theme(axis.text.x = element_text(angle = 90, hjust = 0.2))
 
-
+ 
+  saveRDS(compare_rate,file = "./data/compare_data")
+  
 compare_rate %>% 
   mutate(hate_crimes_10days_year = hate_crimes_per_100k_splc/10 * 365) %>% 
   select(state, hate_crimes_10days_year, annualprop) %>% 
