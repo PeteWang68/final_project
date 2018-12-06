@@ -33,19 +33,32 @@ How do hate crimes differ by state?
   To create the line chart showing the number of different kinds of hate crime incidents during 2005 to 2017, we combined the annual data from FBI. The merged dataset contains year, the incidents of hate crime, three type of hate crime motivation we want to see:"race", "religion" and "sexual orientation" and the specific bias motivation. FBI changed the way they categoried three types of hate crime at 2013 and 2015, we make some change to the categorical name to make the plot more presentable over years. We change the type name from "Anti-Black or African American" to "Anti-Black", "Anti-American Indian or Alaska Native" to "Anti-American Indian/Alaskan Native", "Anti-Islamic (Muslim)" to "Anti-Islamic", "Anti-Gay (Male)" to "Anti-Male Homosexual", "Anti-Lesbian" to "Anti-Female Homosexual" and "Anti-Lesbian, Gay, Bisexual, or Transgender (Mixed Group)" to "Anti-Homosexual" in order to make them identical with previous years. From 2005 to 2014, the "Anti-Hispanic or Latino" hate crime is categorized as "Ethnicity", we change it as "race". Also since 2013, FBI seperate "Anti-Asian" and "Anti-Native Hawaiian or Other Pacific Islander", we combine there two type as one.
   
 *FBI data resource，state division：*
-2005：https://ucr.fbi.gov/hate-crime/2005
-2006: https://ucr.fbi.gov/hate-crime/2006
-2007: https://ucr.fbi.gov/hate-crime/2007
-2008：https://ucr.fbi.gov/hate-crime/2008
-2009: https://ucr.fbi.gov/hate-crime/2009
-2010: https://ucr.fbi.gov/hate-crime/2010
-2011: https://ucr.fbi.gov/hate-crime/2011
-2012: https://ucr.fbi.gov/hate-crime/2012
-2013: https://ucr.fbi.gov/hate-crime/2013
-2014: https://ucr.fbi.gov/hate-crime/2014
-2015: https://ucr.fbi.gov/hate-crime/2015
-2016: https://ucr.fbi.gov/hate-crime/2016
-2017: https://ucr.fbi.gov/hate-crime/2017
+
+*2005*：https://ucr.fbi.gov/hate-crime/2005  
+
+*2006*: https://ucr.fbi.gov/hate-crime/2006  
+
+*2007*: https://ucr.fbi.gov/hate-crime/2007  
+
+*2008*：https://ucr.fbi.gov/hate-crime/2008  
+
+*2009*: https://ucr.fbi.gov/hate-crime/2009  
+
+*2010*: https://ucr.fbi.gov/hate-crime/2010  
+
+*2011*: https://ucr.fbi.gov/hate-crime/2011 
+
+*2012*: https://ucr.fbi.gov/hate-crime/2012  
+
+*2013*: https://ucr.fbi.gov/hate-crime/2013  
+
+*2014*: https://ucr.fbi.gov/hate-crime/2014  
+
+*2015*: https://ucr.fbi.gov/hate-crime/2015
+
+*2016*: https://ucr.fbi.gov/hate-crime/2016
+
+*2017*: https://ucr.fbi.gov/hate-crime/2017
 
 *Median annual household income:* https://www.kff.org/other/state-indicator/median-annual-income/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
  
