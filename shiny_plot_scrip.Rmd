@@ -23,19 +23,19 @@ tidy_data = function(data, x){
          year = x) 
 }
 
-hc_2017 = read_xls("./table-1.xls")
-hc_2016 = read_xls("./2016_hatecrime.xls")
-hc_2015 = read_xls("./2015_hatecrime.xls")
-hc_2014 = read_xls("./2014_hatecrime.xls")
-hc_2013 = read_xls("./2013_hatecrime.xls")
-hc_2012 = read_xls("./2012_hatecrime.xls")
-hc_2011 = read_xls("./2011_hatecrime.xls")
-hc_2010 = read_xls("./2010_hatecrime.xls")
-hc_2009 = read_xls("./2009_hatecrime.xls")
-hc_2008 = read_xls("./2008_hatecrime.xls")
-hc_2007 = read_xls("./2007_hatecrime.xls")
-hc_2006 = read_xls("./2006_hatecrime.xls")
-hc_2005 = read_xls("./2005_hatecrime.xls")
+hc_2017 = read_xls("./data/table-1.xls")
+hc_2016 = read_xls("./data/2016_hatecrime.xls")
+hc_2015 = read_xls("./data/2015_hatecrime.xls")
+hc_2014 = read_xls("./data/2014_hatecrime.xls")
+hc_2013 = read_xls("./data/2013_hatecrime.xls")
+hc_2012 = read_xls("./data/2012_hatecrime.xls")
+hc_2011 = read_xls("./data/2011_hatecrime.xls")
+hc_2010 = read_xls("./data/2010_hatecrime.xls")
+hc_2009 = read_xls("./data/2009_hatecrime.xls")
+hc_2008 = read_xls("./data/2008_hatecrime.xls")
+hc_2007 = read_xls("./data/2007_hatecrime.xls")
+hc_2006 = read_xls("./data/2006_hatecrime.xls")
+hc_2005 = read_xls("./data/2005_hatecrime.xls")
 
 change_name = function(data){
   data %>% 

@@ -11,72 +11,74 @@ library(readxl)
 library(plotly)
 ```
 
+#Data import
+
 ## import hate crime incident count from 2005 to 2017
 ```{r}
-hate_offenses_2017 = read_xls("./table-1.xls") %>% 
+hate_offenses_2017 = read_xls("./data/table-1.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
   mutate(table_1 = str_replace(table_1, "Total", "2017"))
 
-hate_offenses_2016 = read_xls("./2016_hatecrime.xls") %>% 
+hate_offenses_2016 = read_xls("./data/2016_hatecrime.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
   mutate(table_1 = str_replace(table_1, "Total", "2016")) %>% 
   select(1:5)
 
-hate_offenses_2015 = read_xls("./2015_hatecrime.xls") %>% 
+hate_offenses_2015 = read_xls("./data/2015_hatecrime.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
   mutate(table_1 = str_replace(table_1, "Total", "2015"))
     
-hate_offenses_2014 = read_xls("./2014_hatecrime.xls") %>% 
+hate_offenses_2014 = read_xls("./data/2014_hatecrime.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
   mutate(table_1 = str_replace(table_1, "Total", "2014")) %>% 
   select(1:5)
 
-hate_offenses_2013 = read_xls("./2013_hatecrime.xls") %>% 
+hate_offenses_2013 = read_xls("./data/2013_hatecrime.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
   mutate(table_1 = str_replace(table_1, "Total", "2013")) %>% 
   select(1:5)
 
-hate_offenses_2012 = read_xls("./2011_hatecrime.xls") %>% 
+hate_offenses_2012 = read_xls("./data/2011_hatecrime.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
   mutate(table_1 = str_replace(table_1, "Total", "2012"))
 
-hate_offenses_2011 = read_xls("./2011_hatecrime.xls") %>% 
+hate_offenses_2011 = read_xls("./data/2011_hatecrime.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
   mutate(table_1 = str_replace(table_1, "Total", "2011"))
 
-hate_offenses_2010 = read_xls("./2010_hatecrime.xls") %>% 
+hate_offenses_2010 = read_xls("./data/2010_hatecrime.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
   mutate(table_1 = str_replace(table_1, "Total", "2010"))
 
-hate_offenses_2009 = read_xls("./2009_hatecrime.xls") %>% 
+hate_offenses_2009 = read_xls("./data/2009_hatecrime.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
   mutate(table_1 = str_replace(table_1, "Total", "2009"))
 
-hate_offenses_2008 = read_xls("./2008_hatecrime.xls") %>% 
+hate_offenses_2008 = read_xls("./data/2008_hatecrime.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
   mutate(table_1 = str_replace(table_1, "Total", "2008"))
 
-hate_offenses_2007 = read_xls("./2007_hatecrime.xls") %>% 
+hate_offenses_2007 = read_xls("./data/2007_hatecrime.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
   mutate(table_1 = str_replace(table_1, "Total", "2007"))
 
-hate_offenses_2006 = read_xls("./2006_hatecrime.xls") %>% 
+hate_offenses_2006 = read_xls("./data/2006_hatecrime.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
   mutate(table_1 = str_replace(table_1, "Total", "2006"))
 
-hate_offenses_2005 = read_xls("./2005_hatecrime.xls") %>% 
+hate_offenses_2005 = read_xls("./data/2005_hatecrime.xls") %>% 
   janitor::clean_names() %>% 
   filter(table_1 == "Total") %>% 
   mutate(table_1 = str_replace(table_1, "Total", "2005"))
@@ -90,12 +92,6 @@ hatecrime_count_df = rbind(hate_offenses_2017, hate_offenses_2016, hate_offenses
   select(1:3) 
   
 colnames(hatecrime_count_df) = c("year", "total_incidents", "total_offenses")
-```
-
-## plot change in number of hate crimes over time
-```{r}
-hatecrime_count_df %>% 
-  ggplot(aes(x = year, y = total_incidents)) + geom_line(group = 1, color = "blue")
 ```
 
 ## importing hate crime and predictors dataset
@@ -194,6 +190,89 @@ mutate(median_annual_household_income = as.numeric(median_annual_household_incom
 ```
 
 
+
+#Explore the data
+
+
+## plot change in number of hate crimes over time
+```{r}
+hatecrime_count_df %>% 
+  ggplot(aes(x = year, y = total_incidents)) + geom_line(group = 1, color = "blue")
+```
+
+
+##Building the Map of hate crime rate based on 2016 
+```{r}
+map_data_2016 = merge_data %>%
+  rbind(c("Hawaii",71223,	0.034, 0.904,	0 ,0.81, '33.1%', 0 ,0)) %>% 
+  as.tibble() %>% 
+  arrange(state)
+
+map_data<-map_data_2016 %>%         
+  mutate(
+         state = as.factor(state),
+         code = state.abb[state],
+         code = c(code[1:8],'DC',code[9:50]),
+         hover = with(map_data_2016, paste(state,'<br>' ,"share for trump",share_voters_voted_trump)),
+         crime_rate = as.numeric(crime_rate)
+         ) %>% 
+  select(code, crime_rate, hover)
+
+l <- list(color = toRGB("grey"), width = 1)
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = F
+)
+
+
+plot_geo(map_data, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~ crime_rate, text = ~hover, locations = ~code,
+    color = ~ crime_rate, colors = 'Reds',marker = list(line = l)
+  ) %>%
+  colorbar(title = "Hate crime rate ") %>%
+  layout(
+    title = 'Hate crime rate in 2016 all over U.S. ',
+    geo = g
+  )
+```
+
+## crime rate comparision between 10 days after election and 2016 average.
+
+```{r}
+
+library(reshape2)
+
+hate_crime_10days<-read_csv("./data/hate_crime_10days.csv")
+hate_crime_ave<-hate_crime %>% 
+  na.omit() %>% 
+  filter(year==2016) 
+
+
+compare_rate<-merge(hate_crime_10days, hate_crime_ave, by= "state")
+
+compare_rate %>% 
+  mutate(hate_crimes_10days = hate_crimes_per_100k_splc/10 * 365,
+         hate_crimes_2016 = annualprop) %>% 
+  select(state, hate_crimes_10days, hate_crimes_2016) %>% 
+  melt(, id = "state") %>% 
+  mutate(state = factor(state, levels = state %>% unique %>% sort(decreasing = T))) %>% 
+  mutate(state = reorder(state, value)) %>% 
+  ggplot(aes(x = state, y = value, fill = variable, group = variable))+
+  geom_bar(stat="identity", position = "dodge", width = 0.5)+
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 60))+
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 0, size = 10, hjust = 1),legend.position = "right") +
+  ggtitle("Hate Crime Rate Before and After Trump Election") +
+  labs(y = "Hate Crime Rate (per 100,000)", x = "State")
+```
+
+
+
+
+#Regression part
+
 ## regression part
 ```{r}
 sum(is.na(merge_data))
@@ -281,93 +360,4 @@ merge_data_log%>%
   geom_smooth(method = "lm", color="black", formula = y ~ x) +
   geom_point()
 ```
-
-
-##Building the Map of hate crime rate based on 2016 
-```{r}
-map_data_2016 = merge_data %>%
-  rbind(c("Hawaii",71223,	0.034, 0.904,	0 ,0.81, '33.1%', 0 ,0)) %>% 
-  as.tibble() %>% 
-  arrange(state)
-
-map_data<-map_data_2016 %>%         
-  mutate(
-         state = as.factor(state),
-         code = state.abb[state],
-         code = c(code[1:8],'DC',code[9:50]),
-         hover = with(map_data_2016, paste(state,'<br>' ,"share for trump",share_voters_voted_trump)),
-         crime_rate = as.numeric(crime_rate)
-         ) %>% 
-  select(code, crime_rate, hover)
-
-l <- list(color = toRGB("grey"), width = 1)
-g <- list(
-  scope = 'usa',
-  projection = list(type = 'albers usa'),
-  showlakes = F
-)
-
-
-plot_geo(map_data, locationmode = 'USA-states') %>%
-  add_trace(
-    z = ~ crime_rate, text = ~hover, locations = ~code,
-    color = ~ crime_rate, colors = 'Reds',marker = list(line = l)
-  ) %>%
-  colorbar(title = "Hate crime rate ") %>%
-  layout(
-    title = 'Hate crime rate in 2016 all over U.S. ',
-    geo = g
-  )
-```
-
-
-```{r}
-
-library(reshape2)
-
-hate_crime_10days<-read_csv("./data/hate_crime_10days.csv")
-hate_crime_ave<-hate_crime %>% 
-  na.omit() %>% 
-  filter(year==2016) 
-
-
-compare_rate<-merge(hate_crime_10days, hate_crime_ave, by= "state")
-
-compare_rate %>% 
-  mutate(hate_crimes_per_100k_after = hate_crimes_per_100k_splc/10 * 365) %>% 
-  select(state, hate_crimes_per_100k_after, annualprop) %>% 
-  melt(, id = "state") %>% 
-  ggplot(aes(x = state, y = value, color = variable, group = variable))+
-  geom_point()+
-  geom_line()+
-  theme(axis.text.x = element_text(angle = 90, hjust = 0.2))
-
- 
-  saveRDS(compare_rate,file = "./data/compare_data")
-  
-compare_rate %>% 
-  mutate(hate_crimes_10days_year = hate_crimes_per_100k_splc/10 * 365) %>% 
-  select(state, hate_crimes_10days_year, annualprop) %>% 
-  melt(, id = "state") %>% 
-  mutate(state = reorder(state, value)) %>% 
-  ggplot(aes(x = state, y = value, fill = variable, group = variable)) +
-  geom_bar(stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, size = 10, hjust = 1),legend.position = "right")
-```
-
-
-change the bar plot
-
-```{r}
-compare_rate %>% 
-  mutate(hate_crimes_10days_year = hate_crimes_per_100k_splc/10 * 365) %>% 
-  select(state, hate_crimes_10days_year, annualprop) %>% 
-  melt(, id = "state") %>% 
-  mutate(state = factor(state, levels = state %>% unique %>% sort(decreasing = T))) %>% 
-  ggplot(aes(x = state, y = value, fill = variable, group = variable))+
-  geom_bar(stat="identity", position = "dodge", width = 0.5)+
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 60))+
-  coord_flip()
-```
-
 
