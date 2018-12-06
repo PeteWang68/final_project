@@ -10,3 +10,8 @@ title: "Hate Crime Over the Last Decade"
 <img src="hate_crime_img.jpg" style="width:80%">
 
 Over the past few years, the United States has been facing increased divisions amongst its citizens due to ethnic, racial, sexual, and other prejudices. Many articles indicate that Trump's election into presidency and the overall shift in political power, have fostered an environment wherein these harmful sentiments could circulate. We wanted to see if the number of hate crimes reflected the seemingly endless reports of discrimination that flood the news. Additionally, we sought to find whether Trump's election played a part in the change in the number of hate crimes. 
+
+<br>
+
+## Conclusion
+In conclusion, this project showed that hate crimes are currently on an upward trend. Though our findings were not able to prove President Trump as the sole cause for this increase, they did indicate that the 2016 election played a part in increasing the rate of hate crime in the U.S. The rise in the number of hate crimes is alarming, and can serve as an indicator of the increasing divisions and discriminative sentiments amongst subgroups in the U.S. 
