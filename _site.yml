@@ -9,7 +9,7 @@ navbar:
       href: voting.html
     - text: "Situation in 2016"
       href: Situation_in_2016.html
-    - text: shinyapp
+    - text: "Shiny"
       href: https://petewang.shinyapps.io/shiny/
     - icon: fa-envelope fa-lg
       href: mailto:ks3663@cumc.columbia.edu
