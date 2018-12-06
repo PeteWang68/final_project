@@ -92,6 +92,7 @@ colnames(hatecrime_count_df) = c("year", "total_incidents", "total_offenses")
 
 We first wanted to determine the overall pattern of the number of hate crimes committed in the U.S. over the past few years. To do this, we created a plot to see how total number of hate crimes committed in the U.S. changed from 2005 to 2017. We predicted that total hate crime increased from around 2013 (Obama's Presidency) to 2017 (a year into Trump's Presidency). 
 
+<br>
 
 ```{r echo=FALSE}
 # plot change in number of hate crimes over time
