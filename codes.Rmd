@@ -1,11 +1,9 @@
 ---
-title: "final_project"
-author: "Kee-Young Shin"
-date: "December 5, 2018"
-output: html_document
+title: "Codes"
 ---
 
-```{r}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(readxl)
 library(plotly)

@@ -9,6 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Jingyu Xu | Kee-Young Shin | Man Luo | Runqi Ma | Zixu Wang" />
 
 
 <title>Hate Crime Over the Last Decade</title>
@@ -19,6 +20,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -169,6 +173,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -199,6 +298,9 @@ $(document).ready(function () {
   <a href="https://petewang.shinyapps.io/shiny/">Shiny</a>
 </li>
 <li>
+  <a href="codes.html">Codes</a>
+</li>
+<li>
   <a href="mailto:ks3663@cumc.columbia.edu">
     <span class="fa fa-envelope fa-lg"></span>
      
@@ -220,19 +322,52 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Hate Crime Over the Last Decade</h1>
+<h4 class="author"><em>Jingyu Xu | Kee-Young Shin | Man Luo | Runqi Ma | Zixu Wang</em></h4>
 
 </div>
 
 
-<div id="jingyu-xu-kee-young-shin-man-luo-runqi-ma-zixu-wang" class="section level3">
-<h3>Jingyu Xu | Kee-Young Shin | Man Luo | Runqi Ma | Zixu Wang</h3>
 <hr />
 <p><img src="hate_crime_img.jpg" style="width:80%"></p>
+<div id="background" class="section level2">
+<h2>Background</h2>
 <p>Over the past few years, the United States has been facing increased divisions amongst its citizens due to ethnic, racial, sexual, and other prejudices. Many articles indicate that Trump’s election into presidency and the overall shift in political power, have fostered an environment wherein these harmful sentiments could circulate. We wanted to see if the number of hate crimes reflected the seemingly endless reports of discrimination that flood the news. Additionally, we sought to find whether Trump’s election played a part in the change in the number of hate crimes.</p>
+</div>
+<div id="data-source" class="section level2">
+<h2>Data Source</h2>
+<ul>
+<li><p>We collected annual hate crime data from <a href="https://ucr.fbi.gov/hate-crime">FBI</a>, ranging from <a href="https://ucr.fbi.gov/hate-crime/2005">2005</a> to <a href="https://ucr.fbi.gov/hate-crime/2017">2017</a>.</p></li>
+<li><p>To assess the relationship between hate crime and socioeconomic variables, we selected various factors and collected data from the following sources:</p>
+<ul>
+<li><p><a href="https://www.kff.org/other/state-indicator/median-annual-income/?currentTimeframe=0&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D">Median annual household income</a></p></li>
+<li><p><a href="https://www.kff.org/other/state-indicator/unemployment-rate/?currentTimeframe=2&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D">Share of the population that is unemployed</a></p></li>
+<li><p><a href="https://www.census.gov/prod/2012pubs/p20-566.pdf">Share of the population with high school degree</a></p></li>
+<li><p><a href="https://www.kff.org/other/state-indicator/distribution-by-citizenship-status/?currentTimeframe=1&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D">Share of the population that are not U.S. citizens</a></p></li>
+<li><p><a href="https://www.kff.org/other/state-indicator/distribution-by-raceethnicity/?currentTimeframe=0&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D">Share of the population that is white</a></p></li>
+</ul></li>
+<li><p>To compare the hate crime rate before and after the election, and explore whether Trump’s election influenced hate crimes, we collected data from the following sources:</p>
+<ul>
+<li><p><a href="https://www.splcenter.org/20161129/ten-days-after-harassment-and-intimidation-aftermath-election">The hate crime rate from 11.09.2016 to 11.18.2016(10 days after election)</a></p></li>
+<li><p><a href="https://projects.fivethirtyeight.com/2016-swing-the-election/">Share of 2016 U.S. presidential voters who voted for Donald Trump</a></p></li>
+</ul></li>
+</ul>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>In conclusion, this project showed that hate crimes are currently on an upward trend. Though our findings were not able to prove President Trump as the sole cause for this increase, they did indicate that the 2016 election played a part in increasing the rate of hate crime in the U.S. The rise in the number of hate crimes is alarming, and can serve as an indicator of the increasing divisions and discriminative sentiments amongst subgroups in the U.S.</p>
+<p><br></p>
+<hr />
+</div>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wGQlzGs4FTg?hd=1" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen>
+</iframe>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
