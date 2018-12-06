@@ -74,16 +74,18 @@ merge_data =
 Since we found there is a significant increasement of hate crime rate in 2016, we would like to further explore the reason associated with this change. Therefore we found several datasets contain different factors relevant to the hate crime and combined them together. These factors include "Median annual household income", "Share of the population that is unemployed", "Share of the population with high school degree", "Share of the population that are not U.S. citizens", "Share of the population that is white", "Share of 2016 U.S. presidential voters who voted for Donald Trump".
 
 ## Regression
-<<<<<<< HEAD
-Based on the data of 
-=======
+Firstly, we do the regression based on several common socioeconomic factors including "Median annual household income", "Share of the population that is unemployed", "Share of the population with high school degree", "Share of the population that are not U.S. citizens", "Share of the population that is white". After the log transforation and stepwise regression, we get model 1 as following, with median income as the only predictor.
 
-```{r, include = FALSE}
+###Model 1
+
+```{r, echo = FALSE}
 merge_data_log = merge_data %>% 
-  mutate(crime_rate = log(crime_rate)) 
+  mutate(crime_rate = log(crime_rate)) %>%
+  mutate(share_voters_voted_trump = sub("\\%", "",share_voters_voted_trump))%>%
+  mutate(share_voters_voted_trump = as.numeric(share_voters_voted_trump)/100)
 ```
 
-```{r, include = FALSE}
+```{r, echo = FALSE}
 crime_income_slr = lm(crime_rate~median_income, data = merge_data_log)
 summary(crime_income_slr) %>%
   broom::tidy() %>%
@@ -92,16 +94,22 @@ summary(crime_income_slr) %>%
 merge_data_log %>%
   ggplot(aes(x = median_income,y = crime_rate)) +
   geom_smooth(method = "lm", color = "black", formula = y ~ x) +
-  geom_point()
+  geom_point()+
+  labs(
+    title = "Scatterplot between hate crime rate and Median annual household income",
+    x = "Median annual household income",
+    y = "Hate crime rate(per 100,000 population)",
+    caption = "Data from FBI"
+  )
 ```
 
 $$log\textrm{ crime_rate} = -0.74 + 0.000021 \textrm{median_income}$$
 
-<<<<<<< HEAD
-$$log\textrm{ crime_rate} = 2.03 - 3.06 \textrm{share_voters_voted_trump}$$
->>>>>>> d34bc47e9706b2259937c8f52b166e2a6a84a78c
-=======
-```{r, include = FALSE}
+After that, we enter the factor of Share of 2016 U.S. presidential voters who voted for Donald Trump to make the prediction since a significant crime increase has been observed with the election. After log transformation and stepwise, the second model is thus made. 
+
+###Model 2
+
+```{r, echo = FALSE}
 crime_trump_slr = lm(crime_rate~share_voters_voted_trump, data = merge_data_log)
 summary(crime_trump_slr) %>%
   broom::tidy() %>%
@@ -110,8 +118,14 @@ summary(crime_trump_slr) %>%
 merge_data_log %>%
   ggplot(aes(x = share_voters_voted_trump, y = crime_rate)) +
   geom_smooth(method = "lm", color = "black", formula = y ~ x) +
-  geom_point()
+  geom_point()+
+  labs(
+    title = "Scatterplot between hate crime rate and shared voters who voted Trump",
+    x = "Median annual household income",
+    y = "Hate crime rate(per 100,000 population)",
+    caption = "Data from FBI"
+  )
 ```
 
 $$log\textrm{ crime_rate} = 2.03 - 3.06 \textrm{share_voters_voted_trump}$$
->>>>>>> 408032a77833adc8addc40795cf7fea7256a4628
+
