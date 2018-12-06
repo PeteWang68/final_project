@@ -55,6 +55,9 @@ Did questions change as we did this project
 *Share of the population that is white:* https://www.kff.org/other/state-indicator/distribution-by-raceethnicity/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
  
 *Share of 2016 U.S. presidential voters who voted for Donald Trump:* https://projects.fivethirtyeight.com/2016-swing-the-election/
+
+*The hate crime rate from 11.09.2016 to 11.18.2016:*
+https://www.splcenter.org/20161129/ten-days-after-harassment-and-intimidation-aftermath-election
   
 ## Exploratory Analysis 
 
