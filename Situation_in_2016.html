@@ -328,12 +328,9 @@ div.tocify {
 </div>
 <div id="regression" class="section level2">
 <h2>Regression</h2>
-<<<<<<< HEAD
 <p>Firstly, we do the regression based on several common socioeconomic factors including “Median annual household income”, “Share of the population that is unemployed”, “Share of the population with high school degree”, “Share of the population that are not U.S. citizens”, “Share of the population that is white”. After the log transforation and stepwise regression, we get model 1 as following, with median income as the only predictor.</p>
 <div id="model-1" class="section level3">
 <h3>Model 1</h3>
-=======
->>>>>>> 56c70956f1f8f24818d3c6af3715cb3dd2be405a
 <table>
 <thead>
 <tr class="header">
@@ -347,7 +344,6 @@ div.tocify {
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<<<<<<< HEAD
 <td align="right">-0.7028500</td>
 <td align="right">0.7260155</td>
 <td align="right">-0.9680922</td>
@@ -359,31 +355,15 @@ div.tocify {
 <td align="right">0.0000122</td>
 <td align="right">1.7571310</td>
 <td align="right">0.0854082</td>
-=======
-<td align="right">-0.7447166</td>
-<td align="right">0.7347082</td>
-<td align="right">-1.013622</td>
-<td align="right">0.3158453</td>
-</tr>
-<tr class="even">
-<td align="left">median_income</td>
-<td align="right">0.0000217</td>
-<td align="right">0.0000123</td>
-<td align="right">1.761218</td>
-<td align="right">0.0845705</td>
->>>>>>> 56c70956f1f8f24818d3c6af3715cb3dd2be405a
 </tr>
 </tbody>
 </table>
 <p><img src="Situation_in_2016_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p><span class="math display">\[log\textrm{ crime_rate} = -0.74 + 0.000021 \textrm{median_income}\]</span></p>
-<<<<<<< HEAD
 <p>After that, we enter the factor of Share of 2016 U.S. presidential voters who voted for Donald Trump to make the prediction since a significant crime increase has been observed with the election. After log transformation and stepwise, the second model is thus made.</p>
 </div>
 <div id="model-2" class="section level3">
 <h3>Model 2</h3>
-=======
->>>>>>> 56c70956f1f8f24818d3c6af3715cb3dd2be405a
 <table>
 <thead>
 <tr class="header">
@@ -397,7 +377,6 @@ div.tocify {
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<<<<<<< HEAD
 <td align="right">1.955463</td>
 <td align="right">0.4630424</td>
 <td align="right">4.223075</td>
@@ -409,341 +388,6 @@ div.tocify {
 <td align="right">0.9299823</td>
 <td align="right">-3.094242</td>
 <td align="right">0.0033187</td>
-=======
-<td align="right">1.3869442</td>
-<td align="right">0.817485</td>
-<td align="right">1.6965989</td>
-<td align="right">0.2318636</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump34.60%</td>
-<td align="right">-0.2835536</td>
-<td align="right">1.156098</td>
-<td align="right">-0.2452677</td>
-<td align="right">0.8291204</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump35.10%</td>
-<td align="right">-1.5663112</td>
-<td align="right">1.001211</td>
-<td align="right">-1.5644174</td>
-<td align="right">0.2581784</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump36.40%</td>
-<td align="right">-0.5230337</td>
-<td align="right">1.156098</td>
-<td align="right">-0.4524128</td>
-<td align="right">0.6953071</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump37.20%</td>
-<td align="right">0.3864254</td>
-<td align="right">1.156098</td>
-<td align="right">0.3342496</td>
-<td align="right">0.7699870</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump39.40%</td>
-<td align="right">-0.9323571</td>
-<td align="right">1.156098</td>
-<td align="right">-0.8064686</td>
-<td align="right">0.5046269</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump39.70%</td>
-<td align="right">-0.2384773</td>
-<td align="right">1.156098</td>
-<td align="right">-0.2062777</td>
-<td align="right">0.8556669</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump40.20%</td>
-<td align="right">-1.4955529</td>
-<td align="right">1.156098</td>
-<td align="right">-1.2936208</td>
-<td align="right">0.3250530</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump40.30%</td>
-<td align="right">-0.3004614</td>
-<td align="right">1.156098</td>
-<td align="right">-0.2598926</td>
-<td align="right">0.8192549</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump40.70%</td>
-<td align="right">-0.2869402</td>
-<td align="right">1.156098</td>
-<td align="right">-0.2481970</td>
-<td align="right">0.8271401</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump40.90%</td>
-<td align="right">0.2834753</td>
-<td align="right">1.156098</td>
-<td align="right">0.2452000</td>
-<td align="right">0.8291662</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump41.80%</td>
-<td align="right">-0.3114971</td>
-<td align="right">1.156098</td>
-<td align="right">-0.2694382</td>
-<td align="right">0.8128449</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump42.20%</td>
-<td align="right">0.1185531</td>
-<td align="right">1.156098</td>
-<td align="right">0.1025458</td>
-<td align="right">0.9276790</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump44.50%</td>
-<td align="right">-0.5550149</td>
-<td align="right">1.156098</td>
-<td align="right">-0.4800758</td>
-<td align="right">0.6785515</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump44.60%</td>
-<td align="right">0.0121932</td>
-<td align="right">1.156098</td>
-<td align="right">0.0105469</td>
-<td align="right">0.9925424</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump44.70%</td>
-<td align="right">-1.0543865</td>
-<td align="right">1.156098</td>
-<td align="right">-0.9120214</td>
-<td align="right">0.4580302</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump45.60%</td>
-<td align="right">-1.8953164</td>
-<td align="right">1.156098</td>
-<td align="right">-1.6394075</td>
-<td align="right">0.2428028</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump45.70%</td>
-<td align="right">-0.7534746</td>
-<td align="right">1.156098</td>
-<td align="right">-0.6517391</td>
-<td align="right">0.5814580</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump46.00%</td>
-<td align="right">-1.9921553</td>
-<td align="right">1.156098</td>
-<td align="right">-1.7231711</td>
-<td align="right">0.2269991</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump46.30%</td>
-<td align="right">-1.3581359</td>
-<td align="right">1.001211</td>
-<td align="right">-1.3564938</td>
-<td align="right">0.3077740</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump46.60%</td>
-<td align="right">-1.0150990</td>
-<td align="right">1.156098</td>
-<td align="right">-0.8780386</td>
-<td align="right">0.4725283</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump47.40%</td>
-<td align="right">0.1427868</td>
-<td align="right">1.156098</td>
-<td align="right">0.1235075</td>
-<td align="right">0.9129982</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump48.30%</td>
-<td align="right">-1.3210820</td>
-<td align="right">1.156098</td>
-<td align="right">-1.1427072</td>
-<td align="right">0.3715105</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump49.80%</td>
-<td align="right">-1.0093608</td>
-<td align="right">1.156098</td>
-<td align="right">-0.8730751</td>
-<td align="right">0.4746856</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump52.20%</td>
-<td align="right">-2.1320678</td>
-<td align="right">1.156098</td>
-<td align="right">-1.8441923</td>
-<td align="right">0.2064628</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump52.70%</td>
-<td align="right">-0.1785657</td>
-<td align="right">1.156098</td>
-<td align="right">-0.1544555</td>
-<td align="right">0.8914291</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump53.50%</td>
-<td align="right">-1.0188171</td>
-<td align="right">1.156098</td>
-<td align="right">-0.8812546</td>
-<td align="right">0.4711360</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump53.70%</td>
-<td align="right">-0.3887270</td>
-<td align="right">1.156098</td>
-<td align="right">-0.3362404</td>
-<td align="right">0.7686901</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump54.20%</td>
-<td align="right">-0.9885892</td>
-<td align="right">1.156098</td>
-<td align="right">-0.8551082</td>
-<td align="right">0.4825796</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump54.40%</td>
-<td align="right">-1.2082515</td>
-<td align="right">1.156098</td>
-<td align="right">-1.0451113</td>
-<td align="right">0.4056740</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump54.50%</td>
-<td align="right">-2.1507852</td>
-<td align="right">1.156098</td>
-<td align="right">-1.8603825</td>
-<td align="right">0.2039044</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump55.20%</td>
-<td align="right">-0.7349850</td>
-<td align="right">1.156098</td>
-<td align="right">-0.6357461</td>
-<td align="right">0.5899840</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump56.10%</td>
-<td align="right">-1.8350309</td>
-<td align="right">1.156098</td>
-<td align="right">-1.5872619</td>
-<td align="right">0.2533653</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump57.10%</td>
-<td align="right">-1.7013199</td>
-<td align="right">1.156098</td>
-<td align="right">-1.4716048</td>
-<td align="right">0.2789733</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump57.40%</td>
-<td align="right">-0.5600586</td>
-<td align="right">1.156098</td>
-<td align="right">-0.4844385</td>
-<td align="right">0.6759359</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump57.90%</td>
-<td align="right">-1.3323467</td>
-<td align="right">1.156098</td>
-<td align="right">-1.1524510</td>
-<td align="right">0.3682846</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump59.00%</td>
-<td align="right">-0.6284986</td>
-<td align="right">1.156098</td>
-<td align="right">-0.5436376</td>
-<td align="right">0.6411880</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump59.30%</td>
-<td align="right">-0.8689023</td>
-<td align="right">1.156098</td>
-<td align="right">-0.7515816</td>
-<td align="right">0.5307081</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump59.40%</td>
-<td align="right">-0.7498833</td>
-<td align="right">1.156098</td>
-<td align="right">-0.6486328</td>
-<td align="right">0.5831055</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump59.90%</td>
-<td align="right">-1.0642161</td>
-<td align="right">1.156098</td>
-<td align="right">-0.9205238</td>
-<td align="right">0.4544764</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump60.10%</td>
-<td align="right">-2.2532197</td>
-<td align="right">1.156098</td>
-<td align="right">-1.9489862</td>
-<td align="right">0.1906262</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump60.20%</td>
-<td align="right">0.1505050</td>
-<td align="right">1.156098</td>
-<td align="right">0.1301836</td>
-<td align="right">0.9083339</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump62.00%</td>
-<td align="right">-0.4592262</td>
-<td align="right">1.156098</td>
-<td align="right">-0.3972207</td>
-<td align="right">0.7295868</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump64.10%</td>
-<td align="right">-0.9143535</td>
-<td align="right">1.156098</td>
-<td align="right">-0.7908959</td>
-<td align="right">0.5118964</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump66.10%</td>
-<td align="right">-1.5460423</td>
-<td align="right">1.156098</td>
-<td align="right">-1.3372931</td>
-<td align="right">0.3129294</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump67.80%</td>
-<td align="right">-2.0047318</td>
-<td align="right">1.156098</td>
-<td align="right">-1.7340495</td>
-<td align="right">0.2250462</td>
-</tr>
-<tr class="odd">
-<td align="left">share_voters_voted_trump7.40%</td>
-<td align="right">1.4393462</td>
-<td align="right">1.156098</td>
-<td align="right">1.2450032</td>
-<td align="right">0.3392240</td>
-</tr>
-<tr class="even">
-<td align="left">share_voters_voted_trump72.10%</td>
-<td align="right">-0.6032057</td>
-<td align="right">1.156098</td>
-<td align="right">-0.5217598</td>
-<td align="right">0.6538661</td>
->>>>>>> 56c70956f1f8f24818d3c6af3715cb3dd2be405a
 </tr>
 </tbody>
 </table>

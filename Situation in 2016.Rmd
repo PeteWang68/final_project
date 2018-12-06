@@ -105,13 +105,10 @@ merge_data_log %>%
 
 $$log\textrm{ crime_rate} = -0.74 + 0.000021 \textrm{median_income}$$
 
-<<<<<<< HEAD
 After that, we enter the factor of Share of 2016 U.S. presidential voters who voted for Donald Trump to make the prediction since a significant crime increase has been observed with the election. After log transformation and stepwise, the second model is thus made. 
 
 ###Model 2
 
-=======
->>>>>>> 56c70956f1f8f24818d3c6af3715cb3dd2be405a
 ```{r, echo = FALSE}
 crime_trump_slr = lm(crime_rate~share_voters_voted_trump, data = merge_data_log)
 summary(crime_trump_slr) %>%
