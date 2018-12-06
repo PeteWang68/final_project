@@ -119,7 +119,7 @@ race = read_csv("./data/Race.csv") %>%
 vote = read_csv("./data/Vote.csv") %>% 
   janitor::clean_names()
 
-crime_rate = read_excel("./data/2016.xls",  range = cell_rows(3:53)) %>%
+crime_rate = read_excel("./data/2016.xls",  range = cell_rows(3:54)) %>%
   janitor::clean_names() %>%
   filter(participating_state != "Total") %>%
   select(location = participating_state, population_covered,       total_number_of_incidents_reported) %>%
@@ -159,7 +159,7 @@ merge_data =
 #list
 df = list.files(path = "./annual")
 #function
-read_data = function(x){read_excel(str_c("./annual/", x),  range = "A3:E53")%>%
+read_data = function(x){read_excel(str_c("./annual/", x),  range = "A3:E54")%>%
     mutate(year = x)}
 #map
 hate_crime = map(df, read_data)%>%
