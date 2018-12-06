@@ -23,7 +23,7 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<script src="site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="site_libs/htmlwidgets-1.2/htmlwidgets.js"></script>
 <script src="site_libs/plotly-binding-4.8.0/plotly.js"></script>
 <script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
@@ -204,6 +204,9 @@ $(document).ready(function () {
   <a href="Situation_in_2016.html">Situation in 2016</a>
 </li>
 <li>
+  <a href="https://petewang.shinyapps.io/shiny/">shinyapp</a>
+</li>
+<li>
   <a href="mailto:ks3663@cumc.columbia.edu">
     <span class="fa fa-envelope fa-lg"></span>
      
@@ -231,8 +234,21 @@ $(document).ready(function () {
 </div>
 
 
+<<<<<<< HEAD
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## -- Attaching packages -------------------------------------------------------------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
+## v tibble  1.4.2     v dplyr   0.7.8
+## v tidyr   0.8.1     v stringr 1.3.1
+## v readr   1.1.1     v forcats 0.3.0</code></pre>
+<pre><code>## -- Conflicts ----------------------------------------------------------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(readxl)
+=======
 <pre class="r"><code>library(tidyverse)
 library(readxl)
+>>>>>>> a3ac06542228ed8e61541dc8089a8a69a079411f
 library(plotly)</code></pre>
 <div id="import-hate-crime-incident-count-from-2005-to-2017" class="section level2">
 <h2>import hate crime incident count from 2005 to 2017</h2>
@@ -428,20 +444,12 @@ hate_crime = hate_crime%&gt;%
   filter(state != &quot;Total&quot;) %&gt;%
   mutate(annualprop = total_incident/population*100000)%&gt;%
   mutate(year = str_replace(year, &quot;.xls&quot;, &quot;&quot;)) </code></pre>
-<div id="import-and-clean-the-annual-data-from-2005-2017" class="section level2">
-<h2>import and clean the annual data from 2005-2017</h2>
-<pre class="r"><code>#list the files
-files = as.data.frame(list.files(path = &quot;./data_1&quot;)) 
-colnames(files)[1] = &quot;file_names&quot;</code></pre>
-</div>
-<div id="do-the-further-cleaning-of-the-merge-data" class="section level2">
-<h2>do the further cleaning of the merge data</h2>
+<p>do the further cleaning of the merge data</p>
 <pre class="r"><code>merge_data = merge_data %&gt;%
   mutate(median_annual_household_income = str_replace(median_annual_household_income, &quot;,&quot;, &quot;&quot;)) %&gt;%
   mutate(median_annual_household_income = gsub(&quot;\\$&quot;, &quot;&quot;,median_annual_household_income )) %&gt;%
 mutate(median_annual_household_income = as.numeric(median_annual_household_income)) %&gt;%
   select(state, median_income = median_annual_household_income, everything())</code></pre>
-</div>
 <div id="regression-part" class="section level2">
 <h2>regression part</h2>
 <pre class="r"><code>sum(is.na(merge_data))</code></pre>
@@ -555,7 +563,7 @@ mutate(median_annual_household_income = as.numeric(median_annual_household_incom
 merge_data %&gt;% 
   ggplot(aes(x = crime_rate)) + geom_histogram()</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="final_project_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="final_project_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code># transform crime rate variable
 merge_data_log = merge_data %&gt;% 
   mutate(crime_rate = log(crime_rate)) 
@@ -579,10 +587,12 @@ mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_hig
 ## Step:  AIC=-19.25
 ## crime_rate ~ median_income + share_unemployed + share_population_with_high_school_degree + 
 ##     share_non_citizen + share_white</code></pre>
-<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg = object
-## $contrasts): the response appeared on the right-hand side and was dropped</code></pre>
-<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg = object
-## $contrasts): problem with term 6 in model.matrix: no columns are assigned</code></pre>
+<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg =
+## object$contrasts): the response appeared on the right-hand side and was
+## dropped</code></pre>
+<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg =
+## object$contrasts): problem with term 6 in model.matrix: no columns are
+## assigned</code></pre>
 <pre><code>##                                            Df Sum of Sq    RSS     AIC
 ## - share_population_with_high_school_degree  1   0.09028 25.985 -21.081
 ## - median_income                             1   0.38149 26.276 -20.535
@@ -594,11 +604,13 @@ mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_hig
 ## Step:  AIC=-21.08
 ## crime_rate ~ median_income + share_unemployed + share_non_citizen + 
 ##     share_white</code></pre>
-<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg = object
-## $contrasts): the response appeared on the right-hand side and was dropped
+<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg =
+## object$contrasts): the response appeared on the right-hand side and was
+## dropped
 
-## Warning in model.matrix.default(Terms, m, contrasts.arg = object
-## $contrasts): problem with term 6 in model.matrix: no columns are assigned</code></pre>
+## Warning in model.matrix.default(Terms, m, contrasts.arg =
+## object$contrasts): problem with term 6 in model.matrix: no columns are
+## assigned</code></pre>
 <pre><code>##                                            Df Sum of Sq    RSS     AIC
 ## - share_non_citizen                         1   0.32099 26.306 -22.480
 ## - share_white                               1   0.94874 26.933 -21.324
@@ -609,11 +621,13 @@ mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_hig
 ## 
 ## Step:  AIC=-22.48
 ## crime_rate ~ median_income + share_unemployed + share_white</code></pre>
-<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg = object
-## $contrasts): the response appeared on the right-hand side and was dropped
+<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg =
+## object$contrasts): the response appeared on the right-hand side and was
+## dropped
 
-## Warning in model.matrix.default(Terms, m, contrasts.arg = object
-## $contrasts): problem with term 6 in model.matrix: no columns are assigned</code></pre>
+## Warning in model.matrix.default(Terms, m, contrasts.arg =
+## object$contrasts): problem with term 6 in model.matrix: no columns are
+## assigned</code></pre>
 <pre><code>##                                            Df Sum of Sq    RSS     AIC
 ## - share_white                               1   0.68044 26.986 -23.228
 ## - share_unemployed                          1   1.06356 27.369 -22.538
@@ -624,11 +638,13 @@ mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_hig
 ## 
 ## Step:  AIC=-23.23
 ## crime_rate ~ median_income + share_unemployed</code></pre>
-<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg = object
-## $contrasts): the response appeared on the right-hand side and was dropped
+<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg =
+## object$contrasts): the response appeared on the right-hand side and was
+## dropped
 
-## Warning in model.matrix.default(Terms, m, contrasts.arg = object
-## $contrasts): problem with term 6 in model.matrix: no columns are assigned</code></pre>
+## Warning in model.matrix.default(Terms, m, contrasts.arg =
+## object$contrasts): problem with term 6 in model.matrix: no columns are
+## assigned</code></pre>
 <pre><code>##                                            Df Sum of Sq    RSS     AIC
 ## - share_unemployed                          1   0.43557 27.422 -24.444
 ## &lt;none&gt;                                                  26.986 -23.228
@@ -639,11 +655,13 @@ mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_hig
 ## 
 ## Step:  AIC=-24.44
 ## crime_rate ~ median_income</code></pre>
-<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg = object
-## $contrasts): the response appeared on the right-hand side and was dropped
+<pre><code>## Warning in model.matrix.default(Terms, m, contrasts.arg =
+## object$contrasts): the response appeared on the right-hand side and was
+## dropped
 
-## Warning in model.matrix.default(Terms, m, contrasts.arg = object
-## $contrasts): problem with term 6 in model.matrix: no columns are assigned</code></pre>
+## Warning in model.matrix.default(Terms, m, contrasts.arg =
+## object$contrasts): problem with term 6 in model.matrix: no columns are
+## assigned</code></pre>
 <pre><code>##                                            Df Sum of Sq    RSS     AIC
 ## &lt;none&gt;                                                  27.422 -24.444
 ## - median_income                             1   1.80137 29.223 -23.326
@@ -676,13 +694,145 @@ mle_log = lm(crime_rate~median_income+share_unemployed+share_population_with_hig
   select(-state, -share_voters_voted_trump) %&gt;%
   select(crime_rate, everything()) %&gt;%
   pairs()</code></pre>
-<p><img src="final_project_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="final_project_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 <div id="see-distribution-of-hate-crime-rate" class="section level2">
 <h2>see distribution of hate crime rate</h2>
 <pre class="r"><code>ggplot(merge_data, aes(x = crime_rate)) + 
   geom_density(alpha = .4, adjust = .5, color = &quot;blue&quot;)</code></pre>
-<p><img src="final_project_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="final_project_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="see-whether-trump-rate-influence-the-model" class="section level2">
+<h2>see whether Trump rate influence the model</h2>
+<pre class="r"><code>merge_data_log = merge_data_log%&gt;%
+  mutate(share_voters_voted_trump = sub(&quot;\\%&quot;, &quot;&quot;,share_voters_voted_trump))%&gt;%
+  mutate(share_voters_voted_trump = as.numeric(share_voters_voted_trump)/100)
+
+mle_log_1 = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ share_voters_voted_trump, data = merge_data_log)
+  
+summary(step(mle_log_1, direction = &quot;both&quot;))</code></pre>
+<pre><code>## Start:  AIC=-24.03
+## crime_rate ~ median_income + share_unemployed + share_population_with_high_school_degree + 
+##     share_non_citizen + share_white + share_voters_voted_trump
+## 
+##                                            Df Sum of Sq    RSS     AIC
+## - share_population_with_high_school_degree  1    0.0001 22.551 -26.026
+## - median_income                             1    0.0481 22.599 -25.922
+## - share_non_citizen                         1    0.2138 22.765 -25.564
+## - share_unemployed                          1    0.6754 23.226 -24.581
+## &lt;none&gt;                                                  22.551 -24.027
+## - share_white                               1    1.1602 23.711 -23.569
+## - share_voters_voted_trump                  1    3.3437 25.894 -19.252
+## 
+## Step:  AIC=-26.03
+## crime_rate ~ median_income + share_unemployed + share_non_citizen + 
+##     share_white + share_voters_voted_trump
+## 
+##                                            Df Sum of Sq    RSS     AIC
+## - median_income                             1    0.0998 22.651 -27.810
+## - share_non_citizen                         1    0.2322 22.783 -27.525
+## - share_unemployed                          1    0.6977 23.248 -26.534
+## &lt;none&gt;                                                  22.551 -26.026
+## - share_white                               1    1.3406 23.891 -25.197
+## + share_population_with_high_school_degree  1    0.0001 22.551 -24.027
+## - share_voters_voted_trump                  1    3.4339 25.985 -21.081
+## 
+## Step:  AIC=-27.81
+## crime_rate ~ share_unemployed + share_non_citizen + share_white + 
+##     share_voters_voted_trump
+## 
+##                                            Df Sum of Sq    RSS     AIC
+## - share_non_citizen                         1    0.3892 23.040 -28.975
+## - share_unemployed                          1    0.6016 23.252 -28.526
+## &lt;none&gt;                                                  22.651 -27.810
+## - share_white                               1    1.4667 24.117 -26.736
+## + median_income                             1    0.0998 22.551 -26.026
+## + share_population_with_high_school_degree  1    0.0518 22.599 -25.922
+## - share_voters_voted_trump                  1    5.0274 27.678 -19.988
+## 
+## Step:  AIC=-28.98
+## crime_rate ~ share_unemployed + share_white + share_voters_voted_trump
+## 
+##                                            Df Sum of Sq    RSS     AIC
+## - share_unemployed                          1    0.3158 23.356 -30.308
+## &lt;none&gt;                                                  23.040 -28.975
+## - share_white                               1    1.2311 24.271 -28.424
+## + share_non_citizen                         1    0.3892 22.651 -27.810
+## + median_income                             1    0.2569 22.783 -27.525
+## + share_population_with_high_school_degree  1    0.0552 22.985 -27.093
+## - share_voters_voted_trump                  1    6.0454 29.085 -19.558
+## 
+## Step:  AIC=-30.31
+## crime_rate ~ share_white + share_voters_voted_trump
+## 
+##                                            Df Sum of Sq    RSS     AIC
+## - share_white                               1    0.9218 24.277 -30.411
+## &lt;none&gt;                                                  23.356 -30.308
+## + share_unemployed                          1    0.3158 23.040 -28.975
+## + share_non_citizen                         1    0.1035 23.252 -28.526
+## + median_income                             1    0.0412 23.314 -28.395
+## + share_population_with_high_school_degree  1    0.0000 23.356 -28.308
+## - share_voters_voted_trump                  1    5.8497 29.205 -21.356
+## 
+## Step:  AIC=-30.41
+## crime_rate ~ share_voters_voted_trump
+## 
+##                                            Df Sum of Sq    RSS     AIC
+## &lt;none&gt;                                                  24.277 -30.411
+## + share_white                               1    0.9218 23.356 -30.308
+## + share_population_with_high_school_degree  1    0.3949 23.883 -29.215
+## + share_non_citizen                         1    0.1589 24.119 -28.733
+## + median_income                             1    0.0975 24.180 -28.608
+## + share_unemployed                          1    0.0065 24.271 -28.424
+## - share_voters_voted_trump                  1    4.9455 29.223 -23.326</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = crime_rate ~ share_voters_voted_trump, data = merge_data_log)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.4316 -0.3671  0.1436  0.5008  1.3143 
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                 1.956      0.463   4.223  0.00011 ***
+## share_voters_voted_trump   -2.878      0.930  -3.094  0.00332 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.7187 on 47 degrees of freedom
+## Multiple R-squared:  0.1692, Adjusted R-squared:  0.1516 
+## F-statistic: 9.574 on 1 and 47 DF,  p-value: 0.003319</code></pre>
+<pre class="r"><code>cor(merge_data_log$share_voters_voted_trump, merge_data_log$median_income)</code></pre>
+<pre><code>## [1] -0.4803755</code></pre>
+<pre class="r"><code>slr = lm(crime_rate~share_voters_voted_trump, data = merge_data_log)
+summary(slr)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = crime_rate ~ share_voters_voted_trump, data = merge_data_log)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.4316 -0.3671  0.1436  0.5008  1.3143 
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                 1.956      0.463   4.223  0.00011 ***
+## share_voters_voted_trump   -2.878      0.930  -3.094  0.00332 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.7187 on 47 degrees of freedom
+## Multiple R-squared:  0.1692, Adjusted R-squared:  0.1516 
+## F-statistic: 9.574 on 1 and 47 DF,  p-value: 0.003319</code></pre>
+</div>
+<div id="do-scatter-plot" class="section level2">
+<h2>do scatter plot</h2>
+<pre class="r"><code>merge_data%&gt;%
+  ggplot(aes(x = median_income,y = crime_rate))+
+  geom_smooth(method = &quot;lm&quot;, color=&quot;black&quot;, formula = y ~ x) +
+  geom_point()</code></pre>
+<p><img src="final_project_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 <div id="building-the-map-of-hate-crime-rate-based-on-2016" class="section level2">
 <h2>Building the Map of hate crime rate based on 2016</h2>
@@ -714,8 +864,18 @@ plot_geo(map_data_2016, locationmode = &#39;USA-states&#39;) %&gt;%
     title = &#39;Hate crime rate in 2016 all over U.S. &#39;,
     geo = g
   )</code></pre>
+<<<<<<< HEAD
 <div id="htmlwidget-cfe1d02b1b241e7e7d87" style="width:672px;height:480px;" class="plotly html-widget"></div>
 <script type="application/json" data-for="htmlwidget-cfe1d02b1b241e7e7d87">{"x":{"visdat":{"1b5877f318d8":["function () ","plotlyVisDat"]},"cur_data":"1b5877f318d8","attrs":{"1b5877f318d8":{"locationmode":"USA-states","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"z":{},"text":{},"locations":{},"color":{},"colors":"Reds","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","scene":{"zaxis":{"title":"crime_rate"}},"geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa","projection":{"type":"albers usa"},"showlakes":true,"lakecolor":"rgba(255,255,255,1)"},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5},"title":"Hate crime rate in 2016 all over U.S. "},"source":"A","config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"data":[{"colorbar":{"title":"Hate crime rate ","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(255,245,240,1)"],["0.00329001034965554","rgba(255,244,239,1)"],["0.00762014405241635","rgba(255,244,238,1)"],["0.0118128844458941","rgba(255,243,237,1)"],["0.018814600741361","rgba(255,242,235,1)"],["0.028949136181773","rgba(255,240,233,1)"],["0.0393364566619348","rgba(255,238,230,1)"],["0.0470859540746992","rgba(255,237,229,1)"],["0.0591667818940808","rgba(255,235,226,1)"],["0.0625611082445715","rgba(255,234,225,1)"],["0.0649280001670427","rgba(255,234,224,1)"],["0.0718998492218171","rgba(255,233,223,1)"],["0.0889080142040883","rgba(254,230,219,1)"],["0.0910438710949724","rgba(254,230,218,1)"],["0.107466073312285","rgba(254,227,214,1)"],["0.113330689929598","rgba(254,226,213,1)"],["0.118568890948765","rgba(254,225,212,1)"],["0.139284228485111","rgba(254,220,204,1)"],["0.154494303171325","rgba(254,215,198,1)"],["0.15756424338281","rgba(254,214,197,1)"],["0.177833826601441","rgba(254,208,189,1)"],["0.220577334956098","rgba(253,196,172,1)"],["0.254912415636233","rgba(252,185,159,1)"],["0.297279912165542","rgba(253,172,143,1)"],["1","rgba(103,0,13,1)"]],"showscale":true,"locationmode":"USA-states","z":[1.3808898651561,1.48937264916067,3.34805113558664,0.420514815262585,2.37241981189183,1.88413647670102,2.96383119359633,1.57552267964897,16.8827165024884,1.06807949849217,0.474675629191675,1.60414463443326,0.897081333757898,2.71343987643412,0.545959163539177,1.89091504080132,4.65270703981678,0.730244567331498,3.00417806063783,0.614980901518787,5.89066918001885,4.05170339094064,2.29774753161092,1.19565328787573,1.44502572063679,1.91929738361381,1.67873732959462,1.39453031198704,2.19578565995122,3.15335468296094,4.50639387962382,3.01436916852553,1.45875512794317,1.05611537004302,4.61693441404417,0.852912632023768,2.93130321795085,0.482428071556262,1.13590540179814,0.465873547335386,2.28618749023607,2.13495501709919,0.638849301766425,2.18964298866362,4.00260008901783,1.45040839696109,5.3143966868925,2.52873194577905,0.601473858619324],"text":["Alabama <br> share for trump 59.90%","Alaska <br> share for trump 54.20%","Arizona <br> share for trump 52.70%","Arkansas <br> share for trump 60.10%","California <br> share for trump 36.40%","Colorado <br> share for trump 45.70%","Connecticut <br> share for trump 40.30%","Delaware <br> share for trump 39.40%","District of Columbia <br> share for trump 7.40%","Florida <br> share for trump 48.30%","Georgia <br> share for trump 52.20%","Idaho <br> share for trump 64.10%","Illinois <br> share for trump 40.20%","Indiana <br> share for trump 53.70%","Iowa <br> share for trump 46.00%","Kansas <br> share for trump 59.40%","Kentucky <br> share for trump 60.20%","Louisiana <br> share for trump 57.10%","Maine <br> share for trump 40.70%","Maryland <br> share for trump 35.10%","Massachusetts <br> share for trump 37.20%","Michigan <br> share for trump 44.60%","Minnesota <br> share for trump 44.50%","Mississippi <br> share for trump 54.40%","Missouri <br> share for trump 53.50%","Montana <br> share for trump 55.20%","Nebraska <br> share for trump 59.30%","Nevada <br> share for trump 44.70%","New Hampshire <br> share for trump 46.30%","New Jersey <br> share for trump 39.70%","New Mexico <br> share for trump 42.20%","New York <br> share for trump 34.60%","North Carolina <br> share for trump 49.80%","North Dakota <br> share for trump 57.90%","Ohio <br> share for trump 47.40%","Oklahoma <br> share for trump 66.10%","Oregon <br> share for trump 41.80%","Pennsylvania <br> share for trump 46.30%","Rhode Island <br> share for trump 35.10%","South Carolina <br> share for trump 54.50%","South Dakota <br> share for trump 57.40%","Tennessee <br> share for trump 59.00%","Texas <br> share for trump 56.10%","Utah <br> share for trump 72.10%","Vermont <br> share for trump 31.10%","Virginia <br> share for trump 46.60%","Washington <br> share for trump 40.90%","West Virginia <br> share for trump 62.00%","Wisconsin <br> share for trump 45.60%"],"locations":["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI"],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":0.420514815262585,"cmax":16.8827165024884,"colorscale":[["0","rgba(255,245,240,1)"],["0.00329001034965554","rgba(255,244,239,1)"],["0.00762014405241635","rgba(255,244,238,1)"],["0.0118128844458941","rgba(255,243,237,1)"],["0.018814600741361","rgba(255,242,235,1)"],["0.028949136181773","rgba(255,240,233,1)"],["0.0393364566619348","rgba(255,238,230,1)"],["0.0470859540746992","rgba(255,237,229,1)"],["0.0591667818940808","rgba(255,235,226,1)"],["0.0625611082445715","rgba(255,234,225,1)"],["0.0649280001670427","rgba(255,234,224,1)"],["0.0718998492218171","rgba(255,233,223,1)"],["0.0889080142040883","rgba(254,230,219,1)"],["0.0910438710949724","rgba(254,230,218,1)"],["0.107466073312285","rgba(254,227,214,1)"],["0.113330689929598","rgba(254,226,213,1)"],["0.118568890948765","rgba(254,225,212,1)"],["0.139284228485111","rgba(254,220,204,1)"],["0.154494303171325","rgba(254,215,198,1)"],["0.15756424338281","rgba(254,214,197,1)"],["0.177833826601441","rgba(254,208,189,1)"],["0.220577334956098","rgba(253,196,172,1)"],["0.254912415636233","rgba(252,185,159,1)"],["0.297279912165542","rgba(253,172,143,1)"],["1","rgba(103,0,13,1)"]],"showscale":false,"color":[1.3808898651561,1.48937264916067,3.34805113558664,0.420514815262585,2.37241981189183,1.88413647670102,2.96383119359633,1.57552267964897,16.8827165024884,1.06807949849217,0.474675629191675,1.60414463443326,0.897081333757898,2.71343987643412,0.545959163539177,1.89091504080132,4.65270703981678,0.730244567331498,3.00417806063783,0.614980901518787,5.89066918001885,4.05170339094064,2.29774753161092,1.19565328787573,1.44502572063679,1.91929738361381,1.67873732959462,1.39453031198704,2.19578565995122,3.15335468296094,4.50639387962382,3.01436916852553,1.45875512794317,1.05611537004302,4.61693441404417,0.852912632023768,2.93130321795085,0.482428071556262,1.13590540179814,0.465873547335386,2.28618749023607,2.13495501709919,0.638849301766425,2.18964298866362,4.00260008901783,1.45040839696109,5.3143966868925,2.52873194577905,0.601473858619324]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
+=======
+<<<<<<< HEAD
+<div id="htmlwidget-5a26c61f81a70d6bf914" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5a26c61f81a70d6bf914">{"x":{"visdat":{"9fac6a43850c":["function () ","plotlyVisDat"]},"cur_data":"9fac6a43850c","attrs":{"9fac6a43850c":{"locationmode":"USA-states","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"z":{},"text":{},"locations":{},"color":{},"colors":"Reds","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","scene":{"zaxis":{"title":"crime_rate"}},"geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa","projection":{"type":"albers usa"},"showlakes":true,"lakecolor":"rgba(255,255,255,1)"},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5},"title":"Hate crime rate in 2016 all over U.S. "},"source":"A","config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"data":[{"colorbar":{"title":"Hate crime rate ","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(255,245,240,1)"],["0.00329001034965554","rgba(255,244,239,1)"],["0.00762014405241635","rgba(255,244,238,1)"],["0.0118128844458941","rgba(255,243,237,1)"],["0.018814600741361","rgba(255,242,235,1)"],["0.028949136181773","rgba(255,240,233,1)"],["0.0393364566619348","rgba(255,238,230,1)"],["0.0470859540746992","rgba(255,237,229,1)"],["0.0591667818940808","rgba(255,235,226,1)"],["0.0625611082445715","rgba(255,234,225,1)"],["0.0649280001670427","rgba(255,234,224,1)"],["0.0718998492218171","rgba(255,233,223,1)"],["0.0889080142040883","rgba(254,230,219,1)"],["0.0910438710949724","rgba(254,230,218,1)"],["0.107466073312285","rgba(254,227,214,1)"],["0.113330689929598","rgba(254,226,213,1)"],["0.118568890948765","rgba(254,225,212,1)"],["0.139284228485111","rgba(254,220,204,1)"],["0.154494303171325","rgba(254,215,198,1)"],["0.15756424338281","rgba(254,214,197,1)"],["0.177833826601441","rgba(254,208,189,1)"],["0.220577334956098","rgba(253,196,172,1)"],["0.254912415636233","rgba(252,185,159,1)"],["0.297279912165542","rgba(253,172,143,1)"],["1","rgba(103,0,13,1)"]],"showscale":true,"locationmode":"USA-states","z":[1.3808898651561,1.48937264916067,3.34805113558664,0.420514815262585,2.37241981189183,1.88413647670102,2.96383119359633,1.57552267964897,16.8827165024884,1.06807949849217,0.474675629191675,1.60414463443326,0.897081333757898,2.71343987643412,0.545959163539177,1.89091504080132,4.65270703981678,0.730244567331498,3.00417806063783,0.614980901518787,5.89066918001885,4.05170339094064,2.29774753161092,1.19565328787573,1.44502572063679,1.91929738361381,1.67873732959462,1.39453031198704,2.19578565995122,3.15335468296094,4.50639387962382,3.01436916852553,1.45875512794317,1.05611537004302,4.61693441404417,0.852912632023768,2.93130321795085,0.482428071556262,1.13590540179814,0.465873547335386,2.28618749023607,2.13495501709919,0.638849301766425,2.18964298866362,4.00260008901783,1.45040839696109,5.3143966868925,2.52873194577905,0.601473858619324],"text":["Alabama <br> share for trump 59.90%","Alaska <br> share for trump 54.20%","Arizona <br> share for trump 52.70%","Arkansas <br> share for trump 60.10%","California <br> share for trump 36.40%","Colorado <br> share for trump 45.70%","Connecticut <br> share for trump 40.30%","Delaware <br> share for trump 39.40%","District of Columbia <br> share for trump 7.40%","Florida <br> share for trump 48.30%","Georgia <br> share for trump 52.20%","Idaho <br> share for trump 64.10%","Illinois <br> share for trump 40.20%","Indiana <br> share for trump 53.70%","Iowa <br> share for trump 46.00%","Kansas <br> share for trump 59.40%","Kentucky <br> share for trump 60.20%","Louisiana <br> share for trump 57.10%","Maine <br> share for trump 40.70%","Maryland <br> share for trump 35.10%","Massachusetts <br> share for trump 37.20%","Michigan <br> share for trump 44.60%","Minnesota <br> share for trump 44.50%","Mississippi <br> share for trump 54.40%","Missouri <br> share for trump 53.50%","Montana <br> share for trump 55.20%","Nebraska <br> share for trump 59.30%","Nevada <br> share for trump 44.70%","New Hampshire <br> share for trump 46.30%","New Jersey <br> share for trump 39.70%","New Mexico <br> share for trump 42.20%","New York <br> share for trump 34.60%","North Carolina <br> share for trump 49.80%","North Dakota <br> share for trump 57.90%","Ohio <br> share for trump 47.40%","Oklahoma <br> share for trump 66.10%","Oregon <br> share for trump 41.80%","Pennsylvania <br> share for trump 46.30%","Rhode Island <br> share for trump 35.10%","South Carolina <br> share for trump 54.50%","South Dakota <br> share for trump 57.40%","Tennessee <br> share for trump 59.00%","Texas <br> share for trump 56.10%","Utah <br> share for trump 72.10%","Vermont <br> share for trump 31.10%","Virginia <br> share for trump 46.60%","Washington <br> share for trump 40.90%","West Virginia <br> share for trump 62.00%","Wisconsin <br> share for trump 45.60%"],"locations":["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI"],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":0.420514815262585,"cmax":16.8827165024884,"colorscale":[["0","rgba(255,245,240,1)"],["0.00329001034965554","rgba(255,244,239,1)"],["0.00762014405241635","rgba(255,244,238,1)"],["0.0118128844458941","rgba(255,243,237,1)"],["0.018814600741361","rgba(255,242,235,1)"],["0.028949136181773","rgba(255,240,233,1)"],["0.0393364566619348","rgba(255,238,230,1)"],["0.0470859540746992","rgba(255,237,229,1)"],["0.0591667818940808","rgba(255,235,226,1)"],["0.0625611082445715","rgba(255,234,225,1)"],["0.0649280001670427","rgba(255,234,224,1)"],["0.0718998492218171","rgba(255,233,223,1)"],["0.0889080142040883","rgba(254,230,219,1)"],["0.0910438710949724","rgba(254,230,218,1)"],["0.107466073312285","rgba(254,227,214,1)"],["0.113330689929598","rgba(254,226,213,1)"],["0.118568890948765","rgba(254,225,212,1)"],["0.139284228485111","rgba(254,220,204,1)"],["0.154494303171325","rgba(254,215,198,1)"],["0.15756424338281","rgba(254,214,197,1)"],["0.177833826601441","rgba(254,208,189,1)"],["0.220577334956098","rgba(253,196,172,1)"],["0.254912415636233","rgba(252,185,159,1)"],["0.297279912165542","rgba(253,172,143,1)"],["1","rgba(103,0,13,1)"]],"showscale":false,"color":[1.3808898651561,1.48937264916067,3.34805113558664,0.420514815262585,2.37241981189183,1.88413647670102,2.96383119359633,1.57552267964897,16.8827165024884,1.06807949849217,0.474675629191675,1.60414463443326,0.897081333757898,2.71343987643412,0.545959163539177,1.89091504080132,4.65270703981678,0.730244567331498,3.00417806063783,0.614980901518787,5.89066918001885,4.05170339094064,2.29774753161092,1.19565328787573,1.44502572063679,1.91929738361381,1.67873732959462,1.39453031198704,2.19578565995122,3.15335468296094,4.50639387962382,3.01436916852553,1.45875512794317,1.05611537004302,4.61693441404417,0.852912632023768,2.93130321795085,0.482428071556262,1.13590540179814,0.465873547335386,2.28618749023607,2.13495501709919,0.638849301766425,2.18964298866362,4.00260008901783,1.45040839696109,5.3143966868925,2.52873194577905,0.601473858619324]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
+=======
+<div id="htmlwidget-0024a0d0d49681e0b49c" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0024a0d0d49681e0b49c">{"x":{"visdat":{"53ea37897a87":["function () ","plotlyVisDat"]},"cur_data":"53ea37897a87","attrs":{"53ea37897a87":{"locationmode":"USA-states","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"z":{},"text":{},"locations":{},"color":{},"colors":"Reds","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"mapType":"geo","scene":{"zaxis":{"title":"crime_rate"}},"geo":{"domain":{"x":[0,1],"y":[0,1]},"scope":"usa","projection":{"type":"albers usa"},"showlakes":true,"lakecolor":"rgba(255,255,255,1)"},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5},"title":"Hate crime rate in 2016 all over U.S. "},"source":"A","config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"data":[{"colorbar":{"title":"Hate crime rate ","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(255,245,240,1)"],["0.00329001034965554","rgba(255,244,239,1)"],["0.00762014405241635","rgba(255,244,238,1)"],["0.0118128844458941","rgba(255,243,237,1)"],["0.018814600741361","rgba(255,242,235,1)"],["0.028949136181773","rgba(255,240,233,1)"],["0.0393364566619348","rgba(255,238,230,1)"],["0.0470859540746992","rgba(255,237,229,1)"],["0.0591667818940808","rgba(255,235,226,1)"],["0.0625611082445715","rgba(255,234,225,1)"],["0.0649280001670427","rgba(255,234,224,1)"],["0.0718998492218171","rgba(255,233,223,1)"],["0.0889080142040883","rgba(254,230,219,1)"],["0.0910438710949724","rgba(254,230,218,1)"],["0.107466073312285","rgba(254,227,214,1)"],["0.113330689929598","rgba(254,226,213,1)"],["0.118568890948765","rgba(254,225,212,1)"],["0.139284228485111","rgba(254,220,204,1)"],["0.154494303171325","rgba(254,215,198,1)"],["0.15756424338281","rgba(254,214,197,1)"],["0.177833826601441","rgba(254,208,189,1)"],["0.220577334956098","rgba(253,196,172,1)"],["0.254912415636233","rgba(252,185,159,1)"],["0.297279912165542","rgba(253,172,143,1)"],["1","rgba(103,0,13,1)"]],"showscale":true,"locationmode":"USA-states","z":[1.3808898651561,1.48937264916067,3.34805113558664,0.420514815262585,2.37241981189183,1.88413647670102,2.96383119359633,1.57552267964897,16.8827165024884,1.06807949849217,0.474675629191675,1.60414463443326,0.897081333757898,2.71343987643412,0.545959163539177,1.89091504080132,4.65270703981678,0.730244567331498,3.00417806063783,0.614980901518787,5.89066918001885,4.05170339094064,2.29774753161092,1.19565328787573,1.44502572063679,1.91929738361381,1.67873732959462,1.39453031198704,2.19578565995122,3.15335468296094,4.50639387962382,3.01436916852553,1.45875512794317,1.05611537004302,4.61693441404417,0.852912632023768,2.93130321795085,0.482428071556262,1.13590540179814,0.465873547335386,2.28618749023607,2.13495501709919,0.638849301766425,2.18964298866362,4.00260008901783,1.45040839696109,5.3143966868925,2.52873194577905,0.601473858619324],"text":["Alabama <br> share for trump 59.90%","Alaska <br> share for trump 54.20%","Arizona <br> share for trump 52.70%","Arkansas <br> share for trump 60.10%","California <br> share for trump 36.40%","Colorado <br> share for trump 45.70%","Connecticut <br> share for trump 40.30%","Delaware <br> share for trump 39.40%","District of Columbia <br> share for trump 7.40%","Florida <br> share for trump 48.30%","Georgia <br> share for trump 52.20%","Idaho <br> share for trump 64.10%","Illinois <br> share for trump 40.20%","Indiana <br> share for trump 53.70%","Iowa <br> share for trump 46.00%","Kansas <br> share for trump 59.40%","Kentucky <br> share for trump 60.20%","Louisiana <br> share for trump 57.10%","Maine <br> share for trump 40.70%","Maryland <br> share for trump 35.10%","Massachusetts <br> share for trump 37.20%","Michigan <br> share for trump 44.60%","Minnesota <br> share for trump 44.50%","Mississippi <br> share for trump 54.40%","Missouri <br> share for trump 53.50%","Montana <br> share for trump 55.20%","Nebraska <br> share for trump 59.30%","Nevada <br> share for trump 44.70%","New Hampshire <br> share for trump 46.30%","New Jersey <br> share for trump 39.70%","New Mexico <br> share for trump 42.20%","New York <br> share for trump 34.60%","North Carolina <br> share for trump 49.80%","North Dakota <br> share for trump 57.90%","Ohio <br> share for trump 47.40%","Oklahoma <br> share for trump 66.10%","Oregon <br> share for trump 41.80%","Pennsylvania <br> share for trump 46.30%","Rhode Island <br> share for trump 35.10%","South Carolina <br> share for trump 54.50%","South Dakota <br> share for trump 57.40%","Tennessee <br> share for trump 59.00%","Texas <br> share for trump 56.10%","Utah <br> share for trump 72.10%","Vermont <br> share for trump 31.10%","Virginia <br> share for trump 46.60%","Washington <br> share for trump 40.90%","West Virginia <br> share for trump 62.00%","Wisconsin <br> share for trump 45.60%"],"locations":["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI"],"type":"choropleth","marker":{"line":{"colorbar":{"title":"","ticklen":2},"cmin":0.420514815262585,"cmax":16.8827165024884,"colorscale":[["0","rgba(255,245,240,1)"],["0.00329001034965554","rgba(255,244,239,1)"],["0.00762014405241635","rgba(255,244,238,1)"],["0.0118128844458941","rgba(255,243,237,1)"],["0.018814600741361","rgba(255,242,235,1)"],["0.028949136181773","rgba(255,240,233,1)"],["0.0393364566619348","rgba(255,238,230,1)"],["0.0470859540746992","rgba(255,237,229,1)"],["0.0591667818940808","rgba(255,235,226,1)"],["0.0625611082445715","rgba(255,234,225,1)"],["0.0649280001670427","rgba(255,234,224,1)"],["0.0718998492218171","rgba(255,233,223,1)"],["0.0889080142040883","rgba(254,230,219,1)"],["0.0910438710949724","rgba(254,230,218,1)"],["0.107466073312285","rgba(254,227,214,1)"],["0.113330689929598","rgba(254,226,213,1)"],["0.118568890948765","rgba(254,225,212,1)"],["0.139284228485111","rgba(254,220,204,1)"],["0.154494303171325","rgba(254,215,198,1)"],["0.15756424338281","rgba(254,214,197,1)"],["0.177833826601441","rgba(254,208,189,1)"],["0.220577334956098","rgba(253,196,172,1)"],["0.254912415636233","rgba(252,185,159,1)"],["0.297279912165542","rgba(253,172,143,1)"],["1","rgba(103,0,13,1)"]],"showscale":false,"color":[1.3808898651561,1.48937264916067,3.34805113558664,0.420514815262585,2.37241981189183,1.88413647670102,2.96383119359633,1.57552267964897,16.8827165024884,1.06807949849217,0.474675629191675,1.60414463443326,0.897081333757898,2.71343987643412,0.545959163539177,1.89091504080132,4.65270703981678,0.730244567331498,3.00417806063783,0.614980901518787,5.89066918001885,4.05170339094064,2.29774753161092,1.19565328787573,1.44502572063679,1.91929738361381,1.67873732959462,1.39453031198704,2.19578565995122,3.15335468296094,4.50639387962382,3.01436916852553,1.45875512794317,1.05611537004302,4.61693441404417,0.852912632023768,2.93130321795085,0.482428071556262,1.13590540179814,0.465873547335386,2.28618749023607,2.13495501709919,0.638849301766425,2.18964298866362,4.00260008901783,1.45040839696109,5.3143966868925,2.52873194577905,0.601473858619324]}},"geo":"geo","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
+>>>>>>> a3ac06542228ed8e61541dc8089a8a69a079411f
+>>>>>>> 9da3989542836df2e52481f9ee3927177cc26ce6
 </div>
 </div>
 
