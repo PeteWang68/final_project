@@ -179,17 +179,10 @@ hate_crime = hate_crime%>%
 
 ```
 
-## import and clean the annual data from 2005-2017
-```{r}
-
-#list the files
-files = as.data.frame(list.files(path = "./data_1")) 
-colnames(files)[1] = "file_names"
-
-```
 
 
-## do the further cleaning of the merge data
+do the further cleaning of the merge data
+
 ```{r}
 merge_data = merge_data %>%
   mutate(median_annual_household_income = str_replace(median_annual_household_income, ",", "")) %>%
@@ -232,6 +225,30 @@ merge_data %>%
 ```{r}
 ggplot(merge_data, aes(x = crime_rate)) + 
   geom_density(alpha = .4, adjust = .5, color = "blue")
+```
+
+##see whether Trump rate influence the model
+```{r}
+merge_data_log = merge_data_log%>%
+  mutate(share_voters_voted_trump = sub("\\%", "",share_voters_voted_trump))%>%
+  mutate(share_voters_voted_trump = as.numeric(share_voters_voted_trump)/100)
+
+mle_log_1 = lm(crime_rate~median_income+share_unemployed+share_population_with_high_school_degree+share_non_citizen+ share_white+ share_voters_voted_trump, data = merge_data_log)
+  
+summary(step(mle_log_1, direction = "both"))
+
+cor(merge_data_log$share_voters_voted_trump, merge_data_log$median_income)
+
+slr = lm(crime_rate~share_voters_voted_trump, data = merge_data_log)
+summary(slr)
+```
+
+## do scatter plot 
+```{r}
+merge_data%>%
+  ggplot(aes(x = median_income,y = crime_rate))+
+  geom_smooth(method = "lm", color="black", formula = y ~ x) +
+  geom_point()
 ```
 
 

@@ -1,0 +1,13 @@
+name: shiny
+title: shiny
+username:
+account: petewang
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 605953
+bundleId: 1744443
+url: https://petewang.shinyapps.io/shiny/
+when: 1544059530.26809
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: _site.yml|2005_hatecrime.xls|2006_hatecrime.xls|2007_hatecrime.xls|2008_hatecrime.xls|2009_hatecrime.xls|2010_hatecrime.xls|2011_hatecrime.xls|2012_hatecrime.xls|2013_hatecrime.xls|2014_hatecrime.xls|2015_hatecrime.xls|2016_hatecrime.xls|about.html|about.Rmd|final_project.html|final_project.Rmd|hate_crime_img.jpg|index.html|index.Rmd|Proposal.html|Proposal.Rmd|README.html|README.md|report.html|report.Rmd|Situation in 2016.Rmd|Situation_in_2016.html|table-1.xls|final_project_files/figure-html/unnamed-chunk-10-1.png|final_project_files/figure-html/unnamed-chunk-3-1.png|final_project_files/figure-html/unnamed-chunk-7-1.png|final_project_files/figure-html/unnamed-chunk-8-1.png|final_project_files/figure-html/unnamed-chunk-9-1.png|annual|data|site_libs
