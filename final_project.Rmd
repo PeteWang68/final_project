@@ -310,8 +310,9 @@ compare_rate %>%
   mutate(hate_crimes_10days_year = hate_crimes_per_100k_splc/10 * 365) %>% 
   select(state, hate_crimes_10days_year, annualprop) %>% 
   melt(, id = "state") %>% 
-  ggplot(aes(x = state, y = value, fill = variable, group = variable))+
-  geom_bar(stat="identity")+
+  mutate(state = reorder(state, value)) %>% 
+  ggplot(aes(x = state, y = value, fill = variable, group = variable)) +
+  geom_bar(stat = "identity") +
   theme(axis.text.x = element_text(angle = 90, size = 10, hjust = 1),legend.position = "right")
 ```
 
