@@ -6,6 +6,7 @@ title: "Trump Election and Hate Crime"
 library(tidyverse)
 library(readxl)
 library(plotly)
+library(reshape2)
 ```
 
 ```{r include=FALSE}
@@ -64,18 +65,60 @@ merge_data = merge_data %>%
 mutate(median_annual_household_income = as.numeric(median_annual_household_income)) %>%
   select(state, median_income = median_annual_household_income, everything())
 ```
+```{r include=FALSE}
 
-```{r}
-merged_data_no_percent = merge_data %>% 
-  mutate(share_voters_voted_trump = sub("\\%", "", share_voters_voted_trump), 
-         share_voters_voted_trump = as.numeric(share_voters_voted_trump)) 
+#list
+df = list.files(path = "./annual")
+#function
+read_data = function(x){read_excel(str_c("./annual/", x),  range = "A3:E53")%>%
+    mutate(year = x)}
+#map
+hate_crime = map(df, read_data)%>%
+  bind_rows()%>%
+  janitor::clean_names()%>%
+  select(-agencies_submitting_incident_reports, -agencies_submitting_incident_reports_2,-agencies_submitting_incident_reports_3)%>%
+  mutate(year = str_replace(year, ".xls", ""))%>%
+  select(year, everything())
+#set na to 0
+hate_crime[is.na(hate_crime)]=0
 
-merged_data_no_percent %>% 
-  ggplot(aes(x = share_voters_voted_trump, y = crime_rate)) + geom_point()
+#complete the final dataset
+hate_crime = hate_crime%>%
+  mutate(total_incident = total_number_of_incidents_reported + total_number_of_incidents_reported_2)%>%
+  select(year, state = participating_state, population = population_covered, total_incident)%>%
+  filter(state != "Total") %>%
+  mutate(annualprop = total_incident/population*100000)%>%
+  mutate(year = str_replace(year, ".xls", ""))
+
+```
+
+```{r include=FALSE}
+hate_crime_10days<-read_csv("./data/hate_crime_10days.csv")
+hate_crime_2016<-hate_crime %>% 
+  na.omit() %>% 
+  filter(year == 2016) %>%
+  group_by(state) 
+
+compare_rate<-merge(hate_crime_10days, hate_crime_2016, by= "state")
 ```
 
 
-```{r include=FALSE}
+
+
+```{r echo=FALSE}
+
+compare_rate %>% 
+  mutate(hate_crimes_10days_after = hate_crimes_per_100k_splc/10 * 365) %>% 
+  select(state, hate_crimes_10days_after, annualprop) %>% 
+  melt(, id = "state") %>% 
+  ggplot(aes(x = state, y = value, fill = variable, group = variable))+
+  geom_bar(stat="identity")+
+  theme(axis.text.x = element_text(angle = 90, size = 10, hjust = 1),legend.position = "right")
+```
+
+<br>
+
+```{r echo=FALSE}
 
 map_data_2016 = merge_data %>% 
   mutate(state = as.factor(state),
