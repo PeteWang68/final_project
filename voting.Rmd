@@ -55,8 +55,9 @@ compare_rate<-merge(hate_crime_10days, hate_crime_2016, by= "state")
 ```{r echo=FALSE, fig.align="center"}
 
 compare_rate %>% 
-  mutate(hate_crimes_10days_year = hate_crimes_per_100k_splc/10 * 365) %>% 
-  select(state, hate_crimes_10days_year, annualprop) %>% 
+  mutate(hate_crimes_10days = hate_crimes_per_100k_splc/10 * 365,
+         hate_crimes_2016 = annualprop) %>% 
+  select(state, hate_crimes_10days, hate_crimes_2016) %>% 
   melt(, id = "state") %>% 
   mutate(state = factor(state, levels = state %>% unique %>% sort(decreasing = T))) %>% 
   mutate(state = reorder(state, value)) %>% 
